@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import MapWithMarkers from "../components/Map/MapWithMarkers.jsx";
+import LocationSearch from "../components/LocationSearch/LocationSearch.jsx";
+import * as googleMapsApi from "../api/googleMaps.js";
 import * as backend from "../api/backend.js";
 
 const defaultMapLocation = { lat: 49.2827, lng: -123.1207 };
@@ -34,10 +36,15 @@ function PetMapPage() {
   }, []);
 
   const updateVisiblePets = (filteredList) => setVisiblePets(filteredList);
+  const updateMapLocation = async (address) => {
+    const locationCoords = await googleMapsApi.geocodeAddress(address);
+    setMapLocation(locationCoords);
+  };
 
   return (
     <>
       <h1>PetMapPage</h1>
+      <LocationSearch />
       <MapWithMarkers
         pets={petsList}
         updateVisiblePets={updateVisiblePets}
