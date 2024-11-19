@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import MapWithMarkers from "../components/Map/MapWithMarkers.jsx";
 import * as backend from "../api/backend.js";
 
 function PetMapPage() {
@@ -22,6 +23,7 @@ function PetMapPage() {
             <p>{pet.description}</p>
           </li>
         ))}
+        <MapWithMarkers pets={petsList} />
       </ul>
     </>
   );
