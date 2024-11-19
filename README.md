@@ -6,7 +6,7 @@ WhiskerWatch is a place to reunite pet owners with their lost pets.
 
 ### Problem Space
 
-Losing a pet is a distressing experience, pet owners often feel helpless and desperate to find their pets as quickly as possible. Relying on posters or word of mouth can be inefficient and limit the reach of the message.
+Losing a pet is a distressing experience, pet owners often feel helpless and desperate to find their pets as quickly as possible. Relying on posters or word of mouth can be inefficient and limit the reach of the message. WhiskerWatch will help pet owner's reach the right people at the right time and also will also serve as a database of lost pets that people can reference if they find a pet and want to find the owner.
 
 ### User Profile
 
@@ -138,7 +138,7 @@ Response:
 ]
 ```
 
-**POST /pets/**
+**POST /pets**
 
 - Add a new pet
 
