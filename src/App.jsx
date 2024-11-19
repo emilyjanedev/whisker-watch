@@ -1,5 +1,14 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import PetMapPage from "./pages/PetMapPage";
+
 function App() {
-  return <h1>WhiskerWacth</h1>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<PetMapPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

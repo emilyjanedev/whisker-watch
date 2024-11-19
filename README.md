@@ -91,6 +91,7 @@ Design Inspiration
 
 - [Pet List & Map Page](https://www.figma.com/community/file/1040515244782148525/property-listing-website-concept)
 - [Pet Profile Page](https://www.figma.com/community/file/1120008181964013360/ui-kit-pet-adoption)
+- [Color Palette](https://coolors.co/palette/8ecae6-219ebc-023047-ffb703-fb8500)
 
 ### Data
 
