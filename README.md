@@ -118,7 +118,7 @@ Optional Parameters:
 
 Response:
 
-```
+```json
 [
     {
         "id": 1,
@@ -148,37 +148,36 @@ Parameters:
 
 Request Body:
 
-```
+```json
 {
-    "image": "https://example.com/images/pet1.jpg",
-    "status": "missing",
-    "name": "Buddy",
-    "pet_type": "dog",
-    "age": 3,
-    "description": "Golden retriever with a red collar, very friendly.",
-    "longitude": -122.4194,
-    "latitude": 37.7749,
-    "user_id": 42
-
+  "image": "https://example.com/images/pet1.jpg",
+  "status": "missing",
+  "name": "Buddy",
+  "pet_type": "dog",
+  "age": 3,
+  "description": "Golden retriever with a red collar, very friendly.",
+  "longitude": -122.4194,
+  "latitude": 37.7749,
+  "user_id": 42
 }
 ```
 
 Response:
 
-```
+```json
 {
-    "id": 1,
-    "image": "https://example.com/images/pet1.jpg",
-    "status": "missing",
-    "name": "Buddy",
-    "pet_type": "dog",
-    "age": 3,
-    "description": "Golden retriever with a red collar, very friendly.",
-    "longitude": -122.4194,
-    "latitude": 37.7749,
-    "posted_date": "2024-11-01T10:30:00Z",
-    "updated_date": "2024-11-10T15:45:00Z",
-    "user_id": 42
+  "id": 1,
+  "image": "https://example.com/images/pet1.jpg",
+  "status": "missing",
+  "name": "Buddy",
+  "pet_type": "dog",
+  "age": 3,
+  "description": "Golden retriever with a red collar, very friendly.",
+  "longitude": -122.4194,
+  "latitude": 37.7749,
+  "posted_date": "2024-11-01T10:30:00Z",
+  "updated_date": "2024-11-10T15:45:00Z",
+  "user_id": 42
 }
 ```
 
@@ -192,20 +191,20 @@ Parameters:
 
 Response:
 
-```
+```json
 {
-    "id": 1,
-    "image": "https://example.com/images/pet1.jpg",
-    "status": "missing",
-    "name": "Buddy",
-    "pet_type": "dog",
-    "age": 3,
-    "description": "Golden retriever with a red collar, very friendly.",
-    "longitude": -122.4194,
-    "latitude": 37.7749,
-    "posted_date": "2024-11-01T10:30:00Z",
-    "updated_date": "2024-11-10T15:45:00Z",
-    "user_id": 42
+  "id": 1,
+  "image": "https://example.com/images/pet1.jpg",
+  "status": "missing",
+  "name": "Buddy",
+  "pet_type": "dog",
+  "age": 3,
+  "description": "Golden retriever with a red collar, very friendly.",
+  "longitude": -122.4194,
+  "latitude": 37.7749,
+  "posted_date": "2024-11-01T10:30:00Z",
+  "updated_date": "2024-11-10T15:45:00Z",
+  "user_id": 42
 }
 ```
 
