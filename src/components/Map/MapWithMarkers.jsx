@@ -1,39 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import * as googleMapsApi from "../../api/googleMaps.js";
 
 const mapContainerStyle = {
   width: "100%",
   height: "400px",
 };
 
-const defaultMapCenter = { lat: 49.2827, lng: -123.1207 };
-
-const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-const mapId = import.meta.env.VITE_GOOGLE_MAPS_MAP_KEY;
-
-function MapWithMarkers({ pets, updateVisiblePets }) {
-  const [mapCenter, setMapCenter] = useState(defaultMapCenter);
+function MapWithMarkers({ pets, updateVisiblePets, mapLocation }) {
   const mapRef = useRef(null);
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: googleMapsApiKey,
+    googleMapsApiKey: googleMapsApi.apiKey,
   });
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setMapCenter({ lat: latitude, lng: longitude });
-        },
-        () => {
-          setIsGeolocationAvailable(false);
-        }
-      );
-    } else {
-      setIsGeolocationAvailable(false);
-    }
-  }, []);
 
   if (!isLoaded) return <div>Loading...</div>;
 
@@ -61,8 +40,8 @@ function MapWithMarkers({ pets, updateVisiblePets }) {
     <div>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        center={mapCenter}
-        mapId={mapId}
+        center={mapLocation}
+        mapId={googleMapsApi.mapId}
         zoom={12}
         onLoad={onLoad}
         onBoundsChanged={handleBoundsChanged}
