@@ -16,7 +16,7 @@ Losing a pet is a distressing experience, pet owners often feel helpless and des
 - want to get the word out to as many people as possible
 - want to make sure their message reaches the best audience (people in the location of where the pet was lost)
 
-**- Community Members** (neighbours, good samaratins, animal lovers):
+**- Community Members** (neighbors, good samaritans, animal lovers):
 
 - who want to help people find their missing pets
 - who should be aware if a pet is missing in their neighborhood so they can keep an eye out
@@ -33,8 +33,8 @@ Losing a pet is a distressing experience, pet owners often feel helpless and des
 
 **Future Implementations:**
 
-- As a user, I want to be able to report that I have seen a pet, and where I saw it, if I was unable to succesfully approach and take in the pet
-- As a logged in user, I want to be able to update my lost pet listings, updating details or marking a pet as acitvely missing/found
+- As a user, I want to be able to report that I have seen a pet, and where I saw it, if I was unable to successfully approach and take in the pet
+- As a logged in user, I want to be able to update my lost pet listings, updating details or marking a pet as actively missing/found
 - As a logged in user, I want to be able to message other users to communicate about their pets
 
 ## Implementation
