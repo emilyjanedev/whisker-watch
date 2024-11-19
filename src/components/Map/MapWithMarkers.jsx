@@ -1,10 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  GoogleMap,
-  LoadScript,
-  Marker,
-  useJsApiLoader,
-} from "@react-google-maps/api";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
 const mapContainerStyle = {
   width: "100%",
@@ -16,8 +11,7 @@ const defaultMapCenter = { lat: 49.2827, lng: -123.1207 };
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const mapId = import.meta.env.VITE_GOOGLE_MAPS_MAP_KEY;
 
-function MapWithMarkers({ pets }) {
-  const [visiblePets, setVisiblePets] = useState(pets);
+function MapWithMarkers({ pets, updateVisiblePets }) {
   const [mapCenter, setMapCenter] = useState(defaultMapCenter);
   const mapRef = useRef(null);
 
@@ -26,9 +20,7 @@ function MapWithMarkers({ pets }) {
   });
 
   useEffect(() => {
-    // Check if geolocation is available
     if (navigator.geolocation) {
-      // Get the user's current position
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
@@ -62,7 +54,7 @@ function MapWithMarkers({ pets }) {
         pet.lng >= southWest.lng() &&
         pet.lng <= northEast.lng()
     );
-    setVisiblePets(filteredPets);
+    updateVisiblePets(filteredPets);
   };
 
   return (
@@ -79,11 +71,6 @@ function MapWithMarkers({ pets }) {
           <Marker key={pet.id} position={{ lat: pet.lat, lng: pet.lng }} />
         ))}
       </GoogleMap>
-      <ul>
-        {visiblePets.map((pet) => (
-          <li key={pet.id}>{pet.pet_name}</li>
-        ))}
-      </ul>
     </div>
   );
 }
