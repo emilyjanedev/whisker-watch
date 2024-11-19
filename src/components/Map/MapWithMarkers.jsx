@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import * as googleMapsApi from "../../api/googleMaps.js";
+import PropTypes from "prop-types";
 
 const mapContainerStyle = {
   width: "100%",
@@ -55,3 +56,9 @@ function MapWithMarkers({ pets, updateVisiblePets, mapLocation }) {
 }
 
 export default MapWithMarkers;
+
+MapWithMarkers.propTypes = {
+  pets: PropTypes.array.isRequired,
+  updateVisiblePets: PropTypes.func.isRequired,
+  mapLocation: PropTypes.object.isRequired,
+};

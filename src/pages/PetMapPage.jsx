@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import MapWithMarkers from "../components/Map/MapWithMarkers.jsx";
 import LocationSearch from "../components/LocationSearch/LocationSearch.jsx";
 import * as googleMapsApi from "../api/googleMaps.js";
@@ -21,30 +21,27 @@ function PetMapPage() {
 
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setMapLocation({ lat: latitude, lng: longitude });
-        },
-        () => {
-          setIsGeolocationAvailable(false);
-        }
-      );
-    } else {
-      setIsGeolocationAvailable(false);
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        setMapLocation({ lat: latitude, lng: longitude });
+      });
     }
   }, []);
 
-  const updateVisiblePets = (filteredList) => setVisiblePets(filteredList);
-  const updateMapLocation = async (address) => {
-    const locationCoords = await googleMapsApi.geocodeAddress(address);
-    setMapLocation(locationCoords);
-  };
+  const updateVisiblePets = useCallback(
+    (filteredList) => setVisiblePets(filteredList),
+    []
+  );
+  const updateMapLocation = useCallback(async (address) => {
+    // const locationCoords = await googleMapsApi.geocodeAddress(address);
+    // setMapLocation(locationCoords);
+    console.log("Map Location Updated:", address);
+  }, []);
 
   return (
     <>
       <h1>PetMapPage</h1>
-      <LocationSearch />
+      <LocationSearch updateMapLocation={updateMapLocation} />
       <MapWithMarkers
         pets={petsList}
         updateVisiblePets={updateVisiblePets}

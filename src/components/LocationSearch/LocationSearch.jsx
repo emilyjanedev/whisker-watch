@@ -1,9 +1,9 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 function LocationSearch({ updateMapLocation }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateMapLocation();
+    updateMapLocation();
     console.log("Submitted!");
   };
   return (
@@ -14,3 +14,7 @@ function LocationSearch({ updateMapLocation }) {
 }
 
 export default LocationSearch;
+
+LocationSearch.propTypes = {
+  updateMapLocation: PropTypes.func.isRequired,
+};
