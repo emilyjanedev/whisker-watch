@@ -79,13 +79,13 @@ Future Implementations:
 ### Mockups
 
 **Pet List & Map Page**
-![](assets/images/whisker-watch-map.png)
+![](./src/assets/images/whisker-watch-map.png)
 
 **Pet Profile Page**
-![](assets/images/whisker-watch-pet.png)
+![](./src/ssets/images/whisker-watch-pet.png)
 
 **Add Pet Page**
-![](assets/images/whisker-watch-form.png)
+![](./src/assets/images/whisker-watch-form.png)
 
 Design Inspiration
 
@@ -95,13 +95,13 @@ Design Inspiration
 ### Data
 
 **MVP:**
-![](assets/images/whisker-watch-mvp-data.png)
+![](./src/assets/images/whisker-watch-mvp-data.png)
 
 **Future Implementations:**
-![](assets/images/whisker-watch-future-data.png)
+![](./src/assets/images/whisker-watch-future-data.png)
 
 **With Messaging System:**
-![](assets/images/whisker-watch-messaging-data.png)
+![](./src/assets/images/whisker-watch-messaging-data.png)
 
 ### Endpoints
 
