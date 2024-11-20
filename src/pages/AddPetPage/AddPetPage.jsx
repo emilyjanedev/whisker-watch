@@ -1,4 +1,5 @@
 import { useState } from "react";
+import LocationInput from "../../components/LocationInput/LocationInput";
 
 function AddPetPage() {
   const [checkboxStatus, setCheckboxStatus] = useState({

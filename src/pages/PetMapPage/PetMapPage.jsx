@@ -19,12 +19,26 @@ function PetMapPage() {
   }, []);
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        setMapLocation({ lat: latitude, lng: longitude });
-      });
-    }
+    const successCallback = (position) => {
+      const { latitude, longitude } = position.coords;
+      setMapLocation({ lat: latitude, lng: longitude });
+    };
+
+    const errorCallback = (error) => {
+      console.error("Geolocation error:", error.message);
+    };
+
+    const options = {
+      enableHighAccuracy: false,
+      timeout: 5000,
+      maximumAge: Infinity,
+    };
+
+    navigator.geolocation.getCurrentPosition(
+      successCallback,
+      errorCallback,
+      options
+    );
   }, []);
 
   const updateVisiblePets = useCallback(

@@ -1,18 +1,20 @@
 import PetMarkers from "../PetMarkers/PetMarkers.jsx";
 import * as googleMapsApi from "../../api/googleMaps.js";
-import { Map } from "@vis.gl/react-google-maps";
+import { Map, useMap } from "@vis.gl/react-google-maps";
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 const defaultMapLocation = { lat: 49.2827, lng: -123.1207 };
 const mapContainerStyle = { width: "100%", height: "400px" };
 
 function PetMap({ petsList, mapLocation, updateVisiblePets }) {
-  const [center, setCenter] = useState(defaultMapLocation);
+  const map = useMap();
 
   useEffect(() => {
-    setCenter(mapLocation);
-  }, [mapLocation]);
+    if (!map) return;
+
+    map.panTo(mapLocation);
+  }, [mapLocation, map]);
 
   const handleBoundsChanged = (ev) => {
     const bounds = ev.detail.bounds;
@@ -35,7 +37,7 @@ function PetMap({ petsList, mapLocation, updateVisiblePets }) {
       defaultZoom={14}
       reuseMaps={true}
       mapId={googleMapsApi.mapId}
-      center={center}
+      defaultCenter={defaultMapLocation}
       onCameraChanged={(ev) => handleBoundsChanged(ev)}
     >
       <PetMarkers petsList={petsList} />
