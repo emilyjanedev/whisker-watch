@@ -109,12 +109,7 @@ Design Inspiration
 
 **GET /pets**
 
-- Get list of pets, with an optional query for location
-
-Optional Parameters:
-
-- longitude: User-provided location as a number
-- latitude: User-provided location as a number
+- Get list of pets
 
 Response:
 
