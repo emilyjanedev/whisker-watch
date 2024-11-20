@@ -41,7 +41,7 @@ function AutocompleteAddressInput({ updateMapLocation, isLoaded }) {
     <input
       type="text"
       ref={inputRef}
-      placeholder="Enter an address..."
+      placeholder="Enter a location..."
       value={address}
       onChange={(e) => setAddress(e.target.value)}
       onFocus={handleFocus}
