@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-const mapId = import.meta.env.VITE_GOOGLE_MAPS_MAP_KEY;
+const mapId = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID;
 const googleMapsBaseUrl = import.meta.env.VITE_GOOGLE_MAPS_BASE_URL;
 
 const geocodeAddress = async (address) => {

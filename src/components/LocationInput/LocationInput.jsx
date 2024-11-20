@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useMapsLibrary } from "@vis.gl/react-google-maps";
 
-function LocationInput({ updateMapLocation, isLoaded }) {
+function LocationInput({ callbackFn }) {
   const inputRef = useRef(null);
+  const placesLib = useMapsLibrary("places");
   const [address, setAddress] = useState("");
 
   const handleAddressChange = useCallback(
@@ -10,13 +12,13 @@ function LocationInput({ updateMapLocation, isLoaded }) {
       const place = autocompleteInstance.getPlace();
       setAddress(place.formatted_address);
       const { lat, lng } = place.geometry.location;
-      updateMapLocation({ lat: lat(), lng: lng() });
+      callbackFn({ lat: lat(), lng: lng() });
     },
-    [updateMapLocation]
+    [callbackFn]
   );
 
   useEffect(() => {
-    if (!isLoaded || !inputRef.current) return;
+    if (!placesLib || !inputRef.current) return;
 
     const autoCompleteInstance = new window.google.maps.places.Autocomplete(
       inputRef.current,
@@ -29,9 +31,7 @@ function LocationInput({ updateMapLocation, isLoaded }) {
     autoCompleteInstance.addListener("place_changed", () =>
       handleAddressChange(autoCompleteInstance)
     );
-  }, [handleAddressChange, isLoaded]);
-
-  if (!isLoaded) return <div>Loading...</div>;
+  }, [handleAddressChange, placesLib]);
 
   const handleFocus = () => {
     inputRef.current.select();
@@ -52,6 +52,5 @@ function LocationInput({ updateMapLocation, isLoaded }) {
 export default LocationInput;
 
 LocationInput.propTypes = {
-  updateMapLocation: PropTypes.func.isRequired,
-  isLoaded: PropTypes.bool.isRequired,
+  callbackFn: PropTypes.func.isRequired,
 };
