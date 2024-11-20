@@ -6,7 +6,7 @@ WhiskerWatch is a place to reunite pet owners with their lost pets.
 
 ### Problem Space
 
-Losing a pet is a distressing experience, pet owners often feel helpless and desperate to find their pets as quickly as possible. Relying on posters or word of mouth can be inefficient and limit the reach of the message.
+Losing a pet is a distressing experience, pet owners often feel helpless and desperate to find their pets as quickly as possible. Relying on posters or word of mouth can be inefficient and limit the reach of the message. WhiskerWatch will help pet owner's reach the right people at the right time and also will also serve as a database of lost pets that people can reference if they find a pet and want to find the owner.
 
 ### User Profile
 
@@ -110,16 +110,11 @@ Design Inspiration
 
 **GET /pets**
 
-- Get list of pets, with an optional query for location
-
-Optional Parameters:
-
-- longitude: User-provided location as a number
-- latitude: User-provided location as a number
+- Get list of pets
 
 Response:
 
-```
+```json
 [
     {
         "id": 1,
@@ -139,7 +134,7 @@ Response:
 ]
 ```
 
-**POST /pets/**
+**POST /pets**
 
 - Add a new pet
 
@@ -149,37 +144,36 @@ Parameters:
 
 Request Body:
 
-```
+```json
 {
-    "image": "https://example.com/images/pet1.jpg",
-    "status": "missing",
-    "name": "Buddy",
-    "pet_type": "dog",
-    "age": 3,
-    "description": "Golden retriever with a red collar, very friendly.",
-    "longitude": -122.4194,
-    "latitude": 37.7749,
-    "user_id": 42
-
+  "image": "https://example.com/images/pet1.jpg",
+  "status": "missing",
+  "name": "Buddy",
+  "pet_type": "dog",
+  "age": 3,
+  "description": "Golden retriever with a red collar, very friendly.",
+  "longitude": -122.4194,
+  "latitude": 37.7749,
+  "user_id": 42
 }
 ```
 
 Response:
 
-```
+```json
 {
-    "id": 1,
-    "image": "https://example.com/images/pet1.jpg",
-    "status": "missing",
-    "name": "Buddy",
-    "pet_type": "dog",
-    "age": 3,
-    "description": "Golden retriever with a red collar, very friendly.",
-    "longitude": -122.4194,
-    "latitude": 37.7749,
-    "posted_date": "2024-11-01T10:30:00Z",
-    "updated_date": "2024-11-10T15:45:00Z",
-    "user_id": 42
+  "id": 1,
+  "image": "https://example.com/images/pet1.jpg",
+  "status": "missing",
+  "name": "Buddy",
+  "pet_type": "dog",
+  "age": 3,
+  "description": "Golden retriever with a red collar, very friendly.",
+  "longitude": -122.4194,
+  "latitude": 37.7749,
+  "posted_date": "2024-11-01T10:30:00Z",
+  "updated_date": "2024-11-10T15:45:00Z",
+  "user_id": 42
 }
 ```
 
@@ -193,20 +187,20 @@ Parameters:
 
 Response:
 
-```
+```json
 {
-    "id": 1,
-    "image": "https://example.com/images/pet1.jpg",
-    "status": "missing",
-    "name": "Buddy",
-    "pet_type": "dog",
-    "age": 3,
-    "description": "Golden retriever with a red collar, very friendly.",
-    "longitude": -122.4194,
-    "latitude": 37.7749,
-    "posted_date": "2024-11-01T10:30:00Z",
-    "updated_date": "2024-11-10T15:45:00Z",
-    "user_id": 42
+  "id": 1,
+  "image": "https://example.com/images/pet1.jpg",
+  "status": "missing",
+  "name": "Buddy",
+  "pet_type": "dog",
+  "age": 3,
+  "description": "Golden retriever with a red collar, very friendly.",
+  "longitude": -122.4194,
+  "latitude": 37.7749,
+  "posted_date": "2024-11-01T10:30:00Z",
+  "updated_date": "2024-11-10T15:45:00Z",
+  "user_id": 42
 }
 ```
 
