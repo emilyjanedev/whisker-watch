@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 import * as googleMapsApi from "../../api/googleMaps.js";
 import PropTypes from "prop-types";
 
@@ -8,14 +8,8 @@ const mapContainerStyle = {
   height: "400px",
 };
 
-function MapWithMarkers({ pets, updateVisiblePets, mapLocation }) {
+function MapWithMarkers({ pets, updateVisiblePets, mapLocation, isLoaded }) {
   const mapRef = useRef(null);
-
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: googleMapsApi.apiKey,
-  });
-
-  if (!isLoaded) return <div>Loading...</div>;
 
   const onLoad = (map) => {
     mapRef.current = map;
@@ -36,6 +30,8 @@ function MapWithMarkers({ pets, updateVisiblePets, mapLocation }) {
     );
     updateVisiblePets(filteredPets);
   };
+
+  if (!isLoaded) return <div>Loading...</div>;
 
   return (
     <div>
@@ -61,4 +57,5 @@ MapWithMarkers.propTypes = {
   pets: PropTypes.array.isRequired,
   updateVisiblePets: PropTypes.func.isRequired,
   mapLocation: PropTypes.object.isRequired,
+  isLoaded: PropTypes.bool.isRequired,
 };
