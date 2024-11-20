@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
-import MapWithMarkers from "../components/Map/MapWithMarkers.jsx";
-import AutocompleteAddressInput from "../components/AutocompleteAddressInput/AutocompleteAddressInput.jsx";
+import MapWithMarkers from "../../components/Map/MapWithMarkers.jsx";
+import LocationInput from "../../components/LocationInput/LocationInput.jsx";
 import { useJsApiLoader } from "@react-google-maps/api";
-import * as googleMapsApi from "../api/googleMaps.js";
-import * as backend from "../api/backend.js";
+import * as googleMapsApi from "../../api/googleMaps.js";
+import * as backend from "../../api/backend.js";
 
 const defaultMapLocation = { lat: 49.2827, lng: -123.1207 };
 const libraries = ["places"];
@@ -49,7 +49,7 @@ function PetMapPage() {
   return (
     <>
       <h1>PetMapPage</h1>
-      <AutocompleteAddressInput
+      <LocationInput
         updateMapLocation={updateMapLocation}
         isLoaded={isLoaded}
       />

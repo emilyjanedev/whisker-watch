@@ -43,9 +43,10 @@ function MapWithMarkers({ pets, updateVisiblePets, mapLocation, isLoaded }) {
         onLoad={onLoad}
         onBoundsChanged={handleBoundsChanged}
       >
-        {pets.map((pet) => (
-          <Marker key={pet.id} position={{ lat: pet.lat, lng: pet.lng }} />
-        ))}
+        {mapRef.current &&
+          pets.map((pet) => (
+            <Marker key={pet.id} position={{ lat: pet.lat, lng: pet.lng }} />
+          ))}
       </GoogleMap>
     </div>
   );

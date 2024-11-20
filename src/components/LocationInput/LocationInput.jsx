@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-function AutocompleteAddressInput({ updateMapLocation, isLoaded }) {
+function LocationInput({ updateMapLocation, isLoaded }) {
   const inputRef = useRef(null);
   const [address, setAddress] = useState("");
 
@@ -49,9 +49,9 @@ function AutocompleteAddressInput({ updateMapLocation, isLoaded }) {
   );
 }
 
-export default AutocompleteAddressInput;
+export default LocationInput;
 
-AutocompleteAddressInput.propTypes = {
+LocationInput.propTypes = {
   updateMapLocation: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool.isRequired,
 };
