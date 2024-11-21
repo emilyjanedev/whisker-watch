@@ -18,7 +18,9 @@ function AddPetPage() {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
+    pet_image: null,
     pet_name: "",
+    pet_type: "",
     lat: null,
     lng: null,
     pet_age: null,
@@ -26,8 +28,8 @@ function AddPetPage() {
     pet_temperament: "",
     missing_since: "",
     pet_size: "",
+    contact_name: "",
     contact_email: "",
-    pet_image: null,
   });
 
   const handleChange = (e) => {
@@ -148,6 +150,23 @@ function AddPetPage() {
       </div>
 
       <div className="add-pet-form__field">
+        <label className="add-pet-form__label">Pet Type:</label>
+        <select
+          className="add-pet-form__select"
+          name="pet_type"
+          value={formData.pet_type}
+          onChange={handleChange}
+        >
+          <option value="" disabled selected>
+            Select Pet Type
+          </option>
+          <option value="cat">Cat</option>
+          <option value="dog">Dog</option>
+        </select>
+        {errors.pet_temperament && <p>{errors.pet_temperament}</p>}
+      </div>
+
+      <div className="add-pet-form__field">
         <label className="add-pet-form__label">Pet Temperament:</label>
         <select
           className="add-pet-form__select"
@@ -155,6 +174,9 @@ function AddPetPage() {
           value={formData.pet_temperament}
           onChange={handleChange}
         >
+          <option value="" disabled selected>
+            Select Temperament
+          </option>
           {temperaments.map((temperament) => (
             <option key={temperament} value={temperament}>
               {temperament}
@@ -172,6 +194,9 @@ function AddPetPage() {
           value={formData.pet_size}
           onChange={handleChange}
         >
+          <option value="" disabled selected>
+            Select Pet Size
+          </option>
           {sizes.map((size) => (
             <option key={size} value={size}>
               {size}
@@ -179,6 +204,18 @@ function AddPetPage() {
           ))}
         </select>
         {errors.pet_size && <p>{errors.pet_size}</p>}
+      </div>
+
+      <div className="add-pet-form__field">
+        <label className="add-pet-form__label">Contact Name:</label>
+        <input
+          className="add-pet-form__input"
+          type="text"
+          name="contact_name"
+          value={formData.contact_name}
+          onChange={handleChange}
+        />
+        {errors.contact_name && <p>{errors.contact_name}</p>}
       </div>
 
       <div className="add-pet-form__field">
