@@ -4,7 +4,6 @@ import { Map, useMap } from "@vis.gl/react-google-maps";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 
-const defaultMapLocation = { lat: 49.2827, lng: -123.1207 };
 const mapContainerStyle = { width: "100%", height: "400px" };
 
 function PetMap({ petsList, mapLocation, updateVisiblePets }) {
