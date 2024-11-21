@@ -8,7 +8,7 @@ const defaultMapLocation = { lat: 49.2827, lng: -123.1207 };
 function PetMapPage() {
   const [petsList, setPetsList] = useState([]);
   const [visiblePets, setVisiblePets] = useState([]);
-  const [mapLocation, setMapLocation] = useState(defaultMapLocation);
+  const [mapLocation, setMapLocation] = useState({});
 
   useEffect(() => {
     const loadPetsList = async () => {
@@ -26,6 +26,7 @@ function PetMapPage() {
 
     const errorCallback = (error) => {
       console.error("Geolocation error:", error.message);
+      setMapLocation(defaultMapLocation);
     };
 
     const options = {
@@ -54,11 +55,13 @@ function PetMapPage() {
     <>
       <h1>PetMapPage</h1>
       <LocationInput callbackFn={updateMapLocation} />
-      <PetMap
-        petsList={petsList}
-        mapLocation={mapLocation}
-        updateVisiblePets={updateVisiblePets}
-      />
+      {mapLocation.lat && (
+        <PetMap
+          petsList={petsList}
+          mapLocation={mapLocation}
+          updateVisiblePets={updateVisiblePets}
+        />
+      )}
       {visiblePets.length === 0 && <p>No pets missing in this area.</p>}
       <ul>
         {visiblePets.map((pet) => (
