@@ -4,6 +4,10 @@ import * as googleMapsApi from "./api/googleMaps.js";
 import PetMapPage from "./pages/PetMapPage/PetMapPage.jsx";
 import PetDetailsPage from "./pages/PetDetailsPage/PetDetailsPage";
 import AddPetPage from "./pages/AddPetPage/AddPetPage";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
 function App() {
   return (

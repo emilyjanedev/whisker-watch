@@ -1,9 +1,27 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import * as backend from "../../api/backend.js";
 import LocationInput from "../../components/LocationInput/LocationInput";
 import placeholder from "../../assets/images/pet-image-placeholder.jpg";
 import "./AddPetPage.scss";
+import InputFileUpload from "../../components/InputFileUpload/InputFileUpload.jsx";
+import {
+  Container,
+  Paper,
+  Typography,
+  Box,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormHelperText,
+  Button,
+} from "@mui/material";
+import { DateField } from "@mui/x-date-pickers/DateField";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const temperaments = [
   "Friendly",
@@ -85,168 +103,180 @@ function AddPetPage() {
     : placeholder;
 
   return (
-    <form className="add-pet-form" onSubmit={handleSubmit}>
-      <div className="add-pet-form__image-container">
-        <img
-          className="add-pet-form__image"
-          src={imagePreview}
-          alt="Preview of pet"
-        />
-        <input
-          className="add-pet-form__file-input"
-          type="file"
-          accept="image/*"
-          name="pet_image"
-          id="file"
-          onChange={handleChange}
-        />
-        {errors.pet_image && <p>{errors.pet_image}</p>}
-      </div>
+    <Container maxWidth="s">
+      <Paper elevation={6} sx={{ marginTop: 4, padding: 2 }}>
+        <Typography component="h1" variant="h4" sx={{ textAlign: "center" }}>
+          Add a Pet
+        </Typography>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            className="add-pet-form"
+          >
+            <div className="add-pet-form__image-container">
+              <img
+                className="add-pet-form__image"
+                src={imagePreview}
+                alt="Preview of pet"
+              />
+            </div>
 
-      <div className="add-pet-form__field">
-        <label className="add-pet-form__label">Pet Name:</label>
-        <input
-          className="add-pet-form__input"
-          type="text"
-          name="pet_name"
-          value={formData.pet_name}
-          onChange={handleChange}
-        />
-        {errors.pet_name && <p>{errors.pet_name}</p>}
-      </div>
+            <InputFileUpload
+              name="pet_image"
+              handleChange={handleChange}
+              errors={errors.pet_image}
+            />
 
-      <div className="add-pet-form__field">
-        <label className="add-pet-form__label">Location Lost:</label>
-        <LocationInput name="location_lost" callbackFn={handleLocationInput} />
-        {errors.lat && <p>{errors.lat}</p>}
-      </div>
+            <TextField
+              label="Pet Name"
+              placeholder="Enter you pet's name"
+              fullWidth
+              name="pet_name"
+              value={formData.pet_name}
+              onChange={handleChange}
+              error={errors.pet_name ? true : false}
+              helperText={errors.pet_name}
+            />
 
-      <div className="add-pet-form__field">
-        <label className="add-pet-form__label">Missing Since:</label>
-        <input
-          className="add-pet-form__input"
-          type="date"
-          name="missing_since"
-          value={formData.missing_since}
-          onChange={handleChange}
-        />
-        {errors.missing_since && <p>{errors.missing_since}</p>}
-      </div>
+            <div className="add-pet-form__field">
+              <label className="add-pet-form__label">Location Lost:</label>
+              <LocationInput
+                name="location_lost"
+                callbackFn={handleLocationInput}
+              />
+              {errors.lat && <p>{errors.lat}</p>}
+            </div>
 
-      <div className="add-pet-form__field">
-        <label className="add-pet-form__label">Pet Age:</label>
-        <input
-          className="add-pet-form__input"
-          type="number"
-          name="pet_age"
-          value={formData.pet_age}
-          onChange={handleChange}
-        />
-        {errors.pet_age && <p>{errors.pet_age}</p>}
-      </div>
+            <DateField
+              label="Missing Since"
+              name="missing_since"
+              onChange={handleChange}
+              error={errors.missing_since ? true : false}
+              helperText={errors.missing_since}
+            />
 
-      <div className="add-pet-form__field">
-        <label className="add-pet-form__label">Description:</label>
-        <textarea
-          className="add-pet-form__textarea"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-        {errors.description && <p>{errors.description}</p>}
-      </div>
+            <TextField
+              label="Pet Age"
+              placeholder="Enter you pet's age"
+              fullWidth
+              name="pet_age"
+              value={formData.pet_age}
+              onChange={handleChange}
+              error={errors.pet_age ? true : false}
+              helperText={errors.pet_age}
+            />
 
-      <div className="add-pet-form__field">
-        <label className="add-pet-form__label">Pet Type:</label>
-        <select
-          className="add-pet-form__select"
-          name="pet_type"
-          value={formData.pet_type}
-          onChange={handleChange}
-        >
-          <option value="" disabled selected>
-            Select Pet Type
-          </option>
-          <option value="cat">Cat</option>
-          <option value="dog">Dog</option>
-        </select>
-        {errors.pet_temperament && <p>{errors.pet_temperament}</p>}
-      </div>
+            <TextField
+              label="Description"
+              placeholder="Include any important information."
+              fullWidth
+              multiline
+              rows={4}
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              error={errors.description ? true : false}
+              helperText={errors.description}
+            />
 
-      <div className="add-pet-form__field">
-        <label className="add-pet-form__label">Pet Temperament:</label>
-        <select
-          className="add-pet-form__select"
-          name="pet_temperament"
-          value={formData.pet_temperament}
-          onChange={handleChange}
-        >
-          <option value="" disabled selected>
-            Select Temperament
-          </option>
-          {temperaments.map((temperament) => (
-            <option key={temperament} value={temperament}>
-              {temperament}
-            </option>
-          ))}
-        </select>
-        {errors.pet_temperament && <p>{errors.pet_temperament}</p>}
-      </div>
+            <FormControl fullWidth error={errors.pet_type ? true : false}>
+              <InputLabel id="pet-type">Pet Type</InputLabel>
+              <Select
+                labelId="pet-type"
+                name="pet_type"
+                value={formData.pet_type}
+                label="Pet Type"
+                onChange={handleChange}
+              >
+                <MenuItem value={"cat"}>Cat</MenuItem>
+                <MenuItem value={"dog"}>Dog</MenuItem>
+              </Select>
+              <FormHelperText>{errors.pet_type}</FormHelperText>
+            </FormControl>
 
-      <div className="add-pet-form__field">
-        <label className="add-pet-form__label">Pet Size:</label>
-        <select
-          className="add-pet-form__select"
-          name="pet_size"
-          value={formData.pet_size}
-          onChange={handleChange}
-        >
-          <option value="" disabled selected>
-            Select Pet Size
-          </option>
-          {sizes.map((size) => (
-            <option key={size} value={size}>
-              {size}
-            </option>
-          ))}
-        </select>
-        {errors.pet_size && <p>{errors.pet_size}</p>}
-      </div>
+            <FormControl
+              fullWidth
+              error={errors.pet_temperament ? true : false}
+            >
+              <InputLabel id="pet-temperament">Pet Temperament</InputLabel>
+              <Select
+                labelId="pet-temperament"
+                name="pet_temperament"
+                value={formData.pet_temperament}
+                label="Pet Temperament"
+                onChange={handleChange}
+              >
+                {temperaments.map((temperament) => (
+                  <MenuItem key={temperament} value={temperament}>
+                    {temperament}
+                  </MenuItem>
+                ))}
+              </Select>
+              <FormHelperText>{errors.pet_temperament}</FormHelperText>
+            </FormControl>
 
-      <div className="add-pet-form__field">
-        <label className="add-pet-form__label">Contact Name:</label>
-        <input
-          className="add-pet-form__input"
-          type="text"
-          name="contact_name"
-          value={formData.contact_name}
-          onChange={handleChange}
-        />
-        {errors.contact_name && <p>{errors.contact_name}</p>}
-      </div>
+            <FormControl fullWidth error={errors.pet_size ? true : false}>
+              <InputLabel id="pet-size">Pet Size</InputLabel>
+              <Select
+                labelId="pet-size"
+                name="pet_size"
+                value={formData.pet_size}
+                label="Pet Size"
+                onChange={handleChange}
+              >
+                {sizes.map((size) => (
+                  <MenuItem key={size} value={size}>
+                    {size}
+                  </MenuItem>
+                ))}
+              </Select>
+              <FormHelperText>{errors.pet_size}</FormHelperText>
+            </FormControl>
 
-      <div className="add-pet-form__field">
-        <label className="add-pet-form__label">Email:</label>
-        <input
-          className="add-pet-form__input"
-          type="email"
-          name="contact_email"
-          value={formData.contact_email}
-          onChange={handleChange}
-        />
-        {errors.contact_email && <p>{errors.contact_email}</p>}
-      </div>
+            <TextField
+              label="Contact Name"
+              placeholder="Who would you like to be contacted if found?"
+              fullWidth
+              name="contact_name"
+              value={formData.contact_name}
+              onChange={handleChange}
+              error={errors.contact_name ? true : false}
+              helperText={errors.contact_name}
+            />
 
-      <div className="add-pet-form__actions">
-        <button
-          className="add-pet-form__button add-pet-form__button--cancel"
-          onClick={() => navigate(-1)}
-        >
-          Cancel
-        </button>
-        <button className="add-pet-form__button">Submit</button>
-      </div>
-    </form>
+            <TextField
+              label="Contact Email"
+              placeholder="Enter the contact's email"
+              fullWidth
+              name="contact_email"
+              value={formData.contact_email}
+              onChange={handleChange}
+              error={errors.contact_email ? true : false}
+              helperText={errors.contact_email}
+            />
+
+            <Button
+              className="add-pet-form__button add-pet-form__button--cancel"
+              onClick={() => navigate(-1)}
+              fullWidth
+              disableElevation
+              variant="outlined"
+            >
+              Cancel
+            </Button>
+            <Button
+              className="add-pet-form__button"
+              fullWidth
+              disableElevation
+              variant="contained"
+            >
+              Submit
+            </Button>
+          </Box>
+        </LocalizationProvider>
+      </Paper>
+    </Container>
   );
 }
 
