@@ -1,36 +1,93 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LocationInput from "../../components/LocationInput/LocationInput";
+import placeholder from "../../assets/images/pet-image-placeholder.jpg";
+
+const temperaments = [
+  "Friendly",
+  "Timid",
+  "Aggressive",
+  "Protective",
+  "Energetic",
+];
+
+const sizes = ["XS", "S", "M", "L", "XL"];
 
 function AddPetPage() {
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
   const [checkboxStatus, setCheckboxStatus] = useState({
     email: false,
     phone: false,
   });
-  const [formData, setFormData] = useState({});
-  const [errors, setErrors] = useState({});
+  const [formData, setFormData] = useState({
+    pet_name: "",
+    lat: null,
+    lng: null,
+    pet_age: null,
+    description: "",
+    pet_temperament: "",
+    pet_size: "",
+    contact_email: "",
+    pet_image: null,
+  });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+    const { name, value, files } = e.target;
+    if (name === "pet_image") {
+      setFormData({
+        ...formData,
+        [name]: files[0],
+      });
+    } else {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+    }
   };
 
-  const temperaments = [
-    "Friendly",
-    "Timid",
-    "Aggressive",
-    "Protective",
-    "Energetic",
-  ];
+  const handleLocationInput = useCallback(
+    (locationInput) => {
+      setFormData({
+        ...formData,
+        lat: locationInput.lat,
+        lng: locationInput.lng,
+      });
+    },
+    [formData]
+  );
 
-  const sizes = ["XS", "S", "M", "L", "XL"];
+  const validateForm = () => {
+    const newErrors = {};
+
+    for (const [key, value] of Object.entries(formData)) {
+      if (!value) {
+        newErrors[key] = "This field is required";
+      }
+    }
+
+    setErrors(newErrors);
+  };
 
   const handleSumbit = (e) => {
     e.preventDefault();
+    validateForm();
+    console.log(errors);
   };
+
+  const imagePreview = formData.pet_image
+    ? URL.createObjectURL(formData.pet_image)
+    : placeholder;
+
   return (
-    // Image Input
     <form action="submit" onSubmit={handleSumbit}>
+      <img src={imagePreview} alt="picture of pet" />
+      <input
+        type="file"
+        accept="image/*"
+        name="pet_image"
+        id="file"
+        onChange={handleChange}
+      />
       <label>
         Pet Name:
         <input
@@ -42,12 +99,7 @@ function AddPetPage() {
       </label>
       <label>
         Location Lost:
-        <input
-          type="text"
-          name="location_lost"
-          value={formData.location_lost}
-          onChange={handleChange}
-        />
+        <LocationInput name="location_lost" callbackFn={handleLocationInput} />
       </label>
       <label>
         Missing Since:
@@ -106,37 +158,6 @@ function AddPetPage() {
         </select>
       </label>
       <label>
-        Contact Method:
-        <div>
-          <input
-            type="checkbox"
-            id="email"
-            name="email"
-            onClick={() =>
-              setCheckboxStatus({
-                ...checkboxStatus,
-                email: !checkboxStatus.email,
-              })
-            }
-          />
-          <label htmlFor="email">Email</label>
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            id="phone"
-            name="phone"
-            onClick={() =>
-              setCheckboxStatus({
-                ...checkboxStatus,
-                phone: !checkboxStatus.phone,
-              })
-            }
-          />
-          <label htmlFor="phone">Phone</label>
-        </div>
-      </label>
-      {checkboxStatus.email && (
         <input
           type="email"
           name="contact_email"
@@ -144,16 +165,9 @@ function AddPetPage() {
           value={formData.contact_email}
           onChange={handleChange}
         />
-      )}
-      {checkboxStatus.phone && (
-        <input
-          type="tel"
-          name="contact_phone"
-          placeholder="Phone Number"
-          value={formData.contact_phone}
-          onChange={handleChange}
-        />
-      )}
+      </label>
+      <button onClick={() => navigate(-1)}>Cancel</button>
+      <button>Submit</button>
     </form>
   );
 }

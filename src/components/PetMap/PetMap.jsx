@@ -37,7 +37,7 @@ function PetMap({ petsList, mapLocation, updateVisiblePets }) {
       defaultZoom={14}
       reuseMaps={true}
       mapId={googleMapsApi.mapId}
-      defaultCenter={defaultMapLocation}
+      defaultCenter={mapLocation}
       onCameraChanged={(ev) => handleBoundsChanged(ev)}
     >
       <PetMarkers petsList={petsList} />

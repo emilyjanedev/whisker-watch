@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMapsLibrary } from "@vis.gl/react-google-maps";
 
-function LocationInput({ callbackFn }) {
+function LocationInput({ callbackFn, name = "" }) {
   const inputRef = useRef(null);
   const placesLib = useMapsLibrary("places");
   const [address, setAddress] = useState("");
@@ -40,6 +40,7 @@ function LocationInput({ callbackFn }) {
   return (
     <input
       type="text"
+      name={name}
       ref={inputRef}
       placeholder="Enter a location..."
       value={address}
@@ -53,4 +54,5 @@ export default LocationInput;
 
 LocationInput.propTypes = {
   callbackFn: PropTypes.func.isRequired,
+  name: PropTypes.string,
 };
