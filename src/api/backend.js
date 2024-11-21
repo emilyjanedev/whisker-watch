@@ -11,4 +11,14 @@ const getPetsList = async () => {
   }
 };
 
-export { getPetsList };
+const addPet = async (newPet) => {
+  try {
+    const { data } = await axios.post(`${baseUrl}/api/pets`, newPet);
+    return data;
+  } catch (error) {
+    console.error("Could not add pet:", error);
+    throw new Error("Error adding pet.");
+  }
+};
+
+export { getPetsList, addPet };

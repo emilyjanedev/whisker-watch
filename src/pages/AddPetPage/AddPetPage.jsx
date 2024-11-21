@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import * as backend from "../../api/backend.js";
 import LocationInput from "../../components/LocationInput/LocationInput";
 import placeholder from "../../assets/images/pet-image-placeholder.jpg";
 import "./AddPetPage.scss";
@@ -64,13 +65,19 @@ function AddPetPage() {
       }
     }
     setErrors(newErrors);
+    return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    validateForm();
-    console.log(errors);
-    console.log(formData);
+
+    if (validateForm()) {
+      const formDataObject = new FormData();
+      for (const [key, value] of Object.entries(formData)) {
+        formDataObject.append(key, value);
+      }
+      const { id } = await backend.addPet(formDataObject);
+    }
   };
 
   const imagePreview = formData.pet_image
@@ -105,7 +112,7 @@ function AddPetPage() {
           value={formData.pet_name}
           onChange={handleChange}
         />
-        {errors.pet_pet_name && <p>{errors.pet_name}</p>}
+        {errors.pet_name && <p>{errors.pet_name}</p>}
       </div>
 
       <div className="add-pet-form__field">
