@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LocationInput from "../../components/LocationInput/LocationInput";
 import placeholder from "../../assets/images/pet-image-placeholder.jpg";
+import "./AddPetPage.scss";
 
 const temperaments = [
   "Friendly",
@@ -16,10 +17,6 @@ const sizes = ["XS", "S", "M", "L", "XL"];
 function AddPetPage() {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-  const [checkboxStatus, setCheckboxStatus] = useState({
-    email: false,
-    phone: false,
-  });
   const [formData, setFormData] = useState({
     pet_name: "",
     lat: null,
@@ -27,6 +24,7 @@ function AddPetPage() {
     pet_age: null,
     description: "",
     pet_temperament: "",
+    missing_since: "",
     pet_size: "",
     contact_email: "",
     pet_image: null,
@@ -58,20 +56,19 @@ function AddPetPage() {
 
   const validateForm = () => {
     const newErrors = {};
-
     for (const [key, value] of Object.entries(formData)) {
       if (!value) {
         newErrors[key] = "This field is required";
       }
     }
-
     setErrors(newErrors);
   };
 
-  const handleSumbit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     validateForm();
     console.log(errors);
+    console.log(formData);
   };
 
   const imagePreview = formData.pet_image
@@ -79,59 +76,82 @@ function AddPetPage() {
     : placeholder;
 
   return (
-    <form action="submit" onSubmit={handleSumbit}>
-      <img src={imagePreview} alt="picture of pet" />
-      <input
-        type="file"
-        accept="image/*"
-        name="pet_image"
-        id="file"
-        onChange={handleChange}
-      />
-      <label>
-        Pet Name:
+    <form className="add-pet-form" onSubmit={handleSubmit}>
+      <div className="add-pet-form__image-container">
+        <img
+          className="add-pet-form__image"
+          src={imagePreview}
+          alt="Preview of pet"
+        />
         <input
+          className="add-pet-form__file-input"
+          type="file"
+          accept="image/*"
+          name="pet_image"
+          id="file"
+          onChange={handleChange}
+        />
+        {errors.pet_image && <p>{errors.pet_image}</p>}
+      </div>
+
+      <div className="add-pet-form__field">
+        <label className="add-pet-form__label">Pet Name:</label>
+        <input
+          className="add-pet-form__input"
           type="text"
           name="pet_name"
           value={formData.pet_name}
           onChange={handleChange}
         />
-      </label>
-      <label>
-        Location Lost:
+        {errors.pet_pet_name && <p>{errors.pet_name}</p>}
+      </div>
+
+      <div className="add-pet-form__field">
+        <label className="add-pet-form__label">Location Lost:</label>
         <LocationInput name="location_lost" callbackFn={handleLocationInput} />
-      </label>
-      <label>
-        Missing Since:
+        {errors.lat && <p>{errors.lat}</p>}
+      </div>
+
+      <div className="add-pet-form__field">
+        <label className="add-pet-form__label">Missing Since:</label>
         <input
+          className="add-pet-form__input"
           type="date"
           name="missing_since"
           value={formData.missing_since}
           onChange={handleChange}
         />
-      </label>
-      <label>
-        Pet Age:
+        {errors.missing_since && <p>{errors.missing_since}</p>}
+      </div>
+
+      <div className="add-pet-form__field">
+        <label className="add-pet-form__label">Pet Age:</label>
         <input
+          className="add-pet-form__input"
           type="number"
           name="pet_age"
           value={formData.pet_age}
           onChange={handleChange}
         />
-      </label>
-      <label>
-        Description:
+        {errors.pet_age && <p>{errors.pet_age}</p>}
+      </div>
+
+      <div className="add-pet-form__field">
+        <label className="add-pet-form__label">Description:</label>
         <textarea
+          className="add-pet-form__textarea"
           name="description"
           value={formData.description}
           onChange={handleChange}
         />
-      </label>
-      <label>
-        Pet Temperament:
+        {errors.description && <p>{errors.description}</p>}
+      </div>
+
+      <div className="add-pet-form__field">
+        <label className="add-pet-form__label">Pet Temperament:</label>
         <select
+          className="add-pet-form__select"
           name="pet_temperament"
-          id="pet_temperament"
           value={formData.pet_temperament}
           onChange={handleChange}
         >
@@ -141,12 +161,14 @@ function AddPetPage() {
             </option>
           ))}
         </select>
-      </label>
-      <label>
-        Pet Size:
+        {errors.pet_temperament && <p>{errors.pet_temperament}</p>}
+      </div>
+
+      <div className="add-pet-form__field">
+        <label className="add-pet-form__label">Pet Size:</label>
         <select
+          className="add-pet-form__select"
           name="pet_size"
-          id="pet_size"
           value={formData.pet_size}
           onChange={handleChange}
         >
@@ -156,18 +178,30 @@ function AddPetPage() {
             </option>
           ))}
         </select>
-      </label>
-      <label>
+        {errors.pet_size && <p>{errors.pet_size}</p>}
+      </div>
+
+      <div className="add-pet-form__field">
+        <label className="add-pet-form__label">Email:</label>
         <input
+          className="add-pet-form__input"
           type="email"
           name="contact_email"
-          placeholder="Email Address"
           value={formData.contact_email}
           onChange={handleChange}
         />
-      </label>
-      <button onClick={() => navigate(-1)}>Cancel</button>
-      <button>Submit</button>
+        {errors.contact_email && <p>{errors.contact_email}</p>}
+      </div>
+
+      <div className="add-pet-form__actions">
+        <button
+          className="add-pet-form__button add-pet-form__button--cancel"
+          onClick={() => navigate(-1)}
+        >
+          Cancel
+        </button>
+        <button className="add-pet-form__button">Submit</button>
+      </div>
     </form>
   );
 }
