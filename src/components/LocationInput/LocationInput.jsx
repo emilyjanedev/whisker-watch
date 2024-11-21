@@ -1,51 +1,69 @@
 import PropTypes from "prop-types";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMapsLibrary } from "@vis.gl/react-google-maps";
+import { Autocomplete, TextField } from "@mui/material";
+import * as googleMapsApi from "../../api/googleMaps.js";
 
 function LocationInput({ callbackFn, name = "" }) {
   const inputRef = useRef(null);
   const placesLib = useMapsLibrary("places");
   const [address, setAddress] = useState("");
+  const [options, setOptions] = useState([]);
 
-  const handleAddressChange = useCallback(
-    (autocompleteInstance) => {
-      const place = autocompleteInstance.getPlace();
-      setAddress(place.formatted_address);
-      const { lat, lng } = place.geometry.location;
-      callbackFn({ lat: lat(), lng: lng() });
+  // Function to fetch predictions based on the input value
+  const fetchAddressPredictions = useCallback(
+    (inputValue) => {
+      if (!placesLib) return;
+
+      const autocompleteService =
+        new window.google.maps.places.AutocompleteService();
+
+      autocompleteService.getQueryPredictions(
+        {
+          input: inputValue,
+          componentRestrictions: { country: "CA" }, // restrict to Canada (you can adjust this)
+        },
+        (predictions, status) => {
+          if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+            setOptions(predictions.map((prediction) => prediction.description));
+          } else {
+            setOptions([]);
+          }
+        }
+      );
     },
-    [callbackFn]
+    [placesLib]
   );
 
-  useEffect(() => {
-    if (!placesLib || !inputRef.current) return;
+  const handleInputChange = (e, newInputValue) => {
+    setAddress(newInputValue);
+    fetchAddressPredictions(newInputValue);
+  };
 
-    const autoCompleteInstance = new window.google.maps.places.Autocomplete(
-      inputRef.current,
-      {
-        fields: ["geometry", "formatted_address"],
-        componentRestrictions: { country: "CA" },
-      }
-    );
-
-    autoCompleteInstance.addListener("place_changed", () =>
-      handleAddressChange(autoCompleteInstance)
-    );
-  }, [handleAddressChange, placesLib]);
-
-  const handleFocus = () => {
-    inputRef.current.select();
+  const handleChange = async (e, value) => {
+    if (value) {
+      setAddress(value);
+      const coords = await googleMapsApi.geocodeAddress(value);
+      callbackFn(coords);
+    }
   };
 
   return (
-    <input
-      type="text"
-      name={name}
-      ref={inputRef}
-      placeholder="Enter a location..."
-      value={address}
-      onChange={(e) => setAddress(e.target.value)}
-      onFocus={handleFocus}
+    <Autocomplete
+      freeSolo
+      inputValue={address}
+      onInputChange={handleInputChange}
+      onChange={handleChange}
+      options={options} // Set suggestions from getQueryPredictions
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label="Location"
+          ref={inputRef}
+          name={name}
+          // onFocus={handleFocus}
+        />
+      )}
     />
   );
 }

@@ -139,14 +139,10 @@ function AddPetPage() {
               helperText={errors.pet_name}
             />
 
-            <div className="add-pet-form__field">
-              <label className="add-pet-form__label">Location Lost:</label>
-              <LocationInput
-                name="location_lost"
-                callbackFn={handleLocationInput}
-              />
-              {errors.lat && <p>{errors.lat}</p>}
-            </div>
+            <LocationInput
+              name="location_lost"
+              callbackFn={handleLocationInput}
+            />
 
             <DateField
               label="Missing Since"
@@ -257,6 +253,7 @@ function AddPetPage() {
             />
 
             <Button
+              size="large"
               className="add-pet-form__button add-pet-form__button--cancel"
               onClick={() => navigate(-1)}
               fullWidth
@@ -266,6 +263,7 @@ function AddPetPage() {
               Cancel
             </Button>
             <Button
+              size="large"
               className="add-pet-form__button"
               fullWidth
               disableElevation

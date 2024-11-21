@@ -18,6 +18,7 @@ function InputFileUpload({ name, handleChange, errors }) {
   return (
     <FormControl error={errors ? true : false}>
       <Button
+        size="large"
         component="label"
         role={undefined}
         variant="contained"
