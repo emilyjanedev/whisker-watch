@@ -10,7 +10,6 @@ function LocationInput({ callbackFn, name = "" }) {
   const [address, setAddress] = useState("");
   const [options, setOptions] = useState([]);
 
-  // Function to fetch predictions based on the input value
   const fetchAddressPredictions = useCallback(
     (inputValue) => {
       if (!placesLib) return;
@@ -21,7 +20,7 @@ function LocationInput({ callbackFn, name = "" }) {
       autocompleteService.getQueryPredictions(
         {
           input: inputValue,
-          componentRestrictions: { country: "CA" }, // restrict to Canada (you can adjust this)
+          componentRestrictions: { country: "CA" },
         },
         (predictions, status) => {
           if (status === window.google.maps.places.PlacesServiceStatus.OK) {
@@ -54,15 +53,9 @@ function LocationInput({ callbackFn, name = "" }) {
       inputValue={address}
       onInputChange={handleInputChange}
       onChange={handleChange}
-      options={options} // Set suggestions from getQueryPredictions
+      options={options}
       renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Location"
-          ref={inputRef}
-          name={name}
-          // onFocus={handleFocus}
-        />
+        <TextField {...params} label="Location" ref={inputRef} name={name} />
       )}
     />
   );
