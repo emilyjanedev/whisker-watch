@@ -37,7 +37,7 @@ function NavBar() {
   };
 
   return (
-    <AppBar position="static" sx={{ boxShadow: "none" }}>
+    <AppBar position="sticky" sx={{ boxShadow: "none" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <PetsIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
