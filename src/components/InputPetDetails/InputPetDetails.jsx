@@ -44,7 +44,7 @@ export default InputPetDetails;
 
 InputPetDetails.propTypes = {
   options: PropTypes.array.isRequired,
-  inputName: Proptypes.string.isRequired,
+  inputName: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
