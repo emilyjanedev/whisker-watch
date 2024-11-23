@@ -130,7 +130,7 @@ function AddPetPage() {
               display: "flex",
               flexDirection: { xs: "column", sm: "row" },
               flexWrap: { xs: "nowrap", sm: "wrap" },
-              justifyContent: "end",
+              justifyContent: "space-between",
               gap: "1rem",
             }}
           >
@@ -152,9 +152,12 @@ function AddPetPage() {
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "column",
+                flexDirection: { xs: "column", sm: "row" },
+                flexWrap: "wrap",
                 gap: "1rem",
+                width: { sm: "68%" },
                 flexGrow: "1",
+                justifyContent: "space-between",
               }}
             >
               <TextField
@@ -166,6 +169,7 @@ function AddPetPage() {
                 onChange={handleChange}
                 error={errors.pet_name ? true : false}
                 helperText={errors.pet_name}
+                sx={{ width: { sm: "48%" } }}
               />
 
               <LocationInput
@@ -179,6 +183,7 @@ function AddPetPage() {
                 onChange={handleChange}
                 error={errors.missing_since ? true : false}
                 helperText={errors.missing_since}
+                sx={{ width: { sm: "48%" } }}
               />
 
               <TextField
@@ -190,6 +195,7 @@ function AddPetPage() {
                 onChange={handleChange}
                 error={errors.pet_age ? true : false}
                 helperText={errors.pet_age}
+                sx={{ width: { sm: "48%" } }}
               />
 
               <TextField
@@ -205,7 +211,11 @@ function AddPetPage() {
                 helperText={errors.description}
               />
 
-              <FormControl fullWidth error={errors.pet_type ? true : false}>
+              <FormControl
+                fullWidth
+                error={errors.pet_type ? true : false}
+                sx={{ width: { sm: "24%" } }}
+              >
                 <InputLabel id="pet-type">Pet Type</InputLabel>
                 <Select
                   labelId="pet-type"
@@ -223,6 +233,7 @@ function AddPetPage() {
               <FormControl
                 fullWidth
                 error={errors.pet_temperament ? true : false}
+                sx={{ width: { sm: "44%" } }}
               >
                 <InputLabel id="pet-temperament">Pet Temperament</InputLabel>
                 <Select
@@ -241,7 +252,11 @@ function AddPetPage() {
                 <FormHelperText>{errors.pet_temperament}</FormHelperText>
               </FormControl>
 
-              <FormControl fullWidth error={errors.pet_size ? true : false}>
+              <FormControl
+                fullWidth
+                error={errors.pet_size ? true : false}
+                sx={{ width: { sm: "24%" } }}
+              >
                 <InputLabel id="pet-size">Pet Size</InputLabel>
                 <Select
                   labelId="pet-size"
@@ -268,6 +283,7 @@ function AddPetPage() {
                 onChange={handleChange}
                 error={errors.contact_name ? true : false}
                 helperText={errors.contact_name}
+                sx={{ width: { sm: "48%" } }}
               />
 
               <TextField
@@ -279,6 +295,7 @@ function AddPetPage() {
                 onChange={handleChange}
                 error={errors.contact_email ? true : false}
                 helperText={errors.contact_email}
+                sx={{ width: { sm: "48%" } }}
               />
             </Box>
             <Box
@@ -297,7 +314,7 @@ function AddPetPage() {
                 onClick={() => navigate(-1)}
                 disableElevation
                 variant="outlined"
-                sx={{ width: { xs: "100%", sm: "25%" } }}
+                sx={{ width: { xs: "100%", sm: "11.25rem" } }}
               >
                 Cancel
               </Button>
@@ -306,7 +323,7 @@ function AddPetPage() {
                 className="add-pet-form__button"
                 disableElevation
                 variant="contained"
-                sx={{ width: { xs: "100%", sm: "25%" } }}
+                sx={{ width: { xs: "100%", sm: "11.25rem" } }}
               >
                 Submit
               </Button>

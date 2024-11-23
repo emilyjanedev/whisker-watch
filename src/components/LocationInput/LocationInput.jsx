@@ -54,6 +54,7 @@ function LocationInput({ callbackFn, name = "" }) {
       onInputChange={handleInputChange}
       onChange={handleChange}
       options={options}
+      sx={{ width: { sm: "48%" } }}
       renderInput={(params) => (
         <TextField {...params} label="Location" ref={inputRef} name={name} />
       )}

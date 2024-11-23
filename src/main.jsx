@@ -10,6 +10,15 @@ const theme = createTheme({
   typography: {
     fontFamily: ["Poppins", "sans-serif"].join(","),
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 768,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
 });
 
 createRoot(document.getElementById("root")).render(
