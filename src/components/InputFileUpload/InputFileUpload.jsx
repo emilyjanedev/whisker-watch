@@ -1,6 +1,7 @@
 import PetsIcon from "@mui/icons-material/Pets";
 import { styled } from "@mui/material/styles";
 import { Button, FormHelperText, FormControl } from "@mui/material";
+import PropTypes from "prop-types";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -41,3 +42,9 @@ function InputFileUpload({ name, handleChange, errors }) {
 }
 
 export default InputFileUpload;
+
+InputFileUpload.propTypes = {
+  name: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  errors: PropTypes.string.isRequired,
+};

@@ -94,6 +94,8 @@ function AddPetPage() {
         formDataObject.append(key, value);
       }
       const { id } = await backend.addPet(formDataObject);
+      // Use Id for redirect to pet profile page
+      // Or back to map
     }
   };
 
@@ -105,7 +107,7 @@ function AddPetPage() {
     <Container maxWidth="md" sx={{ p: { xs: "1rem", sm: "2rem" } }}>
       <Box
         sx={{
-          marginTop: "2rem",
+          margin: "2rem 0",
         }}
       >
         <Typography
