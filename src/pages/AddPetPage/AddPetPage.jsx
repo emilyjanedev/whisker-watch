@@ -112,12 +112,12 @@ function AddPetPage() {
           component="h1"
           variant="h4"
           sx={{
-            textAlign: "center",
+            textAlign: { xs: "center", sm: "left" },
             fontWeight: "medium",
-            marginBottom: "1rem",
+            marginBottom: { xs: "1rem", sm: "2rem" },
           }}
         >
-          Add a Pet
+          Let&apos;s Find your Lost Pet...
         </Typography>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Box
