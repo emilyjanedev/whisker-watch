@@ -8,7 +8,6 @@ import "./AddPetPage.scss";
 import InputFileUpload from "../../components/InputFileUpload/InputFileUpload.jsx";
 import {
   Container,
-  Paper,
   Typography,
   Box,
   TextField,
@@ -103,9 +102,21 @@ function AddPetPage() {
     : placeholder;
 
   return (
-    <Container maxWidth="s">
-      <Paper elevation={6} sx={{ marginTop: 4, padding: 2 }}>
-        <Typography component="h1" variant="h4" sx={{ textAlign: "center" }}>
+    <Container maxWidth="md" sx={{ p: { xs: "1rem", sm: "2rem" } }}>
+      <Box
+        sx={{
+          marginTop: "2rem",
+        }}
+      >
+        <Typography
+          component="h1"
+          variant="h4"
+          sx={{
+            textAlign: "center",
+            fontWeight: "medium",
+            marginBottom: "1rem",
+          }}
+        >
           Add a Pet
         </Typography>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -113,167 +124,194 @@ function AddPetPage() {
             component="form"
             onSubmit={handleSubmit}
             className="add-pet-form"
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              flexWrap: { xs: "nowrap", sm: "wrap" },
+              justifyContent: "end",
+              gap: "1rem",
+            }}
           >
-            <div className="add-pet-form__image-container">
-              <img
-                className="add-pet-form__image"
-                src={imagePreview}
-                alt="Preview of pet"
+            <Box>
+              <div className="add-pet-form__image-container">
+                <img
+                  className="add-pet-form__image"
+                  src={imagePreview}
+                  alt="Preview of pet"
+                />
+              </div>
+
+              <InputFileUpload
+                name="pet_image"
+                handleChange={handleChange}
+                errors={errors.pet_image}
               />
-            </div>
-
-            <InputFileUpload
-              name="pet_image"
-              handleChange={handleChange}
-              errors={errors.pet_image}
-            />
-
-            <TextField
-              label="Pet Name"
-              placeholder="Enter you pet's name"
-              fullWidth
-              name="pet_name"
-              value={formData.pet_name}
-              onChange={handleChange}
-              error={errors.pet_name ? true : false}
-              helperText={errors.pet_name}
-            />
-
-            <LocationInput
-              name="location_lost"
-              callbackFn={handleLocationInput}
-            />
-
-            <DateField
-              label="Missing Since"
-              name="missing_since"
-              onChange={handleChange}
-              error={errors.missing_since ? true : false}
-              helperText={errors.missing_since}
-            />
-
-            <TextField
-              label="Pet Age"
-              placeholder="Enter you pet's age"
-              fullWidth
-              name="pet_age"
-              value={formData.pet_age}
-              onChange={handleChange}
-              error={errors.pet_age ? true : false}
-              helperText={errors.pet_age}
-            />
-
-            <TextField
-              label="Description"
-              placeholder="Include any important information."
-              fullWidth
-              multiline
-              rows={4}
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              error={errors.description ? true : false}
-              helperText={errors.description}
-            />
-
-            <FormControl fullWidth error={errors.pet_type ? true : false}>
-              <InputLabel id="pet-type">Pet Type</InputLabel>
-              <Select
-                labelId="pet-type"
-                name="pet_type"
-                value={formData.pet_type}
-                label="Pet Type"
-                onChange={handleChange}
-              >
-                <MenuItem value={"cat"}>Cat</MenuItem>
-                <MenuItem value={"dog"}>Dog</MenuItem>
-              </Select>
-              <FormHelperText>{errors.pet_type}</FormHelperText>
-            </FormControl>
-
-            <FormControl
-              fullWidth
-              error={errors.pet_temperament ? true : false}
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
+                flexGrow: "1",
+              }}
             >
-              <InputLabel id="pet-temperament">Pet Temperament</InputLabel>
-              <Select
-                labelId="pet-temperament"
-                name="pet_temperament"
-                value={formData.pet_temperament}
-                label="Pet Temperament"
+              <TextField
+                label="Pet Name"
+                placeholder="Enter you pet's name"
+                fullWidth
+                name="pet_name"
+                value={formData.pet_name}
                 onChange={handleChange}
-              >
-                {temperaments.map((temperament) => (
-                  <MenuItem key={temperament} value={temperament}>
-                    {temperament}
-                  </MenuItem>
-                ))}
-              </Select>
-              <FormHelperText>{errors.pet_temperament}</FormHelperText>
-            </FormControl>
+                error={errors.pet_name ? true : false}
+                helperText={errors.pet_name}
+              />
 
-            <FormControl fullWidth error={errors.pet_size ? true : false}>
-              <InputLabel id="pet-size">Pet Size</InputLabel>
-              <Select
-                labelId="pet-size"
-                name="pet_size"
-                value={formData.pet_size}
-                label="Pet Size"
+              <LocationInput
+                name="location_lost"
+                callbackFn={handleLocationInput}
+              />
+
+              <DateField
+                label="Missing Since"
+                name="missing_since"
                 onChange={handleChange}
+                error={errors.missing_since ? true : false}
+                helperText={errors.missing_since}
+              />
+
+              <TextField
+                label="Pet Age"
+                placeholder="Enter you pet's age"
+                fullWidth
+                name="pet_age"
+                value={formData.pet_age}
+                onChange={handleChange}
+                error={errors.pet_age ? true : false}
+                helperText={errors.pet_age}
+              />
+
+              <TextField
+                label="Description"
+                placeholder="Include any important information."
+                fullWidth
+                multiline
+                rows={4}
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                error={errors.description ? true : false}
+                helperText={errors.description}
+              />
+
+              <FormControl fullWidth error={errors.pet_type ? true : false}>
+                <InputLabel id="pet-type">Pet Type</InputLabel>
+                <Select
+                  labelId="pet-type"
+                  name="pet_type"
+                  value={formData.pet_type}
+                  label="Pet Type"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={"cat"}>Cat</MenuItem>
+                  <MenuItem value={"dog"}>Dog</MenuItem>
+                </Select>
+                <FormHelperText>{errors.pet_type}</FormHelperText>
+              </FormControl>
+
+              <FormControl
+                fullWidth
+                error={errors.pet_temperament ? true : false}
               >
-                {sizes.map((size) => (
-                  <MenuItem key={size} value={size}>
-                    {size}
-                  </MenuItem>
-                ))}
-              </Select>
-              <FormHelperText>{errors.pet_size}</FormHelperText>
-            </FormControl>
+                <InputLabel id="pet-temperament">Pet Temperament</InputLabel>
+                <Select
+                  labelId="pet-temperament"
+                  name="pet_temperament"
+                  value={formData.pet_temperament}
+                  label="Pet Temperament"
+                  onChange={handleChange}
+                >
+                  {temperaments.map((temperament) => (
+                    <MenuItem key={temperament} value={temperament}>
+                      {temperament}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>{errors.pet_temperament}</FormHelperText>
+              </FormControl>
 
-            <TextField
-              label="Contact Name"
-              placeholder="Who would you like to be contacted if found?"
-              fullWidth
-              name="contact_name"
-              value={formData.contact_name}
-              onChange={handleChange}
-              error={errors.contact_name ? true : false}
-              helperText={errors.contact_name}
-            />
+              <FormControl fullWidth error={errors.pet_size ? true : false}>
+                <InputLabel id="pet-size">Pet Size</InputLabel>
+                <Select
+                  labelId="pet-size"
+                  name="pet_size"
+                  value={formData.pet_size}
+                  label="Pet Size"
+                  onChange={handleChange}
+                >
+                  {sizes.map((size) => (
+                    <MenuItem key={size} value={size}>
+                      {size}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>{errors.pet_size}</FormHelperText>
+              </FormControl>
 
-            <TextField
-              label="Contact Email"
-              placeholder="Enter the contact's email"
-              fullWidth
-              name="contact_email"
-              value={formData.contact_email}
-              onChange={handleChange}
-              error={errors.contact_email ? true : false}
-              helperText={errors.contact_email}
-            />
+              <TextField
+                label="Contact Name"
+                placeholder="Who would you like to be contacted if found?"
+                fullWidth
+                name="contact_name"
+                value={formData.contact_name}
+                onChange={handleChange}
+                error={errors.contact_name ? true : false}
+                helperText={errors.contact_name}
+              />
 
-            <Button
-              size="large"
-              className="add-pet-form__button add-pet-form__button--cancel"
-              onClick={() => navigate(-1)}
-              fullWidth
-              disableElevation
-              variant="outlined"
+              <TextField
+                label="Contact Email"
+                placeholder="Enter the contact's email"
+                fullWidth
+                name="contact_email"
+                value={formData.contact_email}
+                onChange={handleChange}
+                error={errors.contact_email ? true : false}
+                helperText={errors.contact_email}
+              />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                flexWrap: { xs: "nowrap", sm: "wrap" },
+                justifyContent: "end",
+                gap: "1rem",
+                width: "100%",
+              }}
             >
-              Cancel
-            </Button>
-            <Button
-              size="large"
-              className="add-pet-form__button"
-              fullWidth
-              disableElevation
-              variant="contained"
-            >
-              Submit
-            </Button>
+              <Button
+                size="large"
+                className="add-pet-form__button add-pet-form__button--cancel"
+                onClick={() => navigate(-1)}
+                disableElevation
+                variant="outlined"
+                sx={{ width: { xs: "100%", sm: "25%" } }}
+              >
+                Cancel
+              </Button>
+              <Button
+                size="large"
+                className="add-pet-form__button"
+                disableElevation
+                variant="contained"
+                sx={{ width: { xs: "100%", sm: "25%" } }}
+              >
+                Submit
+              </Button>
+            </Box>
           </Box>
         </LocalizationProvider>
-      </Paper>
+      </Box>
     </Container>
   );
 }

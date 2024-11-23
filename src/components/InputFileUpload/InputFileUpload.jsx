@@ -16,7 +16,7 @@ const VisuallyHiddenInput = styled("input")({
 
 function InputFileUpload({ name, handleChange, errors }) {
   return (
-    <FormControl error={errors ? true : false}>
+    <FormControl error={errors ? true : false} sx={{ width: "100%" }}>
       <Button
         size="large"
         component="label"

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import * as backend from "../../api/backend.js";
 import PetMap from "../../components/PetMap/PetMap.jsx";
 import LocationInput from "../../components/LocationInput/LocationInput.jsx";
+import { Skeleton } from "@mui/material";
 
 const defaultMapLocation = { lat: 49.2827, lng: -123.1207 };
 
@@ -55,11 +56,16 @@ function PetMapPage() {
     <>
       <h1>PetMapPage</h1>
       <LocationInput callbackFn={updateMapLocation} />
-      {mapLocation.lat && (
+      {mapLocation.lat ? (
         <PetMap
           petsList={petsList}
           mapLocation={mapLocation}
           updateVisiblePets={updateVisiblePets}
+        />
+      ) : (
+        <Skeleton
+          variant="rectangular"
+          sx={{ width: "100%", height: "400px" }}
         />
       )}
       {visiblePets.length === 0 && <p>No pets missing in this area.</p>}
