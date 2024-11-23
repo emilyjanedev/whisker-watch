@@ -66,6 +66,7 @@ function PetMapPage() {
         <Skeleton
           variant="rectangular"
           sx={{ width: "100%", height: "400px" }}
+          animation={"wave"}
         />
       )}
       {visiblePets.length === 0 && <p>No pets missing in this area.</p>}
