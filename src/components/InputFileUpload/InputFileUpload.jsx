@@ -36,7 +36,7 @@ function InputFileUpload({ name, handleChange, errors }) {
           single
         />
       </Button>
-      <FormHelperText>{errors}</FormHelperText>
+      <FormHelperText>{errors || " "}</FormHelperText>
     </FormControl>
   );
 }
@@ -46,5 +46,5 @@ export default InputFileUpload;
 InputFileUpload.propTypes = {
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  errors: PropTypes.string.isRequired,
+  errors: PropTypes.string,
 };

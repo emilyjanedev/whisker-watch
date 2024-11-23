@@ -4,7 +4,7 @@ import { useMapsLibrary } from "@vis.gl/react-google-maps";
 import { Autocomplete, TextField } from "@mui/material";
 import * as googleMapsApi from "../../api/googleMaps.js";
 
-function LocationInput({ callbackFn, name = "" }) {
+function LocationInput({ callbackFn, name = "", errors }) {
   const inputRef = useRef(null);
   const placesLib = useMapsLibrary("places");
   const [address, setAddress] = useState("");
@@ -56,7 +56,14 @@ function LocationInput({ callbackFn, name = "" }) {
       options={options}
       sx={{ width: { sm: "48%" } }}
       renderInput={(params) => (
-        <TextField {...params} label="Location" ref={inputRef} name={name} />
+        <TextField
+          {...params}
+          label="Location"
+          ref={inputRef}
+          name={name}
+          error={errors ? true : false}
+          helperText={errors || " "}
+        />
       )}
     />
   );
@@ -67,4 +74,5 @@ export default LocationInput;
 LocationInput.propTypes = {
   callbackFn: PropTypes.func.isRequired,
   name: PropTypes.string,
+  errors: PropTypes.string,
 };

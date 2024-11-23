@@ -1,47 +1,34 @@
+import "./AddPetPage.scss";
+import * as backend from "../../api/backend.js";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import * as backend from "../../api/backend.js";
+import { validateForm } from "../../utils/validateForm.js";
+import { temperaments, sizes } from "../../constants/petConstants.js";
+import InputPetDetails from "../../components/InputPetDetails/InputPetDetails.jsx";
 import LocationInput from "../../components/LocationInput/LocationInput";
 import placeholder from "../../assets/images/pet-image-placeholder.jpg";
-import "./AddPetPage.scss";
 import InputFileUpload from "../../components/InputFileUpload/InputFileUpload.jsx";
+import { DateField } from "@mui/x-date-pickers/DateField";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   Container,
   Typography,
   Box,
   TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormHelperText,
   Button,
 } from "@mui/material";
-import { DateField } from "@mui/x-date-pickers/DateField";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-
-const temperaments = [
-  "Friendly",
-  "Timid",
-  "Aggressive",
-  "Protective",
-  "Energetic",
-];
-
-const sizes = ["XS", "S", "M", "L", "XL"];
 
 function AddPetPage() {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
-    pet_image: null,
+    pet_image: "",
     pet_name: "",
     pet_type: "",
-    lat: null,
-    lng: null,
-    pet_age: null,
+    lat: "",
+    lng: "",
+    pet_age: "",
     description: "",
     pet_temperament: "",
     missing_since: "",
@@ -74,28 +61,18 @@ function AddPetPage() {
     [formData]
   );
 
-  const validateForm = () => {
-    const newErrors = {};
-    for (const [key, value] of Object.entries(formData)) {
-      if (!value) {
-        newErrors[key] = "This field is required";
-      }
-    }
-    setErrors(newErrors);
-    return Object.keys(errors).length === 0;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const newErrors = validateForm(formData);
+    setErrors(newErrors);
 
-    if (validateForm()) {
+    if (Object.keys(newErrors).length === 0) {
       const formDataObject = new FormData();
       for (const [key, value] of Object.entries(formData)) {
         formDataObject.append(key, value);
       }
       const { id } = await backend.addPet(formDataObject);
-      // Use Id for redirect to pet profile page
-      // Or back to map
+      console.log(id);
     }
   };
 
@@ -154,7 +131,7 @@ function AddPetPage() {
                 display: "flex",
                 flexDirection: { xs: "column", sm: "row" },
                 flexWrap: "wrap",
-                gap: "1rem",
+                gap: "0.25rem",
                 width: { sm: "68%" },
                 flexGrow: "1",
                 justifyContent: "space-between",
@@ -168,21 +145,27 @@ function AddPetPage() {
                 value={formData.pet_name}
                 onChange={handleChange}
                 error={errors.pet_name ? true : false}
-                helperText={errors.pet_name}
+                helperText={errors.pet_name || " "}
                 sx={{ width: { sm: "48%" } }}
               />
 
               <LocationInput
                 name="location_lost"
+                errors={errors.lat}
                 callbackFn={handleLocationInput}
               />
 
               <DateField
                 label="Missing Since"
                 name="missing_since"
-                onChange={handleChange}
+                onChange={(newValue) =>
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    missing_since: newValue,
+                  }))
+                }
                 error={errors.missing_since ? true : false}
-                helperText={errors.missing_since}
+                helperText={errors.missing_since || " "}
                 sx={{ width: { sm: "48%" } }}
               />
 
@@ -194,7 +177,7 @@ function AddPetPage() {
                 value={formData.pet_age}
                 onChange={handleChange}
                 error={errors.pet_age ? true : false}
-                helperText={errors.pet_age}
+                helperText={errors.pet_age || " "}
                 sx={{ width: { sm: "48%" } }}
               />
 
@@ -208,81 +191,45 @@ function AddPetPage() {
                 value={formData.description}
                 onChange={handleChange}
                 error={errors.description ? true : false}
-                helperText={errors.description}
+                helperText={errors.description || " "}
               />
 
-              <FormControl
-                fullWidth
-                error={errors.pet_type ? true : false}
-                sx={{ width: { sm: "24%" } }}
-              >
-                <InputLabel id="pet-type">Pet Type</InputLabel>
-                <Select
-                  labelId="pet-type"
-                  name="pet_type"
-                  value={formData.pet_type}
-                  label="Pet Type"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={"cat"}>Cat</MenuItem>
-                  <MenuItem value={"dog"}>Dog</MenuItem>
-                </Select>
-                <FormHelperText>{errors.pet_type}</FormHelperText>
-              </FormControl>
+              <InputPetDetails
+                options={["Cat", "Dog"]}
+                inputName="pet_type"
+                label="Pet Type"
+                handleChange={handleChange}
+                value={formData.pet_type}
+                errors={errors.pet_type}
+              />
 
-              <FormControl
-                fullWidth
-                error={errors.pet_temperament ? true : false}
-                sx={{ width: { sm: "44%" } }}
-              >
-                <InputLabel id="pet-temperament">Pet Temperament</InputLabel>
-                <Select
-                  labelId="pet-temperament"
-                  name="pet_temperament"
-                  value={formData.pet_temperament}
-                  label="Pet Temperament"
-                  onChange={handleChange}
-                >
-                  {temperaments.map((temperament) => (
-                    <MenuItem key={temperament} value={temperament}>
-                      {temperament}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <FormHelperText>{errors.pet_temperament}</FormHelperText>
-              </FormControl>
+              <InputPetDetails
+                options={temperaments}
+                inputName="pet_temperament"
+                label="Temperament"
+                handleChange={handleChange}
+                value={formData.pet_temperament}
+                errors={errors.pet_temperament}
+              />
 
-              <FormControl
-                fullWidth
-                error={errors.pet_size ? true : false}
-                sx={{ width: { sm: "24%" } }}
-              >
-                <InputLabel id="pet-size">Pet Size</InputLabel>
-                <Select
-                  labelId="pet-size"
-                  name="pet_size"
-                  value={formData.pet_size}
-                  label="Pet Size"
-                  onChange={handleChange}
-                >
-                  {sizes.map((size) => (
-                    <MenuItem key={size} value={size}>
-                      {size}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <FormHelperText>{errors.pet_size}</FormHelperText>
-              </FormControl>
+              <InputPetDetails
+                options={sizes}
+                inputName="pet_size"
+                label="Pet Size"
+                handleChange={handleChange}
+                value={formData.pet_size}
+                errors={errors.pet_size}
+              />
 
               <TextField
                 label="Contact Name"
-                placeholder="Who would you like to be contacted if found?"
+                placeholder="Who should be contacted?"
                 fullWidth
                 name="contact_name"
                 value={formData.contact_name}
                 onChange={handleChange}
                 error={errors.contact_name ? true : false}
-                helperText={errors.contact_name}
+                helperText={errors.contact_name || " "}
                 sx={{ width: { sm: "48%" } }}
               />
 
@@ -294,7 +241,7 @@ function AddPetPage() {
                 value={formData.contact_email}
                 onChange={handleChange}
                 error={errors.contact_email ? true : false}
-                helperText={errors.contact_email}
+                helperText={errors.contact_email || " "}
                 sx={{ width: { sm: "48%" } }}
               />
             </Box>
@@ -321,6 +268,7 @@ function AddPetPage() {
               <Button
                 size="large"
                 className="add-pet-form__button"
+                type="submit"
                 disableElevation
                 variant="contained"
                 sx={{ width: { xs: "100%", sm: "11.25rem" } }}
