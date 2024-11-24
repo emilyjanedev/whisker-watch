@@ -6,12 +6,12 @@ import "./PetCard.scss";
 
 function PetCard({ pet }) {
   return (
-    <Paper elevation={3} className="pet-card">
+    <Paper elevation={2} className="pet-card" sx={{ borderRadius: "20px" }}>
       <Box className="pet-card__details">
         <img
           className="pet-card__image"
           alt={`${pet.pet_name}'s picture`}
-          src={placeholder}
+          src={pet.pet_image || placeholder}
         />
         <Box className="pet-card__info">
           <Typography className="pet-card__name" variant="h6" component="h3">
@@ -45,6 +45,7 @@ function PetCard({ pet }) {
         <Chip
           className={`pet-card__status`}
           variant="outlined"
+          size="small"
           label={pet.status === "lost" ? "Missing" : "Found"}
           color={pet.status === "lost" ? "error" : "success"}
         />

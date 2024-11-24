@@ -11,13 +11,7 @@ import InputFileUpload from "../../components/InputFileUpload/InputFileUpload.js
 import { DateField } from "@mui/x-date-pickers/DateField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import {
-  Container,
-  Typography,
-  Box,
-  TextField,
-  Button,
-} from "@mui/material";
+import { Container, Typography, Box, TextField, Button } from "@mui/material";
 
 function AddPetPage() {
   const navigate = useNavigate();
@@ -149,11 +143,13 @@ function AddPetPage() {
                 sx={{ width: { sm: "48%" } }}
               />
 
-              <LocationInput
-                name="location_lost"
-                errors={errors.lat}
-                callbackFn={handleLocationInput}
-              />
+              <div className="add-pet-form__location-input">
+                <LocationInput
+                  name="location_lost"
+                  errors={errors.lat}
+                  callbackFn={handleLocationInput}
+                />
+              </div>
 
               <DateField
                 label="Missing Since"
