@@ -40,12 +40,13 @@
   &__status-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: start;
     align-items: end;
     padding: 0.5rem 1rem 0.5rem 0;
   }
 
   &__missing-date {
     text-align: right;
+    flex-grow: 1;
   }
 }

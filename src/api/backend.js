@@ -11,6 +11,16 @@ const getPetsList = async () => {
   }
 };
 
+const getPetById = async (petId) => {
+  try {
+    const { data } = await axios.get(`${baseUrl}/api/pets/${petId}`);
+    return data;
+  } catch (error) {
+    console.error("Could not get pet data:", error);
+    throw new Error("Error getting pet data.");
+  }
+};
+
 const addPet = async (newPet) => {
   try {
     const { data } = await axios.post(`${baseUrl}/api/pets`, newPet);
@@ -21,4 +31,4 @@ const addPet = async (newPet) => {
   }
 };
 
-export { getPetsList, addPet };
+export { getPetsList, getPetById, addPet };

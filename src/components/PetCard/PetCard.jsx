@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
-import { Chip, Box, Typography, Paper } from "@mui/material";
+import { Chip, Box, Typography, Paper, Button } from "@mui/material";
 import placeholder from "../../assets/images/pet-image-placeholder.jpg";
 import { format } from "date-fns";
 import "./PetCard.scss";
+import { Link } from "react-router-dom";
 
 function PetCard({ pet }) {
   return (
@@ -54,8 +55,18 @@ function PetCard({ pet }) {
           variant="body2"
           component="p"
         >
-          Since {format(pet.missing_since, "MMM do")}
+          Since {pet.missing__since && format(pet.missing_since, "MMM do")}
         </Typography>
+        <Button
+          className="pet-card__details-link"
+          variant="contained"
+          component={Link}
+          to={`/pets/${pet.id}`}
+          disableElevation
+          size="small"
+        >
+          See Details
+        </Button>
       </Box>
     </Paper>
   );

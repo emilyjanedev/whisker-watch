@@ -1,0 +1,29 @@
+.pet-details-page {
+  padding: 1rem;
+  &__image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    object-fit: cover;
+  }
+
+  &__header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 0.25rem;
+  }
+
+  &__status-container {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
+}
