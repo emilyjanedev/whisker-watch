@@ -48,5 +48,5 @@ InputPetDetails.propTypes = {
   label: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
-  errors: PropTypes.string.isRequired,
+  errors: PropTypes.string
 };
