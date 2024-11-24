@@ -3,6 +3,8 @@ import * as backend from "../../api/backend.js";
 import PetMap from "../../components/PetMap/PetMap.jsx";
 import LocationInput from "../../components/LocationInput/LocationInput.jsx";
 import { Skeleton } from "@mui/material";
+import PetCard from "../../components/PetCard/PetCard.jsx";
+import "./PetMapPage.scss"
 
 const defaultMapLocation = { lat: 49.2827, lng: -123.1207 };
 
@@ -53,32 +55,41 @@ function PetMapPage() {
   }, []);
 
   return (
-    <>
-      <h1>PetMapPage</h1>
-      <LocationInput callbackFn={updateMapLocation} />
+    <div className="pet-map-page">
+      <h1 className="pet-map-page__title">PetMapPage</h1>
+      <div className="pet-map-page__location-input">
+        <LocationInput callbackFn={updateMapLocation} />
+      </div>
       {mapLocation.lat ? (
-        <PetMap
-          petsList={petsList}
-          mapLocation={mapLocation}
-          updateVisiblePets={updateVisiblePets}
-        />
+        <div className="pet-map-page__map">
+          <PetMap
+            petsList={petsList}
+            mapLocation={mapLocation}
+            updateVisiblePets={updateVisiblePets}
+          />
+        </div>
       ) : (
-        <Skeleton
-          variant="rectangular"
-          sx={{ width: "100%", height: "400px" }}
-          animation={"wave"}
-        />
+        <div className="pet-map-page__skeleton">
+          <Skeleton
+            variant="rectangular"
+            sx={{ width: "100%", height: "400px" }}
+            animation={"wave"}
+          />
+        </div>
       )}
-      {visiblePets.length === 0 && <p>No pets missing in this area.</p>}
-      <ul>
+      {visiblePets.length === 0 && (
+        <p className="pet-map-page__no-pets-message">
+          No pets missing in this area.
+        </p>
+      )}
+      <ul className="pet-map-page__pet-list">
         {visiblePets.map((pet) => (
-          <li key={pet.id}>
-            <h2>{pet.pet_name}</h2>
-            <p>{pet.description}</p>
+          <li className="pet-map-page__pet-list-item" key={pet.id}>
+            <PetCard pet={pet} />
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 

@@ -1,0 +1,59 @@
+@use "../../styles/partials/mixins" as *;
+
+.pet-card {
+  border-radius: 8px;
+  max-width: 425px;
+  height: 125px;
+  overflow: hidden;
+  display: flex;
+  gap: 0.25rem;
+  justify-content: space-between;
+
+  &__image {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+  }
+
+  &__attributes {
+    display: none;
+
+    @include small-mobile {
+      display: block;
+    }
+  }
+
+  &__details {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.5rem 0;
+  }
+
+  &__info {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__status-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+    padding: 0.5rem 0.5rem 0.5rem 0;
+  }
+
+  &__missing-date {
+    text-align: right;
+  }
+
+  &__description,
+  &__temperament,
+  &__location,
+  &__status,
+  &__missing-date {
+    font-size: 13.5px;
+  }
+}

@@ -1,0 +1,9 @@
+.pet-map-page {
+  &__pet-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    list-style-type: none;
+    padding: 0 0.5rem;
+  }
+}
