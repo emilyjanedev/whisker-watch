@@ -69,7 +69,7 @@ function PetMapPage() {
           <div className="pet-map-page__skeleton">
             <Skeleton
               variant="rectangular"
-              sx={{ width: "100%", height: "400px" }}
+              sx={{ width: "100%", height: "100%" }}
               animation={"wave"}
             />
           </div>

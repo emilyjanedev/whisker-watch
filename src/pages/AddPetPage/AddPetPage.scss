@@ -1,3 +1,5 @@
+@use "../../styles/partials/mixins" as *;
+
 .add-pet-form {
   &__image-container {
     display: flex;
@@ -14,6 +16,8 @@
   }
 
   &__location-input {
-    width: 48%;
+    @include tablet {
+      width: 48%;
+    }
   }
 }
