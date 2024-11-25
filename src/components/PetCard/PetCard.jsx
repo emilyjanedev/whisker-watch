@@ -34,7 +34,7 @@ function PetCard({ pet }) {
           </Typography>
           <Typography
             className="pet-card__location"
-            variant="body2"
+            variant="caption"
             component="p"
             color="text.secondary"
           >
@@ -52,10 +52,10 @@ function PetCard({ pet }) {
         />
         <Typography
           className="pet-card__missing-date"
-          variant="body2"
+          variant="caption"
           component="p"
         >
-          Since {pet.missing__since && format(pet.missing_since, "MMM do")}
+          Since {pet.missing_since && format(pet.missing_since, "MMM do")}
         </Typography>
         <Button
           className="pet-card__details-link"
@@ -65,7 +65,7 @@ function PetCard({ pet }) {
           disableElevation
           size="small"
         >
-          See Details
+          Details
         </Button>
       </Box>
     </Paper>
