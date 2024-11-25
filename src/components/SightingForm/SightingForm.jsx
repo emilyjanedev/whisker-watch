@@ -51,7 +51,7 @@ function SightingForm({ petId, handleNewSighting }) {
       <div className="add-sighting-form__input-container">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateField
-            label="Sighted On"
+            label="Date"
             name="sighted_at"
             onChange={(newValue) =>
               setFormData((prevData) => ({

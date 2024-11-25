@@ -2,10 +2,11 @@ import "./PetDetailsPage.scss";
 import { useParams } from "react-router-dom";
 import * as backend from "../../api/backend.js";
 import { useCallback, useEffect, useState } from "react";
-import { Chip, Typography } from "@mui/material";
+import { Chip, List, Typography } from "@mui/material";
 import { format } from "date-fns";
 import MapWithMarkers from "../../components/MapWithMarkers/MapWithMarkers.jsx";
 import SightingForm from "../../components/SightingForm/SIghtingForm.jsx";
+import SightingCard from "../../components/SightingCard/SightingCard.jsx";
 
 function PetDetailsPage() {
   const { id } = useParams();
@@ -53,11 +54,7 @@ function PetDetailsPage() {
         </Typography>
         <div className="pet-details-page__status-container">
           <Chip
-            className={`pet-details-page__status ${
-              petData.status === "lost"
-                ? "pet-details-page__status--missing"
-                : "pet-details-page__status--found"
-            }`}
+            className={"pet-details-page__status"}
             variant="outlined"
             size="small"
             label={petData.status === "lost" ? "Missing" : "Found"}
@@ -93,7 +90,6 @@ function PetDetailsPage() {
         Sightings of {petData.pet_name}:
       </Typography>
       <div className="pet-details-page__map-container">
-        {/* Sighting Map */}
         {mapLocation.lat && (
           <MapWithMarkers
             markersList={petSightings}
@@ -107,22 +103,15 @@ function PetDetailsPage() {
         <Typography variant="body1" component="h3">
           Have you seen {petData.pet_name}?
         </Typography>
-        {/* Sighting Form */}
         <SightingForm petId={id} handleNewSighting={handleNewSighting} />
       </div>
       <div className="pet-details-page__sighting-list">
-        <ul>
-          {/* Sighting Cards */}
+        <List sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           {visibleSightings.length > 0 &&
             visibleSightings.map((sighting) => (
-              <li key={sighting.id} className="pet-details-page__sighting-item">
-                <Typography variant="body2" component="p">
-                  {sighting.note} on{" "}
-                  {sighting.sighted_at && format(sighting.sighted_at, "MMM do")}
-                </Typography>
-              </li>
+              <SightingCard sightingData={sighting} key={sighting.id} />
             ))}
-        </ul>
+        </List>
       </div>
     </div>
   );
