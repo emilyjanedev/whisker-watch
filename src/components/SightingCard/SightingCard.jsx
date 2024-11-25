@@ -7,7 +7,6 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar,
-  Paper,
   IconButton,
 } from "@mui/material";
 
@@ -16,34 +15,28 @@ function SightingCard({ sightingData, handleClick }) {
 
   return (
     <div className="sighting-card">
-      <Paper
-        className="sighting-card__paper"
-        elevation={2}
-        sx={{ borderRadius: "20px" }}
+      <ListItem
+        className="sighting-card__list-item"
+        secondaryAction={
+          <IconButton
+            edge="end"
+            aria-label="delete"
+            onClick={() => handleClick({ lat, lng })}
+            size="large"
+          >
+            <PlaceIcon />
+          </IconButton>
+        }
       >
-        <ListItem
-          className="sighting-card__list-item"
-          secondaryAction={
-            <IconButton
-              edge="end"
-              aria-label="delete"
-              onClick={() => handleClick({ lat, lng })}
-              size="large"
-            >
-              <PlaceIcon />
-            </IconButton>
-          }
-        >
-          <ListItemAvatar className="sighting-card__avatar-container">
-            <Avatar className="sighting-card__avatar" />
-          </ListItemAvatar>
-          <ListItemText
-            className="sighting-card__text"
-            primary={sightingData.note}
-            secondary={`Seen on ${format(sightingData.sighted_at, "MMM do")}`}
-          />
-        </ListItem>
-      </Paper>
+        <ListItemAvatar className="sighting-card__avatar-container">
+          <Avatar className="sighting-card__avatar" />
+        </ListItemAvatar>
+        <ListItemText
+          className="sighting-card__text"
+          primary={sightingData.note}
+          secondary={`Seen on ${format(sightingData.sighted_at, "MMM do")}`}
+        />
+      </ListItem>
     </div>
   );
 }

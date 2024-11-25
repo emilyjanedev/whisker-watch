@@ -5,12 +5,17 @@
   height: 125px;
   display: flex;
   justify-content: space-between;
+  background-color: #f7f7f7;
+  padding: 0.5rem;
+
+  @include small-mobile {
+    padding: 1rem;
+  }
 
   &__image {
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    width: 125px;
-    height: 125px;
+    border-radius: 20px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
   }
 
@@ -26,7 +31,6 @@
     display: flex;
     gap: 0.5rem;
     align-items: center;
-    padding: 0.5rem 0;
   }
 
   &__info {
@@ -41,7 +45,6 @@
     flex-direction: column;
     justify-content: start;
     align-items: end;
-    padding: 0.5rem 1rem 0.5rem 0;
   }
 
   &__missing-date {

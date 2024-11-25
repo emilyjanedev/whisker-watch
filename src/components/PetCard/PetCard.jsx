@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Chip, Box, Typography, Paper, Button } from "@mui/material";
+import { Chip, Box, Typography, Button } from "@mui/material";
 import placeholder from "../../assets/images/pet-image-placeholder.jpg";
 import { format } from "date-fns";
 import "./PetCard.scss";
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function PetCard({ pet }) {
   return (
-    <Paper elevation={2} className="pet-card" sx={{ borderRadius: "20px" }}>
+    <div className="pet-card">
       <Box className="pet-card__details">
         <img
           className="pet-card__image"
@@ -68,7 +68,7 @@ function PetCard({ pet }) {
           Details
         </Button>
       </Box>
-    </Paper>
+    </div>
   );
 }
 
