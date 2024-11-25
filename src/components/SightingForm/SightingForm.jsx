@@ -7,6 +7,7 @@ import { TextField, Button } from "@mui/material";
 import LocationInput from "../LocationInput/LocationInput";
 import { validateForm } from "../../utils/validateForm.js";
 import * as backend from "../../api/backend.js";
+import PropTypes from "prop-types";
 
 function SightingForm({ petId, handleNewSighting }) {
   const [errors, setErrors] = useState({});
@@ -79,8 +80,6 @@ function SightingForm({ petId, handleNewSighting }) {
         label="Note"
         placeholder="Include any important information."
         fullWidth
-        multiline
-        rows={4}
         name="note"
         value={formData.note}
         onChange={handleChange}
@@ -88,12 +87,12 @@ function SightingForm({ petId, handleNewSighting }) {
         helperText={errors.note || " "}
       />
       <Button
+        fullWidth
         size="large"
         className="add-sighting-form__button"
         type="submit"
         disableElevation
         variant="contained"
-        sx={{ width: { xs: "100%", sm: "11.25rem" } }}
       >
         Submit
       </Button>
@@ -102,3 +101,8 @@ function SightingForm({ petId, handleNewSighting }) {
 }
 
 export default SightingForm;
+
+SightingForm.propTypes = {
+  petId: PropTypes.number.isRequired,
+  handleNewSighting: PropTypes.func.isRequired,
+};

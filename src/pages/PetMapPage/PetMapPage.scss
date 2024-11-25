@@ -2,6 +2,8 @@
 
 .pet-map-page {
   padding: 0 1rem;
+  max-width: 1280px;
+  margin: 0 auto;
   @include tablet {
     padding: 0 1rem;
   }
@@ -58,7 +60,8 @@
       height: 82.5vh;
       overflow: scroll;
       margin: 0;
-      padding: 0.5rem 1rem 0.5rem 0;
+      padding: 0.5rem;
+      scrollbar-color: lightgray white;
     }
   }
 }

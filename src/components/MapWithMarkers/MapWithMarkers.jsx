@@ -10,7 +10,7 @@ const mapContainerStyle = { width: "100%", height: "100%" };
 function MapWithMarkers({
   markersList,
   mapLocation,
-  updateVisibleMarkers,
+  updateVisibleMarkers = null,
   centralMarker = {},
 }) {
   const map = useMap();
@@ -26,7 +26,9 @@ function MapWithMarkers({
         marker.lng >= southWest.lng &&
         marker.lng <= northEast.lng
     );
-    updateVisibleMarkers(filteredMarkers);
+    if (updateVisibleMarkers) {
+      updateVisibleMarkers(filteredMarkers);
+    }
   };
 
   useEffect(() => {
@@ -48,6 +50,7 @@ function MapWithMarkers({
       mapId={googleMapsApi.mapId}
       defaultCenter={mapLocation}
       onCameraChanged={(ev) => handleBoundsChanged(ev)}
+      onLoad={(ev) => filterForVisibleMarkers(ev.details.bounds)}
     >
       <PetMarkers markersList={markersList} />
       {centralMarker.lat && <CentralMarker markerLocation={centralMarker} />}
@@ -60,5 +63,6 @@ export default MapWithMarkers;
 MapWithMarkers.propTypes = {
   markersList: PropTypes.array.isRequired,
   mapLocation: PropTypes.object.isRequired,
-  updateVisibleMarkers: PropTypes.func.isRequired,
+  updateVisibleMarkers: PropTypes.func,
+  centralMarker: PropTypes.object,
 };
