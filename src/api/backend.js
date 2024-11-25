@@ -21,6 +21,16 @@ const getPetById = async (petId) => {
   }
 };
 
+const getPetSightings = async (petId) => {
+  try {
+    const { data } = await axios.get(`${baseUrl}/api/pets/${petId}/sightings`);
+    return data;
+  } catch (error) {
+    console.error("Could not get pet sightings:", error);
+    throw new Error("Error getting pet sightings.");
+  }
+};
+
 const addPet = async (newPet) => {
   try {
     const { data } = await axios.post(`${baseUrl}/api/pets`, newPet);
@@ -31,4 +41,4 @@ const addPet = async (newPet) => {
   }
 };
 
-export { getPetsList, getPetById, addPet };
+export { getPetsList, getPetById, getPetSightings, addPet };

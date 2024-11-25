@@ -4,15 +4,16 @@ import * as backend from "../../api/backend.js";
 import { useEffect, useState } from "react";
 import { Chip, Typography } from "@mui/material";
 import { format } from "date-fns";
-import PetMap from "../../components/PetMap/PetMap.jsx";
 
 function PetDetailsPage() {
   const { id } = useParams();
   const [petData, setPetData] = useState({});
+  const [petSightings, setPetSightings] = useState([]);
 
   useEffect(() => {
     const loadPetData = async () => {
       setPetData(await backend.getPetById(id));
+      setPetSightings(await backend.getPetSightings(id));
     };
     loadPetData();
   }, [id]);
@@ -57,9 +58,10 @@ function PetDetailsPage() {
         variant="body2"
         component="p"
         className="pet-details-page__pet-attributes"
-        sx={{mb: 1}}
+        sx={{ mb: 1 }}
       >
-        Age: {petData.pet_age} | Size: {petData.pet_size} | {petData.pet_temperament}
+        Age: {petData.pet_age} | Size: {petData.pet_size} |{" "}
+        {petData.pet_temperament}
       </Typography>
       <Typography
         variant="body1"
@@ -68,6 +70,9 @@ function PetDetailsPage() {
       >
         {petData.description}
       </Typography>
+      <Typography variant="h6" component="h3">
+        Sightings of {petData.pet_name}:
+      </Typography>
       <div className="pet-details-page__map-container">
         {/* Sighting Map */}
       </div>
@@ -75,7 +80,18 @@ function PetDetailsPage() {
         {/* Sighting Form */}
       </div>
       <div className="pet-details-page__sighting-list">
-        {/* Sighting Cards */}
+        <ul>
+          {/* Sighting Cards */}
+          {petSightings.length > 0 &&
+            petSightings.map((sighting) => (
+              <li>
+                <p>
+                  {sighting.note} on{" "}
+                  {sighting.sighted_at && format(sighting.sighted_at, "MMM do")}
+                </p>
+              </li>
+            ))}
+        </ul>
       </div>
     </div>
   );
