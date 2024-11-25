@@ -41,4 +41,17 @@ const addPet = async (newPet) => {
   }
 };
 
-export { getPetsList, getPetById, getPetSightings, addPet };
+const addPetSighting = async (newSighting, petId) => {
+  try {
+    const { data } = await axios.post(
+      `${baseUrl}/api/pets/${petId}/sightings`,
+      newSighting
+    );
+    return data;
+  } catch (error) {
+    console.error("Could not add pet sighting:", error);
+    throw new Error("Error adding pet sighting.");
+  }
+};
+
+export { getPetsList, getPetById, getPetSightings, addPet, addPetSighting };

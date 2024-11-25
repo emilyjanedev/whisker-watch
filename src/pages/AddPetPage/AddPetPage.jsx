@@ -61,6 +61,7 @@ function AddPetPage() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
+      console.log(formData);
       const formDataObject = new FormData();
       for (const [key, value] of Object.entries(formData)) {
         formDataObject.append(key, value);

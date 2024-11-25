@@ -15,14 +15,7 @@ function MapWithMarkers({
 }) {
   const map = useMap();
 
-  useEffect(() => {
-    if (!map) return;
-
-    map.panTo(mapLocation);
-  }, [mapLocation, map]);
-
-  const handleBoundsChanged = (ev) => {
-    const bounds = ev.detail.bounds;
+  const filterForVisibleMarkers = (bounds) => {
     const northEast = { lat: bounds.north, lng: bounds.east };
     const southWest = { lat: bounds.south, lng: bounds.west };
 
@@ -34,6 +27,17 @@ function MapWithMarkers({
         marker.lng <= northEast.lng
     );
     updateVisibleMarkers(filteredMarkers);
+  };
+
+  useEffect(() => {
+    if (!map) return;
+
+    map.panTo(mapLocation);
+  }, [mapLocation, map]);
+
+  const handleBoundsChanged = (ev) => {
+    const bounds = ev.detail.bounds;
+    filterForVisibleMarkers(bounds);
   };
 
   return (

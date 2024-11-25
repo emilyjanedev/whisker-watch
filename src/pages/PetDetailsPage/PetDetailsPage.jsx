@@ -12,17 +12,22 @@ function PetDetailsPage() {
   const [petData, setPetData] = useState({});
   const [petSightings, setPetSightings] = useState([]);
   const [visibleSightings, setVisibleSightings] = useState([]);
-  const [petLocation, setPetLocation] = useState({});
+  const [mapLocation, setMapLocation] = useState({});
 
   const updateVisibleSightings = useCallback((filteredList) =>
     setVisibleSightings(filteredList)
   );
 
+  const handleNewSighting = useCallback((updatedList, sightingLocation) => {
+    setPetSightings(updatedList);
+    setMapLocation(sightingLocation);
+  });
+
   useEffect(() => {
     const loadPetData = async () => {
       const data = await backend.getPetById(id);
       setPetData(data);
-      setPetLocation({ lat: data.lat, lng: data.lng });
+      setMapLocation({ lat: data.lat, lng: data.lng });
       setPetSightings(await backend.getPetSightings(id));
     };
     loadPetData();
@@ -89,12 +94,12 @@ function PetDetailsPage() {
       </Typography>
       <div className="pet-details-page__map-container">
         {/* Sighting Map */}
-        {petLocation.lat && (
+        {mapLocation.lat && (
           <MapWithMarkers
             markersList={petSightings}
-            mapLocation={petLocation}
+            mapLocation={mapLocation}
             updateVisibleMarkers={updateVisibleSightings}
-            centralMarker={petLocation}
+            centralMarker={{ lat: petData.lat, lng: petData.lng }}
           />
         )}
       </div>
@@ -103,7 +108,7 @@ function PetDetailsPage() {
           Have you seen {petData.pet_name}?
         </Typography>
         {/* Sighting Form */}
-        <SightingForm petId={id} />
+        <SightingForm petId={id} handleNewSighting={handleNewSighting} />
       </div>
       <div className="pet-details-page__sighting-list">
         <ul>
