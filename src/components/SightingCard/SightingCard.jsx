@@ -24,7 +24,7 @@ function SightingCard({ sightingData, handleClick }) {
             onClick={() => handleClick({ lat, lng })}
             size="large"
           >
-            <PlaceIcon />
+            <PlaceIcon color="secondary" />
           </IconButton>
         }
       >

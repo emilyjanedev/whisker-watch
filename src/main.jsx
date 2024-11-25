@@ -10,6 +10,18 @@ const theme = createTheme({
   typography: {
     fontFamily: ["Poppins", "sans-serif"].join(","),
   },
+  palette: {
+    mode: "light",
+    primary: {
+      main: "#83c5be",
+    },
+    secondary: {
+      main: "#006d77",
+    },
+    text: {
+      primary: "rgba(0,0,0,0.78)",
+    },
+  },
   breakpoints: {
     values: {
       xs: 0,
