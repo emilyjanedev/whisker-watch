@@ -259,7 +259,11 @@ function AddPetPage() {
               onClick={() => navigate(-1)}
               disableElevation
               variant="outlined"
-              sx={{ width: { xs: "100%", sm: "11.25rem" } }}
+              color="secondary"
+              sx={{
+                width: { xs: "100%", sm: "11.25rem" },
+                borderRadius: "20px",
+              }}
             >
               Cancel
             </Button>
@@ -269,7 +273,10 @@ function AddPetPage() {
               type="submit"
               disableElevation
               variant="contained"
-              sx={{ width: { xs: "100%", sm: "11.25rem" } }}
+              sx={{
+                width: { xs: "100%", sm: "11.25rem" },
+                borderRadius: "20px",
+              }}
             >
               Submit
             </Button>

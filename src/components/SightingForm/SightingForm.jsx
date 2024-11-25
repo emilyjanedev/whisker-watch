@@ -93,6 +93,7 @@ function SightingForm({ petId, handleNewSighting }) {
         type="submit"
         disableElevation
         variant="contained"
+        sx={{ borderRadius: "20px" }}
       >
         Submit
       </Button>
@@ -103,6 +104,6 @@ function SightingForm({ petId, handleNewSighting }) {
 export default SightingForm;
 
 SightingForm.propTypes = {
-  petId: PropTypes.number.isRequired,
+  petId: PropTypes.string.isRequired,
   handleNewSighting: PropTypes.func.isRequired,
 };

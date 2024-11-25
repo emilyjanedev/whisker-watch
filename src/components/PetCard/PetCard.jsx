@@ -64,6 +64,7 @@ function PetCard({ pet }) {
           to={`/pets/${pet.id}`}
           disableElevation
           size="small"
+          sx={{ borderRadius: "20px" }}
         >
           Details
         </Button>

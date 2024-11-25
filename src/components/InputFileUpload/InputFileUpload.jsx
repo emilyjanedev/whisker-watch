@@ -26,6 +26,7 @@ function InputFileUpload({ name, handleChange, errors }) {
         tabIndex={-1}
         startIcon={<PetsIcon />}
         disableElevation
+        sx={{ borderRadius: "20px" }}
       >
         Upload Pet Image
         <VisuallyHiddenInput

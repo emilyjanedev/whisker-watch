@@ -3,7 +3,7 @@ import CentralMarker from "../CentralMarker/CentralMarker.jsx";
 import * as googleMapsApi from "../../api/googleMaps.js";
 import { Map, useMap } from "@vis.gl/react-google-maps";
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 const mapContainerStyle = { width: "100%", height: "100%" };
 
@@ -15,21 +15,24 @@ function MapWithMarkers({
 }) {
   const map = useMap();
 
-  const filterForVisibleMarkers = (bounds) => {
-    const northEast = { lat: bounds.north, lng: bounds.east };
-    const southWest = { lat: bounds.south, lng: bounds.west };
+  const filterForVisibleMarkers = useCallback(
+    (bounds) => {
+      const northEast = { lat: bounds.north, lng: bounds.east };
+      const southWest = { lat: bounds.south, lng: bounds.west };
 
-    const filteredMarkers = markersList.filter(
-      (marker) =>
-        marker.lat >= southWest.lat &&
-        marker.lat <= northEast.lat &&
-        marker.lng >= southWest.lng &&
-        marker.lng <= northEast.lng
-    );
-    if (updateVisibleMarkers) {
-      updateVisibleMarkers(filteredMarkers);
-    }
-  };
+      const filteredMarkers = markersList.filter(
+        (marker) =>
+          marker.lat >= southWest.lat &&
+          marker.lat <= northEast.lat &&
+          marker.lng >= southWest.lng &&
+          marker.lng <= northEast.lng
+      );
+      if (updateVisibleMarkers) {
+        updateVisibleMarkers(filteredMarkers);
+      }
+    },
+    [markersList, updateVisibleMarkers]
+  );
 
   useEffect(() => {
     if (!map) return;
@@ -50,7 +53,6 @@ function MapWithMarkers({
       mapId={googleMapsApi.mapId}
       defaultCenter={mapLocation}
       onCameraChanged={(ev) => handleBoundsChanged(ev)}
-      onLoad={(ev) => filterForVisibleMarkers(ev.details.bounds)}
     >
       <PetMarkers markersList={markersList} />
       {centralMarker.lat && <CentralMarker markerLocation={centralMarker} />}
