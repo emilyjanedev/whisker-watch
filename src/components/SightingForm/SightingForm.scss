@@ -1,0 +1,12 @@
+.add-sighting-form {
+  margin-top: 0.5rem;
+
+  &__input-container {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__location-input-container {
+    width: 48%;
+  }
+}

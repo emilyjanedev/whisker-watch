@@ -1,4 +1,4 @@
-import React from "react";
+import "./SightingForm.scss";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateField } from "@mui/x-date-pickers/DateField";
@@ -48,27 +48,32 @@ function SightingForm({ petId, handleNewSighting }) {
 
   return (
     <form action="submit" className="add-sighting-form" onSubmit={handleSubmit}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DateField
-          fullWidth
-          label="Sighted On"
-          name="sighted_at"
-          onChange={(newValue) =>
-            setFormData((prevData) => ({
-              ...prevData,
-              sighted_at: newValue,
-            }))
-          }
-          error={errors.sighted_at ? true : false}
-          helperText={errors.sighted_at || " "}
-        />
-      </LocalizationProvider>
+      <div className="add-sighting-form__input-container">
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DateField
+            label="Sighted On"
+            name="sighted_at"
+            onChange={(newValue) =>
+              setFormData((prevData) => ({
+                ...prevData,
+                sighted_at: newValue,
+              }))
+            }
+            sx={{ width: " 48%" }}
+            error={errors.sighted_at ? true : false}
+            helperText={errors.sighted_at || " "}
+          />
+        </LocalizationProvider>
 
-      <LocationInput
-        callbackFn={handleLocationInput}
-        name="sighted_location"
-        errors={errors.lat}
-      />
+        <div className="add-sighting-form__location-input-container">
+          <LocationInput
+            callbackFn={handleLocationInput}
+            className="add-sighting-form__location-input"
+            name="sighted_location"
+            errors={errors.lat}
+          />
+        </div>
+      </div>
 
       <TextField
         label="Note"

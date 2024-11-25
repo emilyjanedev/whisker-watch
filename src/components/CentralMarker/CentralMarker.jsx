@@ -7,7 +7,7 @@ glyphImg.src = PetsIcon;
 
 const CentralMarker = ({ markerLocation }) => {
   return (
-    <AdvancedMarker position={markerLocation}>
+    <AdvancedMarker position={markerLocation} zIndex={2}>
       <Pin background={"#5df0f5"} glyphColor={"#FFF"} borderColor={"#66646e"} />
     </AdvancedMarker>
   );
