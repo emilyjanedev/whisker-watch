@@ -57,23 +57,22 @@ function PetMapPage() {
   return (
     <div className="pet-map-page">
       <div className="pet-map-page__layout-container">
-        {mapLocation.lat ? (
-          <div className="pet-map-page__map">
+        <div className="pet-map-page__map">
+          {mapLocation.lat ? (
             <MapWithMarkers
               markersList={petsList}
               mapLocation={mapLocation}
               updateVisibleMarkers={updateVisiblePets}
             />
-          </div>
-        ) : (
-          <div className="pet-map-page__skeleton">
+          ) : (
             <Skeleton
               variant="rectangular"
-              sx={{ width: "100%", height: { xs: "350px", sm: "91vh" } }}
+              sx={{ width: "100%", height: "100%" }}
               animation={"wave"}
             />
-          </div>
-        )}
+          )}
+        </div>
+
         <div className="pet-map-page__map-results">
           <div className="pet-map-page__location-input">
             <LocationInput callbackFn={updateMapLocation} />

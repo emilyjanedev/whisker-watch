@@ -2,7 +2,7 @@ import "./PetDetailsPage.scss";
 import { useParams } from "react-router-dom";
 import * as backend from "../../api/backend.js";
 import { useCallback, useEffect, useState } from "react";
-import { Chip, List, Typography } from "@mui/material";
+import { Chip, List, Skeleton, Typography } from "@mui/material";
 import { format } from "date-fns";
 import MapWithMarkers from "../../components/MapWithMarkers/MapWithMarkers.jsx";
 import SightingForm from "../../components/SightingForm/SIghtingForm.jsx";
@@ -107,12 +107,14 @@ function PetDetailsPage() {
           Sightings of {petData.pet_name}
         </Typography>
         <div className="pet-details-page__map-container">
-          {mapLocation.lat && (
+          {mapLocation.lat ? (
             <MapWithMarkers
               markersList={petSightings}
               mapLocation={mapLocation}
               centralMarker={{ lat: petData.lat, lng: petData.lng }}
             />
+          ) : (
+            <Skeleton variant="rectangle" sx={{ height: "300px" }} />
           )}
         </div>
         <List
