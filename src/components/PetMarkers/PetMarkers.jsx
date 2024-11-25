@@ -1,11 +1,18 @@
 import { AdvancedMarker, Pin } from "@vis.gl/react-google-maps";
 import PropTypes from "prop-types";
+import PetsIcon from "@mui/icons-material/Pets";
 
-const PetMarkers = ({ petsList }) => {
+const glyphImg = document.createElement("img");
+glyphImg.src = PetsIcon;
+
+const PetMarkers = ({ markersList }) => {
   return (
     <>
-      {petsList.map((pet) => (
-        <AdvancedMarker key={pet.id} position={{ lat: pet.lat, lng: pet.lng }}>
+      {markersList.map((marker) => (
+        <AdvancedMarker
+          key={marker.id}
+          position={{ lat: marker.lat, lng: marker.lng }}
+        >
           <Pin
             background={"#c3b2f7"}
             glyphColor={"#FFF"}
@@ -20,5 +27,5 @@ const PetMarkers = ({ petsList }) => {
 export default PetMarkers;
 
 PetMarkers.propTypes = {
-  petsList: PropTypes.array.isRequired,
+  markersList: PropTypes.array.isRequired,
 };

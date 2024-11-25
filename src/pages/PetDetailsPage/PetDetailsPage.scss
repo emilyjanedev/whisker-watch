@@ -26,4 +26,11 @@
     flex-direction: column;
     align-items: end;
   }
+
+  &__map-container {
+    border-radius: 20px;
+    overflow: hidden;
+    height: 300px;
+    margin-top: 1rem;
+  }
 }

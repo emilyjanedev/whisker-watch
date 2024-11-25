@@ -1,4 +1,5 @@
 import PetMarkers from "../PetMarkers/PetMarkers.jsx";
+import CentralMarker from "../CentralMarker/CentralMarker.jsx";
 import * as googleMapsApi from "../../api/googleMaps.js";
 import { Map, useMap } from "@vis.gl/react-google-maps";
 import PropTypes from "prop-types";
@@ -6,7 +7,12 @@ import { useEffect } from "react";
 
 const mapContainerStyle = { width: "100%", height: "100%" };
 
-function PetMap({ petsList, mapLocation, updateVisiblePets }) {
+function MapWithMarkers({
+  markersList,
+  mapLocation,
+  updateVisibleMarkers,
+  centralMarker = {},
+}) {
   const map = useMap();
 
   useEffect(() => {
@@ -20,14 +26,14 @@ function PetMap({ petsList, mapLocation, updateVisiblePets }) {
     const northEast = { lat: bounds.north, lng: bounds.east };
     const southWest = { lat: bounds.south, lng: bounds.west };
 
-    const filteredPets = petsList.filter(
-      (pet) =>
-        pet.lat >= southWest.lat &&
-        pet.lat <= northEast.lat &&
-        pet.lng >= southWest.lng &&
-        pet.lng <= northEast.lng
+    const filteredMarkers = markersList.filter(
+      (marker) =>
+        marker.lat >= southWest.lat &&
+        marker.lat <= northEast.lat &&
+        marker.lng >= southWest.lng &&
+        marker.lng <= northEast.lng
     );
-    updateVisiblePets(filteredPets);
+    updateVisibleMarkers(filteredMarkers);
   };
 
   return (
@@ -39,15 +45,16 @@ function PetMap({ petsList, mapLocation, updateVisiblePets }) {
       defaultCenter={mapLocation}
       onCameraChanged={(ev) => handleBoundsChanged(ev)}
     >
-      <PetMarkers petsList={petsList} />
+      <PetMarkers markersList={markersList} />
+      {centralMarker.lat && <CentralMarker markerLocation={centralMarker} />}
     </Map>
   );
 }
 
-export default PetMap;
+export default MapWithMarkers;
 
-PetMap.propTypes = {
-  petsList: PropTypes.array.isRequired,
+MapWithMarkers.propTypes = {
+  markersList: PropTypes.array.isRequired,
   mapLocation: PropTypes.object.isRequired,
-  updateVisiblePets: PropTypes.func.isRequired,
+  updateVisibleMarkers: PropTypes.func.isRequired,
 };

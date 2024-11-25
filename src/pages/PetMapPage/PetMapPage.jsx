@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import * as backend from "../../api/backend.js";
-import PetMap from "../../components/PetMap/PetMap.jsx";
+import MapWithMarkers from "../../components/MapWithMarkers/MapWithMarkers.jsx";
 import LocationInput from "../../components/LocationInput/LocationInput.jsx";
 import { Skeleton } from "@mui/material";
 import PetCard from "../../components/PetCard/PetCard.jsx";
@@ -59,10 +59,10 @@ function PetMapPage() {
       <div className="pet-map-page__layout-container">
         {mapLocation.lat ? (
           <div className="pet-map-page__map">
-            <PetMap
-              petsList={petsList}
+            <MapWithMarkers
+              markersList={petsList}
               mapLocation={mapLocation}
-              updateVisiblePets={updateVisiblePets}
+              updateVisibleMarkers={updateVisiblePets}
             />
           </div>
         ) : (

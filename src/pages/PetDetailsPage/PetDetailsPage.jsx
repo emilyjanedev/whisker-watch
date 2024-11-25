@@ -1,18 +1,28 @@
 import "./PetDetailsPage.scss";
 import { useParams } from "react-router-dom";
 import * as backend from "../../api/backend.js";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Chip, Typography } from "@mui/material";
 import { format } from "date-fns";
+import MapWithMarkers from "../../components/MapWithMarkers/MapWithMarkers.jsx";
+import SightingForm from "../../components/SightingForm/SIghtingForm.jsx";
 
 function PetDetailsPage() {
   const { id } = useParams();
   const [petData, setPetData] = useState({});
   const [petSightings, setPetSightings] = useState([]);
+  const [visibleSightings, setVisibleSightings] = useState([]);
+  const [petLocation, setPetLocation] = useState({});
+
+  const updateVisibleSightings = useCallback((filteredList) =>
+    setVisibleSightings(filteredList)
+  );
 
   useEffect(() => {
     const loadPetData = async () => {
-      setPetData(await backend.getPetById(id));
+      const data = await backend.getPetById(id);
+      setPetData(data);
+      setPetLocation({ lat: data.lat, lng: data.lng });
       setPetSightings(await backend.getPetSightings(id));
     };
     loadPetData();
@@ -38,7 +48,11 @@ function PetDetailsPage() {
         </Typography>
         <div className="pet-details-page__status-container">
           <Chip
-            className={`pet-details-page__status`}
+            className={`pet-details-page__status ${
+              petData.status === "lost"
+                ? "pet-details-page__status--missing"
+                : "pet-details-page__status--found"
+            }`}
             variant="outlined"
             size="small"
             label={petData.status === "lost" ? "Missing" : "Found"}
@@ -75,20 +89,32 @@ function PetDetailsPage() {
       </Typography>
       <div className="pet-details-page__map-container">
         {/* Sighting Map */}
+        {petLocation.lat && (
+          <MapWithMarkers
+            markersList={petSightings}
+            mapLocation={petLocation}
+            updateVisibleMarkers={updateVisibleSightings}
+            centralMarker={petLocation}
+          />
+        )}
       </div>
-      <div className="pet-details page__sighting-form">
+      <div className="pet-details-page__sighting-form">
+        <Typography variant="body1" component="h3">
+          Have you seen {petData.pet_name}?
+        </Typography>
         {/* Sighting Form */}
+        <SightingForm petId={id} />
       </div>
       <div className="pet-details-page__sighting-list">
         <ul>
           {/* Sighting Cards */}
-          {petSightings.length > 0 &&
-            petSightings.map((sighting) => (
-              <li>
-                <p>
+          {visibleSightings.length > 0 &&
+            visibleSightings.map((sighting) => (
+              <li key={sighting.id} className="pet-details-page__sighting-item">
+                <Typography variant="body2" component="p">
                   {sighting.note} on{" "}
                   {sighting.sighted_at && format(sighting.sighted_at, "MMM do")}
-                </p>
+                </Typography>
               </li>
             ))}
         </ul>
