@@ -21,12 +21,15 @@ function InputPetDetails({
       error={errors ? true : false}
       sx={{ width: { sm: "32%" } }}
     >
-      <InputLabel id={inputName}>{label}</InputLabel>
+      <InputLabel id={inputName} color="secondary">
+        {label}
+      </InputLabel>
       <Select
         labelId={inputName}
         name={inputName}
         value={value}
         label={label}
+        color="secondary"
         onChange={handleChange}
       >
         {options.map((option) => (
@@ -48,5 +51,5 @@ InputPetDetails.propTypes = {
   label: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
-  errors: PropTypes.string
+  errors: PropTypes.string,
 };

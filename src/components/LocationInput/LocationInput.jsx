@@ -62,6 +62,7 @@ function LocationInput({ callbackFn, name = "", errors }) {
           name={name}
           error={errors ? true : false}
           helperText={errors || " "}
+          color="secondary"
         />
       )}
     />

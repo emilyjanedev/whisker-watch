@@ -12,7 +12,7 @@ import { DateField } from "@mui/x-date-pickers/DateField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { getCityFromAddress } from "../../utils/getCityFromAddress.js";
-import { Container, Typography, Box, TextField, Button } from "@mui/material";
+import { Typography, TextField, Button } from "@mui/material";
 
 function AddPetPage() {
   const navigate = useNavigate();
@@ -42,7 +42,6 @@ function AddPetPage() {
       });
     } else {
       setFormData((prevData) => ({ ...prevData, [name]: value }));
-      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
     }
   };
 
@@ -61,6 +60,7 @@ function AddPetPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateForm(formData);
+    console.log(newErrors);
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
@@ -78,216 +78,190 @@ function AddPetPage() {
     : placeholder;
 
   return (
-    <Container maxWidth="md" sx={{ p: { xs: "1rem", sm: "2rem" } }}>
-      <Box
+    <div className="add-pet-page">
+      <Typography
+        component="h1"
+        variant="h4"
         sx={{
-          margin: "2rem 0",
+          textAlign: { xs: "center", sm: "left" },
+          fontWeight: "medium",
+          marginBottom: { xs: "1rem", sm: "2rem" },
         }}
       >
-        <Typography
-          component="h1"
-          variant="h4"
-          sx={{
-            textAlign: { xs: "center", sm: "left" },
-            fontWeight: "medium",
-            marginBottom: { xs: "1rem", sm: "2rem" },
-          }}
-        >
-          Let&apos;s Find your Lost Pet...
-        </Typography>
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          className="add-pet-form"
-          sx={{
-            display: "flex",
-            flexDirection: { xs: "column", sm: "row" },
-            flexWrap: { xs: "nowrap", sm: "wrap" },
-            justifyContent: "space-between",
-            gap: "1rem",
-          }}
-        >
-          <Box>
-            <div className="add-pet-form__image-container">
-              <img
-                className="add-pet-form__image"
-                src={imagePreview}
-                alt="Preview of pet"
-              />
-            </div>
-
-            <InputFileUpload
-              name="pet_image"
-              handleChange={handleChange}
-              errors={errors.pet_image}
+        Let&apos;s Find your Lost Pet...
+      </Typography>
+      <form onSubmit={handleSubmit} className="add-pet-form">
+        <div className="add-pet-form__image-input">
+          <div className="add-pet-form__image-container">
+            <img
+              className="add-pet-form__image"
+              src={imagePreview}
+              alt="Preview of pet"
             />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: { xs: "column", sm: "row" },
-              flexWrap: "wrap",
-              gap: "0.25rem",
-              width: { sm: "68%" },
-              flexGrow: "1",
-              justifyContent: "space-between",
-            }}
-          >
-            <TextField
-              label="Pet Name"
-              placeholder="Enter you pet's name"
-              fullWidth
-              name="pet_name"
-              value={formData.pet_name}
-              onChange={handleChange}
-              error={errors.pet_name ? true : false}
-              helperText={errors.pet_name || " "}
+          </div>
+
+          <InputFileUpload
+            name="pet_image"
+            handleChange={handleChange}
+            errors={errors.pet_image}
+          />
+        </div>
+        <div className="add-pet-form__inputs">
+          <TextField
+            label="Pet Name"
+            placeholder="Enter you pet's name"
+            fullWidth
+            name="pet_name"
+            value={formData.pet_name}
+            onChange={handleChange}
+            error={errors.pet_name ? true : false}
+            helperText={errors.pet_name || " "}
+            sx={{ width: { sm: "48%" } }}
+            color="secondary"
+          />
+
+          <div className="add-pet-form__location-input">
+            <LocationInput
+              name="location_lost"
+              errors={errors.lat}
+              callbackFn={handleLocationInput}
+            />
+          </div>
+
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DateField
+              label="Missing Since"
+              name="missing_since"
+              onChange={(newValue) =>
+                setFormData((prevData) => ({
+                  ...prevData,
+                  missing_since: newValue,
+                }))
+              }
+              error={errors.missing_since ? true : false}
+              helperText={errors.missing_since || " "}
               sx={{ width: { sm: "48%" } }}
-            />
-
-            <div className="add-pet-form__location-input">
-              <LocationInput
-                name="location_lost"
-                errors={errors.lat}
-                callbackFn={handleLocationInput}
-              />
-            </div>
-
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateField
-                label="Missing Since"
-                name="missing_since"
-                onChange={(newValue) =>
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    missing_since: newValue,
-                  }))
-                }
-                error={errors.missing_since ? true : false}
-                helperText={errors.missing_since || " "}
-                sx={{ width: { sm: "48%" } }}
-              />
-            </LocalizationProvider>
-
-            <TextField
-              label="Pet Age"
-              placeholder="Enter you pet's age"
-              fullWidth
-              name="pet_age"
-              value={formData.pet_age}
-              onChange={handleChange}
-              error={errors.pet_age ? true : false}
-              helperText={errors.pet_age || " "}
-              sx={{ width: { sm: "48%" } }}
-            />
-
-            <TextField
-              label="Description"
-              placeholder="Include any important information."
-              fullWidth
-              multiline
-              rows={4}
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              error={errors.description ? true : false}
-              helperText={errors.description || " "}
-            />
-
-            <InputPetDetails
-              options={["Cat", "Dog"]}
-              inputName="pet_type"
-              label="Pet Type"
-              handleChange={handleChange}
-              value={formData.pet_type}
-              errors={errors.pet_type}
-            />
-
-            <InputPetDetails
-              options={temperaments}
-              inputName="pet_temperament"
-              label="Temperament"
-              handleChange={handleChange}
-              value={formData.pet_temperament}
-              errors={errors.pet_temperament}
-            />
-
-            <InputPetDetails
-              options={sizes}
-              inputName="pet_size"
-              label="Pet Size"
-              handleChange={handleChange}
-              value={formData.pet_size}
-              errors={errors.pet_size}
-            />
-
-            <TextField
-              label="Contact Name"
-              placeholder="Who should be contacted?"
-              fullWidth
-              name="contact_name"
-              value={formData.contact_name}
-              onChange={handleChange}
-              error={errors.contact_name ? true : false}
-              helperText={errors.contact_name || " "}
-              sx={{ width: { sm: "48%" } }}
-            />
-
-            <TextField
-              label="Contact Email"
-              placeholder="Enter the contact's email"
-              fullWidth
-              name="contact_email"
-              value={formData.contact_email}
-              onChange={handleChange}
-              error={errors.contact_email ? true : false}
-              helperText={errors.contact_email || " "}
-              sx={{ width: { sm: "48%" } }}
-            />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: { xs: "column", sm: "row" },
-              flexWrap: { xs: "nowrap", sm: "wrap" },
-              justifyContent: "end",
-              gap: "1rem",
-              width: "100%",
-            }}
-          >
-            <Button
-              size="large"
-              className="add-pet-form__button add-pet-form__button--cancel"
-              onClick={() => navigate(-1)}
-              disableElevation
-              variant="outlined"
               color="secondary"
-              sx={{
-                width: { xs: "100%", sm: "11.25rem" },
-                borderRadius: "20px",
-                textTransform: "capitalize",
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              size="large"
-              className="add-pet-form__button"
-              type="submit"
-              disableElevation
-              variant="contained"
-              sx={{
-                width: { xs: "100%", sm: "11.25rem" },
-                borderRadius: "20px",
-                textTransform: "capitalize",
-              }}
-            >
-              Submit
-            </Button>
-          </Box>
-        </Box>
-      </Box>
-    </Container>
+            />
+          </LocalizationProvider>
+
+          <TextField
+            label="Pet Age"
+            placeholder="Pet age in years (enter 0 if < 1 year)"
+            fullWidth
+            name="pet_age"
+            type="number"
+            value={formData.pet_age}
+            onChange={handleChange}
+            error={errors.pet_age ? true : false}
+            helperText={errors.pet_age || " "}
+            sx={{ width: { sm: "48%" } }}
+            color="secondary"
+          />
+
+          <TextField
+            label="Description"
+            placeholder="Include any important information."
+            fullWidth
+            multiline
+            rows={4}
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            error={errors.description ? true : false}
+            helperText={errors.description || " "}
+            color="secondary"
+          />
+
+          <InputPetDetails
+            options={["Cat", "Dog"]}
+            inputName="pet_type"
+            label="Pet Type"
+            handleChange={handleChange}
+            value={formData.pet_type}
+            errors={errors.pet_type}
+            color="secondary"
+          />
+
+          <InputPetDetails
+            options={temperaments}
+            inputName="pet_temperament"
+            label="Temperament"
+            handleChange={handleChange}
+            value={formData.pet_temperament}
+            errors={errors.pet_temperament}
+            color="secondary"
+          />
+
+          <InputPetDetails
+            options={sizes}
+            inputName="pet_size"
+            label="Pet Size"
+            handleChange={handleChange}
+            value={formData.pet_size}
+            errors={errors.pet_size}
+            color="secondary"
+          />
+
+          <TextField
+            label="Contact Name"
+            placeholder="Who should be contacted?"
+            fullWidth
+            name="contact_name"
+            value={formData.contact_name}
+            onChange={handleChange}
+            error={errors.contact_name ? true : false}
+            helperText={errors.contact_name || " "}
+            sx={{ width: { sm: "48%" } }}
+            color="secondary"
+          />
+
+          <TextField
+            label="Contact Email"
+            placeholder="Enter the contact's email"
+            fullWidth
+            name="contact_email"
+            value={formData.contact_email}
+            onChange={handleChange}
+            error={errors.contact_email ? true : false}
+            helperText={errors.contact_email || " "}
+            sx={{ width: { sm: "48%" } }}
+            color="secondary"
+          />
+        </div>
+        <div className="add-pet-form__button-container">
+          <Button
+            size="large"
+            className="add-pet-form__button add-pet-form__button--cancel"
+            onClick={() => navigate(-1)}
+            disableElevation
+            variant="outlined"
+            color="secondary"
+            sx={{
+              width: { xs: "100%", sm: "11.25rem" },
+              borderRadius: "20px",
+              textTransform: "capitalize",
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            size="large"
+            className="add-pet-form__button"
+            type="submit"
+            disableElevation
+            variant="contained"
+            sx={{
+              width: { xs: "100%", sm: "11.25rem" },
+              borderRadius: "20px",
+              textTransform: "capitalize",
+            }}
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 }
 

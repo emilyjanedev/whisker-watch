@@ -1,6 +1,26 @@
 @use "../../styles/partials/mixins" as *;
 
+.add-pet-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+
+  @include tablet {
+    padding: 2rem;
+  }
+}
+
 .add-pet-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+
+  @include tablet {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
   &__image-container {
     display: flex;
     flex-direction: column;
@@ -13,6 +33,33 @@
     height: 200px;
     border-radius: 20px;
     object-fit: cover;
+  }
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    flex-grow: 1;
+    justify-content: space-between;
+
+    @include tablet {
+      flex-direction: row;
+      width: 68%;
+    }
+  }
+
+  &__button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: 1rem;
+    width: 100%;
+
+    @include tablet {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
   }
 
   &__location-input {

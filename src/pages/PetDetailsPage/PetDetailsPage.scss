@@ -33,10 +33,15 @@
   }
 
   &__image {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: auto;
     border-radius: 20px;
     object-fit: cover;
+
+    @include tablet {
+      width: 300px;
+      height: 300px;
+    }
   }
 
   &__header-container {
