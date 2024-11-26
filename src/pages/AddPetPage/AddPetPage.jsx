@@ -265,6 +265,7 @@ function AddPetPage() {
               sx={{
                 width: { xs: "100%", sm: "11.25rem" },
                 borderRadius: "20px",
+                textTransform: "capitalize",
               }}
             >
               Cancel
@@ -278,6 +279,7 @@ function AddPetPage() {
               sx={{
                 width: { xs: "100%", sm: "11.25rem" },
                 borderRadius: "20px",
+                textTransform: "capitalize",
               }}
             >
               Submit

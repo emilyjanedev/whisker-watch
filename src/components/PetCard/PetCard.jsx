@@ -63,8 +63,10 @@ function PetCard({ pet }) {
           component={Link}
           to={`/pets/${pet.id}`}
           disableElevation
-          size="small"
-          sx={{ borderRadius: "20px" }}
+          sx={{
+            borderRadius: "20px",
+            textTransform: "capitalize",
+          }}
         >
           Details
         </Button>

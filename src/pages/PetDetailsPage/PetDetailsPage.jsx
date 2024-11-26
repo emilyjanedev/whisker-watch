@@ -82,6 +82,15 @@ function PetDetailsPage() {
             {petData.pet_temperament}
           </Typography>
           <Typography
+            variant="body2"
+            component="p"
+            color="secondary"
+            className="pet-details-page__pet-city"
+            sx={{ mb: 1, fontWeight: "medium" }}
+          >
+            {petData.city}
+          </Typography>
+          <Typography
             variant="body1"
             component="p"
             className="pet-details-page__description"

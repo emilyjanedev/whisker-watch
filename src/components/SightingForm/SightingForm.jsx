@@ -96,7 +96,7 @@ function SightingForm({ petId, handleNewSighting }) {
         type="submit"
         disableElevation
         variant="contained"
-        sx={{ borderRadius: "20px" }}
+        sx={{ borderRadius: "20px", textTransform: "capitalize" }}
       >
         Submit
       </Button>

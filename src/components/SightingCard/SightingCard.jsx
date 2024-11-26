@@ -19,7 +19,6 @@ function SightingCard({ sightingData, handleClick }) {
         className="sighting-card__list-item"
         secondaryAction={
           <IconButton
-            edge="end"
             aria-label="delete"
             onClick={() => handleClick({ lat, lng })}
             size="large"
