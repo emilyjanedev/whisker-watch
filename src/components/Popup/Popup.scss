@@ -1,13 +1,22 @@
+@use "../../styles/partials/mixins" as *;
+
 .popup {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 100vw;
+  height: 100vh;
   transform: translate(-50%, -50%);
-  width: 400px;
   background-color: white;
   box-shadow: 24px;
-  border-radius: 20px;
-  padding: 2rem;
+  padding: 6rem 2rem;
+
+  @include tablet {
+    padding: 2rem;
+    width: 400px;
+    height: 250px;
+    border-radius: 20px;
+  }
 
   &__button-container {
     display: flex;

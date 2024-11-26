@@ -68,6 +68,7 @@ function AddPetPage() {
     e.preventDefault();
     const newErrors = validateForm(formData);
     setErrors(newErrors);
+    setOpen(true);
 
     if (Object.keys(newErrors).length === 0) {
       const formDataObject = new FormData();
@@ -260,7 +261,7 @@ function AddPetPage() {
             disableElevation
             variant="outlined"
             color="secondary"
-            sx={{ width: { xs: "11.25rem" } }}
+            sx={{ width: { sm: "11.25rem" } }}
           >
             Cancel
           </StyledButton>
@@ -270,7 +271,7 @@ function AddPetPage() {
             type="submit"
             disableElevation
             variant="contained"
-            sx={{ width: { xs: "11.25rem" } }}
+            sx={{ width: { sm: "11.25rem" } }}
           >
             Submit
           </StyledButton>
