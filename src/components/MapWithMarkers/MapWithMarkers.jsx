@@ -2,7 +2,8 @@ import PetMarkers from "../PetMarkers/PetMarkers.jsx";
 import CentralMarker from "../CentralMarker/CentralMarker.jsx";
 import { mapContainerStyle } from "../../constants/mapConstants.js";
 import * as googleMapsApi from "../../api/googleMaps.js";
-import { Map } from "@vis.gl/react-google-maps";
+import { Map, useMap } from "@vis.gl/react-google-maps";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 function MapWithMarkers({
   markersList,
@@ -10,6 +11,8 @@ function MapWithMarkers({
   updateVisibleMarkers = null,
   centralMarker = {},
 }) {
+  const map = useMap();
+
   const handleMapLoad = (ev) => {
     const bounds = ev.map.getBounds();
 
@@ -28,6 +31,12 @@ function MapWithMarkers({
       updateVisibleMarkers(filteredMarkers);
     }
   };
+
+  useEffect(() => {
+    if (map) {
+      map.panTo(mapLocation);
+    }
+  }, [mapLocation, map]);
 
   return (
     <Map
