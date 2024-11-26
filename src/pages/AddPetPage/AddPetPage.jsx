@@ -14,6 +14,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { getCityFromAddress } from "../../utils/getCityFromAddress.js";
 import { Typography, TextField } from "@mui/material";
 import { StyledButton } from "../../components/StyledButton/StyledButton.jsx";
+import Popup from "../../components/Popup/Popup.jsx";
 
 function AddPetPage() {
   const navigate = useNavigate();
@@ -33,6 +34,11 @@ function AddPetPage() {
     contact_name: "",
     contact_email: "",
   });
+  const [open, setOpen] = useState(false);
+  const [newPetId, setNewPetId] = useState("");
+
+  const handlePopupOpen = () => setOpen(true);
+  const handlePopupClose = () => setOpen(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -61,7 +67,6 @@ function AddPetPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateForm(formData);
-    console.log(newErrors);
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
@@ -70,7 +75,8 @@ function AddPetPage() {
         formDataObject.append(key, value);
       }
       const { id } = await backend.addPet(formDataObject);
-      console.log(id);
+      setNewPetId(id);
+      setOpen(true);
 
       setFormData({
         pet_image: "",
@@ -270,6 +276,16 @@ function AddPetPage() {
           </StyledButton>
         </div>
       </form>
+      <Popup
+        isOpen={open}
+        handleOpen={handlePopupOpen}
+        handleClose={handlePopupClose}
+        title={"Pet Added!"}
+        description={
+          "Your pet was successfully added. Check out their profile page or browse the pet map."
+        }
+        petId={newPetId}
+      />
     </div>
   );
 }
