@@ -3,10 +3,9 @@ import * as backend from "../../api/backend.js";
 import MapWithMarkers from "../../components/MapWithMarkers/MapWithMarkers.jsx";
 import LocationInput from "../../components/LocationInput/LocationInput.jsx";
 import { Skeleton } from "@mui/material";
+import { defaultMapLocation } from "../../constants/mapConstants.js";
 import PetCard from "../../components/PetCard/PetCard.jsx";
 import "./PetMapPage.scss";
-
-const defaultMapLocation = { lat: 49.2827, lng: -123.1207 };
 
 function PetMapPage() {
   const [petsList, setPetsList] = useState([]);

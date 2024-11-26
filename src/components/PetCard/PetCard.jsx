@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import { Chip, Box, Typography, Button } from "@mui/material";
+import { Chip, Box, Typography } from "@mui/material";
+import { StyledButton } from "../StyledButton/StyledButton";
 import placeholder from "../../assets/images/pet-image-placeholder.jpg";
 import { format } from "date-fns";
 import "./PetCard.scss";
@@ -57,19 +58,15 @@ function PetCard({ pet }) {
         >
           Since {pet.missing_since && format(pet.missing_since, "MMM do")}
         </Typography>
-        <Button
+        <StyledButton
           className="pet-card__details-link"
           variant="contained"
           component={Link}
           to={`/pets/${pet.id}`}
           disableElevation
-          sx={{
-            borderRadius: "20px",
-            textTransform: "capitalize",
-          }}
         >
           Details
-        </Button>
+        </StyledButton>
       </Box>
     </div>
   );

@@ -1,7 +1,8 @@
 import PetsIcon from "@mui/icons-material/Pets";
 import { styled } from "@mui/material/styles";
-import { Button, FormHelperText, FormControl } from "@mui/material";
+import { FormHelperText, FormControl } from "@mui/material";
 import PropTypes from "prop-types";
+import { StyledButton } from "../StyledButton/StyledButton";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -18,7 +19,7 @@ const VisuallyHiddenInput = styled("input")({
 function InputFileUpload({ name, handleChange, errors }) {
   return (
     <FormControl error={errors ? true : false} sx={{ width: "100%" }}>
-      <Button
+      <StyledButton
         size="large"
         component="label"
         role={undefined}
@@ -36,7 +37,7 @@ function InputFileUpload({ name, handleChange, errors }) {
           onChange={handleChange}
           single
         />
-      </Button>
+      </StyledButton>
       <FormHelperText>{errors || " "}</FormHelperText>
     </FormControl>
   );

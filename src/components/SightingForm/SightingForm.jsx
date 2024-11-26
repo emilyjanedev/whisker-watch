@@ -3,10 +3,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateField } from "@mui/x-date-pickers/DateField";
 import { useState, useCallback } from "react";
-import { TextField, Button } from "@mui/material";
+import { TextField } from "@mui/material";
 import LocationInput from "../LocationInput/LocationInput";
 import { validateForm } from "../../utils/validateForm.js";
 import { getCityFromAddress } from "../../utils/getCityFromAddress.js";
+import { StyledButton } from "../StyledButton/StyledButton.jsx";
 import * as backend from "../../api/backend.js";
 import PropTypes from "prop-types";
 
@@ -89,17 +90,16 @@ function SightingForm({ petId, handleNewSighting }) {
         error={errors.note ? true : false}
         helperText={errors.note || " "}
       />
-      <Button
+      <StyledButton
         fullWidth
         size="large"
         className="add-sighting-form__button"
         type="submit"
         disableElevation
         variant="contained"
-        sx={{ borderRadius: "20px", textTransform: "capitalize" }}
       >
         Submit
-      </Button>
+      </StyledButton>
     </form>
   );
 }

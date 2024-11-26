@@ -1,11 +1,9 @@
 import PetMarkers from "../PetMarkers/PetMarkers.jsx";
 import CentralMarker from "../CentralMarker/CentralMarker.jsx";
+import { mapContainerStyle } from "../../constants/mapConstants.js";
 import * as googleMapsApi from "../../api/googleMaps.js";
 import { Map } from "@vis.gl/react-google-maps";
 import PropTypes from "prop-types";
-
-const mapContainerStyle = { width: "100%", height: "100%" };
-
 function MapWithMarkers({
   markersList,
   mapLocation,

@@ -12,7 +12,8 @@ import { DateField } from "@mui/x-date-pickers/DateField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { getCityFromAddress } from "../../utils/getCityFromAddress.js";
-import { Typography, TextField, Button } from "@mui/material";
+import { Typography, TextField } from "@mui/material";
+import { StyledButton } from "../../components/StyledButton/StyledButton.jsx";
 
 function AddPetPage() {
   const navigate = useNavigate();
@@ -70,6 +71,22 @@ function AddPetPage() {
       }
       const { id } = await backend.addPet(formDataObject);
       console.log(id);
+
+      setFormData({
+        pet_image: "",
+        pet_name: "",
+        pet_type: "",
+        lat: "",
+        lng: "",
+        city: "",
+        pet_age: "",
+        description: "",
+        pet_temperament: "",
+        missing_since: "",
+        pet_size: "",
+        contact_name: "",
+        contact_email: "",
+      });
     }
   };
 
@@ -230,35 +247,27 @@ function AddPetPage() {
           />
         </div>
         <div className="add-pet-form__button-container">
-          <Button
+          <StyledButton
             size="large"
             className="add-pet-form__button add-pet-form__button--cancel"
             onClick={() => navigate(-1)}
             disableElevation
             variant="outlined"
             color="secondary"
-            sx={{
-              width: { xs: "100%", sm: "11.25rem" },
-              borderRadius: "20px",
-              textTransform: "capitalize",
-            }}
+            sx={{ width: { xs: "11.25rem" } }}
           >
             Cancel
-          </Button>
-          <Button
+          </StyledButton>
+          <StyledButton
             size="large"
             className="add-pet-form__button"
             type="submit"
             disableElevation
             variant="contained"
-            sx={{
-              width: { xs: "100%", sm: "11.25rem" },
-              borderRadius: "20px",
-              textTransform: "capitalize",
-            }}
+            sx={{ width: { xs: "11.25rem" } }}
           >
             Submit
-          </Button>
+          </StyledButton>
         </div>
       </form>
     </div>
