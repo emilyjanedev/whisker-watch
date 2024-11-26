@@ -12,18 +12,20 @@ function MapWithMarkers({
   updateVisibleMarkers = null,
   centralMarker = {},
 }) {
-  const handleBoundsChanged = (ev) => {
-    const bounds = ev.detail.bounds;
-    const northEast = { lat: bounds.north, lng: bounds.east };
-    const southWest = { lat: bounds.south, lng: bounds.west };
+  const handleMapLoad = (ev) => {
+    const bounds = ev.map.getBounds();
+
+    const northEast = bounds.getNorthEast();
+    const southWest = bounds.getSouthWest();
 
     const filteredMarkers = markersList.filter(
       (marker) =>
-        marker.lat >= southWest.lat &&
-        marker.lat <= northEast.lat &&
-        marker.lng >= southWest.lng &&
-        marker.lng <= northEast.lng
+        marker.lat >= southWest.lat() &&
+        marker.lat <= northEast.lat() &&
+        marker.lng >= southWest.lng() &&
+        marker.lng <= northEast.lng()
     );
+
     if (updateVisibleMarkers) {
       updateVisibleMarkers(filteredMarkers);
     }
@@ -35,7 +37,7 @@ function MapWithMarkers({
       defaultZoom={14}
       mapId={googleMapsApi.mapId}
       defaultCenter={mapLocation}
-      onCameraChanged={(ev) => handleBoundsChanged(ev)}
+      onTilesLoaded={(ev) => handleMapLoad(ev)}
     >
       <PetMarkers markersList={markersList} />
       {centralMarker.lat && <CentralMarker markerLocation={centralMarker} />}

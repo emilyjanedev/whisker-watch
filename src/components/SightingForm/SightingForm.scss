@@ -1,5 +1,10 @@
+@use "../../styles/partials/mixins" as *;
+
 .add-sighting-form {
   margin-top: 0.5rem;
+  @include tablet {
+    padding-bottom: 1rem;
+  }
 
   &__input-container {
     display: flex;
