@@ -66,5 +66,5 @@ Popup.propTypes = {
   handleClose: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  petId: PropTypes.string.isRequired,
+  petId: PropTypes.number.isRequired,
 };

@@ -6,7 +6,6 @@ import { useState, useCallback } from "react";
 import { TextField } from "@mui/material";
 import LocationInput from "../LocationInput/LocationInput";
 import { validateForm } from "../../utils/validateForm.js";
-import { getCityFromAddress } from "../../utils/getCityFromAddress.js";
 import { StyledButton } from "../StyledButton/StyledButton.jsx";
 import * as backend from "../../api/backend.js";
 import PropTypes from "prop-types";
@@ -23,12 +22,12 @@ function SightingForm({ petId, handleNewSighting }) {
   });
 
   const handleLocationInput = useCallback(
-    (locationInput, address) => {
+    (position, city) => {
       setFormData({
         ...formData,
-        lat: locationInput.lat,
-        lng: locationInput.lng,
-        city: getCityFromAddress(address),
+        lat: position.lat,
+        lng: position.lng,
+        city: city,
       });
     },
     [formData]

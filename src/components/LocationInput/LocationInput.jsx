@@ -42,8 +42,8 @@ function LocationInput({ callbackFn, name = "", errors }) {
   const handleChange = async (e, value) => {
     if (value) {
       setAddress(value);
-      const coords = await googleMapsApi.geocodeAddress(value);
-      callbackFn(coords, value);
+      const result = await googleMapsApi.geocodeAddress(value);
+      callbackFn(result.position, result.city);
     }
   };
 

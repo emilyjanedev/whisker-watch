@@ -11,7 +11,6 @@ import Popup from "../../components/Popup/Popup.jsx";
 import InputFileUpload from "../../components/InputFileUpload/InputFileUpload.jsx";
 import { DateField, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { getCityFromAddress } from "../../utils/getCityFromAddress.js";
 import { Typography, TextField } from "@mui/material";
 import { StyledButton } from "../../components/StyledButton/StyledButton.jsx";
 
@@ -52,12 +51,12 @@ function AddPetPage() {
   };
 
   const handleLocationInput = useCallback(
-    (locationInput, address) => {
+    (position, city) => {
       setFormData({
         ...formData,
-        lat: locationInput.lat,
-        lng: locationInput.lng,
-        city: getCityFromAddress(address),
+        lat: position.lat,
+        lng: position.lng,
+        city: city,
       });
     },
     [formData]
