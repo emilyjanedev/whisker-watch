@@ -68,7 +68,6 @@ function AddPetPage() {
     e.preventDefault();
     const newErrors = validateForm(formData);
     setErrors(newErrors);
-    setOpen(true);
 
     if (Object.keys(newErrors).length === 0) {
       const formDataObject = new FormData();
