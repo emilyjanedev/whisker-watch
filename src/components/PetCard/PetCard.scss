@@ -2,21 +2,28 @@
 
 .pet-card {
   border-radius: 20px;
-  height: 125px;
+  height: 120px;
   display: flex;
   justify-content: space-between;
   background-color: #f7f7f7;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
 
   @include small-mobile {
+    height: 130px;
     padding: 1rem;
   }
 
   &__image {
-    border-radius: 20px;
-    width: 100px;
-    height: 100px;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
     object-fit: cover;
+
+    @include small-mobile {
+      border-radius: 20px;
+      width: 100px;
+      height: 100px;
+    }
   }
 
   &__attributes {
@@ -44,12 +51,21 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
-    align-items: end;
+    align-items: center;
+
+    @include small-mobile {
+      align-items: end;
+    }
   }
 
   &__missing-date {
-    text-align: right;
+    text-align: center;
     flex-grow: 1;
+    font-size: 8px !important;
+
+    @include small-mobile {
+      font-size: 10px !important;
+    }
   }
 
   &__details-link {

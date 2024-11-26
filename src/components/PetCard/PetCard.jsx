@@ -61,6 +61,7 @@ function PetCard({ pet }) {
         <StyledButton
           className="pet-card__details-link"
           variant="contained"
+          size="small"
           component={Link}
           to={`/pets/${pet.id}`}
           disableElevation
