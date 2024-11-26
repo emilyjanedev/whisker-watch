@@ -1,12 +1,13 @@
-import PetMarkers from "../PetMarkers/PetMarkers.jsx";
-import CentralMarker from "../CentralMarker/CentralMarker.jsx";
 import { mapContainerStyle } from "../../constants/mapConstants.js";
 import * as googleMapsApi from "../../api/googleMaps.js";
 import { Map, useMap } from "@vis.gl/react-google-maps";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
+import MarkerWithImage from "../MarkerWithImage/MarkerWithImage.jsx";
+import MarkerWithTooltip from "../MarkerWithTooltip/MarkerWithTooltip.jsx";
 function MapWithMarkers({
   markersList,
+  markerChoice,
   mapLocation,
   updateVisibleMarkers = null,
   centralMarker = {},
@@ -46,8 +47,14 @@ function MapWithMarkers({
       defaultCenter={mapLocation}
       onTilesLoaded={(ev) => handleMapLoad(ev)}
     >
-      <PetMarkers markersList={markersList} />
-      {centralMarker.lat && <CentralMarker markerLocation={centralMarker} />}
+      {markersList.map((marker) =>
+        markerChoice === "pet" ? (
+          <MarkerWithImage key={marker.id} marker={marker} />
+        ) : (
+          <MarkerWithTooltip key={marker.id} marker={marker} />
+        )
+      )}
+      {centralMarker.lat && <MarkerWithImage marker={centralMarker} />}
     </Map>
   );
 }
@@ -56,6 +63,7 @@ export default MapWithMarkers;
 
 MapWithMarkers.propTypes = {
   markersList: PropTypes.array.isRequired,
+  markerChoice: PropTypes.string.isRequired,
   mapLocation: PropTypes.object.isRequired,
   updateVisibleMarkers: PropTypes.func,
   centralMarker: PropTypes.object,

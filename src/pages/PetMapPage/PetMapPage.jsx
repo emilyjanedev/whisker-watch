@@ -60,6 +60,7 @@ function PetMapPage() {
           {mapLocation.lat ? (
             <MapWithMarkers
               markersList={petsList}
+              markerChoice="pet"
               mapLocation={mapLocation}
               updateVisibleMarkers={updateVisiblePets}
             />

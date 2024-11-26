@@ -140,8 +140,9 @@ function PetDetailsPage() {
             {mapLocation.lat ? (
               <MapWithMarkers
                 markersList={petSightings}
+                markerChoice="sighting"
                 mapLocation={mapLocation}
-                centralMarker={{ lat: petData.lat, lng: petData.lng }}
+                centralMarker={petData}
               />
             ) : (
               <Skeleton variant="rectangle" sx={{ height: "300px" }} />
