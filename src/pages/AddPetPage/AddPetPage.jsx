@@ -147,7 +147,7 @@ function AddPetPage() {
 
           <TextField
             label="Pet Age"
-            placeholder="Pet age in years (enter 0 if < 1 year)"
+            placeholder="Pet age in years (enter 0 if < 1)"
             fullWidth
             name="pet_age"
             type="number"
