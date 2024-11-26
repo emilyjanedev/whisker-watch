@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { forwardRef } from "react";
 import { Chip, Box, Typography } from "@mui/material";
 import { StyledButton } from "../StyledButton/StyledButton";
 import placeholder from "../../assets/images/pet-image-placeholder.jpg";
@@ -6,9 +7,9 @@ import { format } from "date-fns";
 import "./PetCard.scss";
 import { Link } from "react-router-dom";
 
-function PetCard({ pet }) {
+const PetCard = forwardRef(({ pet, isActive }, ref) => {
   return (
-    <div className="pet-card">
+    <div ref={ref} className={`pet-card ${isActive ? "pet-card--active" : ""}`}>
       <Box className="pet-card__details">
         <img
           className="pet-card__image"
@@ -71,10 +72,13 @@ function PetCard({ pet }) {
       </Box>
     </div>
   );
-}
+});
+
+PetCard.displayName = "PetCard";
 
 export default PetCard;
 
 PetCard.propTypes = {
   pet: PropTypes.object.isRequired,
+  isActive: PropTypes.bool.isRequired,
 };

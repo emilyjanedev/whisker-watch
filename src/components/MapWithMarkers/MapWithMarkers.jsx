@@ -11,6 +11,7 @@ function MapWithMarkers({
   mapLocation,
   updateVisibleMarkers = null,
   centralMarker = {},
+  handleMarkerClick = null,
 }) {
   const map = useMap();
 
@@ -49,7 +50,11 @@ function MapWithMarkers({
     >
       {markersList.map((marker) =>
         markerChoice === "pet" ? (
-          <MarkerWithImage key={marker.id} marker={marker} />
+          <MarkerWithImage
+            key={marker.id}
+            marker={marker}
+            handleMarkerClick={handleMarkerClick && handleMarkerClick}
+          />
         ) : (
           <MarkerWithTooltip key={marker.id} marker={marker} />
         )
@@ -67,4 +72,5 @@ MapWithMarkers.propTypes = {
   mapLocation: PropTypes.object.isRequired,
   updateVisibleMarkers: PropTypes.func,
   centralMarker: PropTypes.object,
+  handleMarkerClick: PropTypes.func,
 };

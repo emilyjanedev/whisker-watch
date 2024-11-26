@@ -3,7 +3,10 @@
 .pet-map-page {
   padding: 0 1rem;
   max-width: 1280px;
+  height: 100%;
   margin: 0 auto;
+  overflow: hidden;
+
   @include tablet {
     padding: 0 1rem;
   }
@@ -14,18 +17,16 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 0.25rem;
-      height: 91vh;
-      padding: 1rem 0 0.5rem 0;
-      overflow: hidden;
+      height: 93.75vh;
     }
   }
 
   &__location-input {
-    height: 60px;
-    margin-top: 1rem;
+    height: 80px;
+    padding-top: 1rem;
+
     @include tablet {
-      padding: 0 0.5rem;
-      margin: 0;
+      padding: 1rem 0.5rem 0 0.5rem;
     }
   }
 
@@ -38,8 +39,7 @@
     @include tablet {
       flex-grow: 1;
       order: 2;
-      height: 100%;
-      margin-top: 0;
+      height: 91vh;
     }
   }
 
@@ -58,11 +58,10 @@
     padding: 0;
 
     @include tablet {
-      height: 85.5vh;
+      height: 87vh;
       overflow: scroll;
       margin: 0;
-      padding: 0.5rem;
-      padding-bottom: 2rem;
+      padding: 1rem 0.5rem 2rem 0.5rem;
       scrollbar-color: lightgray white;
     }
   }

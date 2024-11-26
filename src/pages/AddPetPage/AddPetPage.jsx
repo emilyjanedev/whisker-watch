@@ -4,17 +4,16 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateForm } from "../../utils/validateForm.js";
 import { temperaments, sizes } from "../../constants/petConstants.js";
+import placeholder from "../../assets/images/pet-image-placeholder.jpg";
 import InputPetDetails from "../../components/InputPetDetails/InputPetDetails.jsx";
 import LocationInput from "../../components/LocationInput/LocationInput";
-import placeholder from "../../assets/images/pet-image-placeholder.jpg";
+import Popup from "../../components/Popup/Popup.jsx";
 import InputFileUpload from "../../components/InputFileUpload/InputFileUpload.jsx";
-import { DateField } from "@mui/x-date-pickers/DateField";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateField, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { getCityFromAddress } from "../../utils/getCityFromAddress.js";
 import { Typography, TextField } from "@mui/material";
 import { StyledButton } from "../../components/StyledButton/StyledButton.jsx";
-import Popup from "../../components/Popup/Popup.jsx";
 
 function AddPetPage() {
   const navigate = useNavigate();

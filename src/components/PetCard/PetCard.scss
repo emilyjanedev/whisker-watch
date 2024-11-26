@@ -7,6 +7,27 @@
   justify-content: space-between;
   background-color: #f7f7f7;
   padding: 1rem 0.5rem;
+  border: 2.5px solid transparent;
+  transition: border 0.3s;
+
+  &--active {
+    border: 2.5px solid #83c5be;
+    animation: border-pulse 1.5s;
+    animation-iteration-count: 2;
+    background-color: #dbfffb;
+
+    @keyframes border-pulse {
+      0% {
+        border-color: #83c5be;
+      }
+      50% {
+        border-color: #006d77;
+      }
+      100% {
+        border-color: #83c5be;
+      }
+    }
+  }
 
   @include small-mobile {
     height: 130px;

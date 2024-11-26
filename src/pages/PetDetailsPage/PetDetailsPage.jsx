@@ -41,7 +41,7 @@ function PetDetailsPage() {
         variant="h4"
         component="h1"
         className="pet-details-page__title"
-        sx={{ fontWeight: "medium", m: { xs: "1rem 0", sm: "1.5rem 0" } }}
+        sx={{ fontWeight: "medium", mb: { xs: 1, sm: 1.5 } }}
       >
         <ArrowBackIcon
           className="pet-details-page__title-icon"

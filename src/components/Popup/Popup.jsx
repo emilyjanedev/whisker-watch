@@ -44,7 +44,7 @@ function Popup({ isOpen, handleClose, title, description, petId }) {
               </StyledButton>
               <StyledButton
                 component={Link}
-                to={`pets/${petId}`}
+                to={`/pets/${petId}`}
                 disableElevation
                 variant="contained"
                 className="popup-button"

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import * as backend from "../../api/backend.js";
 import MapWithMarkers from "../../components/MapWithMarkers/MapWithMarkers.jsx";
 import LocationInput from "../../components/LocationInput/LocationInput.jsx";
@@ -11,6 +11,8 @@ function PetMapPage() {
   const [petsList, setPetsList] = useState([]);
   const [visiblePets, setVisiblePets] = useState([]);
   const [mapLocation, setMapLocation] = useState({});
+  const [activePet, setActivePet] = useState(null);
+  const petCardRefs = useRef({});
 
   useEffect(() => {
     const loadPetsList = async () => {
@@ -53,6 +55,20 @@ function PetMapPage() {
     setMapLocation(coords);
   }, []);
 
+  const handleMarkerClick = useCallback((petId) => {
+    setActivePet(petId);
+    setTimeout(() => {
+      setActivePet(null);
+    }, 5250);
+
+    if (petCardRefs.current[petId]) {
+      petCardRefs.current[petId].scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, []);
+
   return (
     <div className="pet-map-page">
       <div className="pet-map-page__layout-container">
@@ -63,6 +79,7 @@ function PetMapPage() {
               markerChoice="pet"
               mapLocation={mapLocation}
               updateVisibleMarkers={updateVisiblePets}
+              handleMarkerClick={handleMarkerClick}
             />
           ) : (
             <Skeleton
@@ -85,7 +102,11 @@ function PetMapPage() {
             <ul className="pet-map-page__pet-list">
               {visiblePets.map((pet) => (
                 <li className="pet-map-page__pet-list-item" key={pet.id}>
-                  <PetCard pet={pet} />
+                  <PetCard
+                    pet={pet}
+                    ref={(el) => (petCardRefs.current[pet.id] = el)}
+                    isActive={activePet === pet.id}
+                  />
                 </li>
               ))}
             </ul>
