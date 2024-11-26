@@ -40,6 +40,15 @@ function MapWithMarkers({
     map.panTo(mapLocation);
   }, [mapLocation, map]);
 
+  useEffect(() => {
+    if (!map) return;
+
+    const initialBounds = map.getBounds();
+    if (initialBounds) {
+      filterForVisibleMarkers(initialBounds);
+    }
+  }, [map, filterForVisibleMarkers]);
+
   const handleBoundsChanged = (ev) => {
     const bounds = ev.detail.bounds;
     filterForVisibleMarkers(bounds);

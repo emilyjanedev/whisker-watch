@@ -43,7 +43,7 @@ function LocationInput({ callbackFn, name = "", errors }) {
     if (value) {
       setAddress(value);
       const coords = await googleMapsApi.geocodeAddress(value);
-      callbackFn(coords);
+      callbackFn(coords, value);
     }
   };
 

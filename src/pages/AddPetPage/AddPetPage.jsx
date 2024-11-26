@@ -11,6 +11,7 @@ import InputFileUpload from "../../components/InputFileUpload/InputFileUpload.js
 import { DateField } from "@mui/x-date-pickers/DateField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { getCityFromAddress } from "../../utils/getCityFromAddress.js";
 import { Container, Typography, Box, TextField, Button } from "@mui/material";
 
 function AddPetPage() {
@@ -22,6 +23,7 @@ function AddPetPage() {
     pet_type: "",
     lat: "",
     lng: "",
+    city: "",
     pet_age: "",
     description: "",
     pet_temperament: "",
@@ -45,11 +47,12 @@ function AddPetPage() {
   };
 
   const handleLocationInput = useCallback(
-    (locationInput) => {
+    (locationInput, address) => {
       setFormData({
         ...formData,
         lat: locationInput.lat,
         lng: locationInput.lng,
+        city: getCityFromAddress(address),
       });
     },
     [formData]
@@ -61,7 +64,6 @@ function AddPetPage() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      console.log(formData);
       const formDataObject = new FormData();
       for (const [key, value] of Object.entries(formData)) {
         formDataObject.append(key, value);

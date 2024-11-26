@@ -38,7 +38,7 @@ function PetCard({ pet }) {
             component="p"
             color="text.secondary"
           >
-            Test Location
+            {pet.city}
           </Typography>
         </Box>
       </Box>
