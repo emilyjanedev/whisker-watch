@@ -13,11 +13,14 @@ import {
   Checkbox,
   Box,
   styled,
+  Alert,
 } from "@mui/material";
 import MuiCard from "@mui/material/Card";
 import PasswordModal from "../../components/PasswordModal/PasswordModal";
 import { GoogleIcon, FacebookIcon } from "./CustomIcons";
 import { StyledButton } from "../../components/StyledButton/StyledButton";
+import { useAuth } from "../../contexts/AuthContext";
+
 import PropTypes from "prop-types";
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -40,7 +43,6 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
-  height: "calc((1 - var(--template-frame-height, 0)) * 100dvh)",
   minHeight: "100%",
   padding: theme.spacing(2),
   [theme.breakpoints.up("sm")]: {
@@ -60,7 +62,16 @@ function LoginPage({ action }) {
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const [passwordConfirmError, setPasswordConfirmError] = useState(false);
+  const [passwordConfirmErrorMessage, setPasswordConfirmErrorMessage] =
+    useState("");
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState({
+    status: "",
+    message: "",
+  });
+  const { signup } = useAuth();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -70,21 +81,53 @@ function LoginPage({ action }) {
     setOpen(false);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setMessage({
+      status: "",
+      message: "",
+    });
+
     if (emailError || passwordError) {
-      event.preventDefault();
       return;
     }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    if (validateInputs()) {
+      const data = new FormData(event.currentTarget);
+      console.log({
+        email: data.get("email"),
+        password: data.get("password"),
+        passwordConfirm: data.get("confirm-password"),
+      });
+
+      try {
+        setLoading(true);
+        const { user } = await signup(data.get("email"), data.get("password"));
+        const userData = user._delegate;
+        console.log(userData);
+        if (userData) {
+          setMessage({
+            ...message,
+            status: "success",
+            message: "User account created!",
+          });
+        }
+      } catch (error) {
+        setMessage({
+          ...message,
+          status: "error",
+          message: "Could not create user account.",
+        });
+        console.error(error);
+      }
+      setLoading(false);
+    }
   };
 
   const validateInputs = () => {
     const email = document.getElementById("email");
     const password = document.getElementById("password");
+    const passwordConfirm = document.getElementById("confirm-password");
 
     let isValid = true;
 
@@ -106,6 +149,18 @@ function LoginPage({ action }) {
       setPasswordErrorMessage("");
     }
 
+    if (
+      (passwordConfirm && !passwordConfirm.value) ||
+      passwordConfirm.value !== password.value
+    ) {
+      setPasswordConfirmError(true);
+      setPasswordConfirmErrorMessage("Passwords do not match.");
+      isValid = false;
+    } else {
+      setPasswordConfirmError(false);
+      setPasswordErrorMessage("");
+    }
+    console.log(isValid);
     return isValid;
   };
 
@@ -115,7 +170,7 @@ function LoginPage({ action }) {
       <SignInContainer
         direction="column"
         justifyContent="space-between"
-        sx={{ padding: 0, height: { sm: "90vh" } }}
+        sx={{ padding: 0 }}
       >
         <Card
           variant="outlined"
@@ -132,6 +187,9 @@ function LoginPage({ action }) {
           >
             {action === "login" ? "Sign in" : "Sign up"}
           </Typography>
+          {message.status && (
+            <Alert severity={message.status}>{message.message}</Alert>
+          )}
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -181,17 +239,17 @@ function LoginPage({ action }) {
               <FormControl>
                 <FormLabel htmlFor="password">Confirm Password</FormLabel>
                 <TextField
-                  error={passwordError}
-                  helperText={passwordErrorMessage}
-                  name="confirm_password"
+                  error={passwordConfirmError}
+                  helperText={passwordConfirmErrorMessage}
+                  name="confirm-password"
                   placeholder="••••••"
                   type="password"
-                  id="confirm_password"
+                  id="confirm-password"
                   autoFocus
                   required
                   fullWidth
                   variant="outlined"
-                  color={passwordError ? "error" : "primary"}
+                  color={passwordConfirmError ? "error" : "primary"}
                 />
               </FormControl>
             )}
@@ -205,6 +263,7 @@ function LoginPage({ action }) {
               fullWidth
               disableElevation
               variant="contained"
+              disabled={loading}
               onClick={validateInputs}
             >
               {action === "login" ? "Sign in" : "Sign up"}
