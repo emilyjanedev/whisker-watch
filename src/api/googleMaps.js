@@ -14,9 +14,19 @@ const geocodeAddress = async (address) => {
 
     if (data.results.length > 0) {
       const { lat, lng } = data.results[0].geometry.location;
-      const city = data.results[0].address_components.find((component) =>
+      const addressComponents = data.results[0].address_components;
+      const locality = addressComponents.find((component) =>
         component.types.includes("locality")
-      ).short_name;
+      );
+      let city = "";
+      if (locality) {
+        city = locality.short_name;
+      } else {
+        city = addressComponents.find((component) =>
+          component.types.includes("sublocality")
+        ).short_name;
+      }
+
       return { position: { lat, lng }, city: city };
     } else {
       console.error("Could not get geocode, no results found.");

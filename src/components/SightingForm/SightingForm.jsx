@@ -73,7 +73,7 @@ function SightingForm({ petId, handleNewSighting }) {
           <LocationInput
             callbackFn={handleLocationInput}
             className="add-sighting-form__location-input"
-            name="sighted_location"
+            name="sighted_at"
             errors={errors.lat}
           />
         </div>
