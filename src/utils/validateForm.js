@@ -23,7 +23,6 @@ const validateForm = (formData) => {
       newErrors[key] = "*Field is required";
     }
   }
-  console.log(newErrors);
   return newErrors;
 };
 export { validateForm };

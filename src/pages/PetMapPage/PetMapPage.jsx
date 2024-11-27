@@ -19,7 +19,6 @@ function PetMapPage() {
     const loadPetsList = async () => {
       const data = await backend.getPetsList();
       const adjustedPetsList = offsetMarkers(data);
-      console.log(adjustedPetsList);
       setPetsList(adjustedPetsList);
     };
     loadPetsList();
