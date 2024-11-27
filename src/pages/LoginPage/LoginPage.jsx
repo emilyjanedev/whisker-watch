@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   TextField,
   Typography,
@@ -8,15 +8,11 @@ import {
   Link,
   FormLabel,
   Divider,
-  FormControlLabel,
-  CssBaseline,
-  Checkbox,
   Box,
   styled,
   Alert,
 } from "@mui/material";
 import MuiCard from "@mui/material/Card";
-import PasswordModal from "../../components/PasswordModal/PasswordModal";
 import { GoogleIcon, FacebookIcon } from "./CustomIcons";
 import { StyledButton } from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
@@ -65,21 +61,13 @@ function LoginPage({ action }) {
   const [passwordConfirmError, setPasswordConfirmError] = useState(false);
   const [passwordConfirmErrorMessage, setPasswordConfirmErrorMessage] =
     useState("");
-  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({
     status: "",
     message: "",
   });
-  const { signup } = useAuth();
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const { signup, login, currentUser } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -102,21 +90,35 @@ function LoginPage({ action }) {
 
       try {
         setLoading(true);
-        const { user } = await signup(data.get("email"), data.get("password"));
-        const userData = user._delegate;
-        console.log(userData);
-        if (userData) {
-          setMessage({
-            ...message,
-            status: "success",
-            message: "User account created!",
-          });
+        if (action === "signup") {
+          const { user } = await signup(
+            data.get("email"),
+            data.get("password")
+          );
+          const userData = user._delegate;
+          console.log(userData);
+
+          if (userData) {
+            setMessage({
+              ...message,
+              status: "success",
+              message: "User account created!",
+            });
+          }
+        } else {
+          const { user } = await login(data.get("email"), data.get("password"));
+          const userData = user._delegate;
+          console.log(userData);
+          navigate("/");
         }
       } catch (error) {
         setMessage({
           ...message,
           status: "error",
-          message: "Could not create user account.",
+          message:
+            action === "login"
+              ? "Could not login."
+              : "Could not create user account.",
         });
         console.error(error);
       }
@@ -150,8 +152,8 @@ function LoginPage({ action }) {
     }
 
     if (
-      (passwordConfirm && !passwordConfirm.value) ||
-      passwordConfirm.value !== password.value
+      passwordConfirm &&
+      (!passwordConfirm.value || passwordConfirm.value !== password.value)
     ) {
       setPasswordConfirmError(true);
       setPasswordConfirmErrorMessage("Passwords do not match.");
@@ -166,7 +168,6 @@ function LoginPage({ action }) {
 
   return (
     <>
-      <CssBaseline />
       <SignInContainer
         direction="column"
         justifyContent="space-between"
@@ -178,18 +179,24 @@ function LoginPage({ action }) {
             width: { xs: "100vw" },
             height: { xs: "100vh", sm: "auto" },
             m: { sm: 4 },
+            borderRadius: { sm: "20px" },
           }}
         >
           <Typography
             component="h1"
             variant="h4"
-            sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
+            sx={{
+              width: "100%",
+              fontSize: "clamp(2rem, 10vw, 2.15rem)",
+              fontWeight: "medium",
+            }}
           >
             {action === "login" ? "Sign in" : "Sign up"}
           </Typography>
           {message.status && (
             <Alert severity={message.status}>{message.message}</Alert>
           )}
+          {currentUser.email}
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -253,11 +260,6 @@ function LoginPage({ action }) {
                 />
               </FormControl>
             )}
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <PasswordModal open={open} handleClose={handleClose} />
             <StyledButton
               type="submit"
               fullWidth
@@ -268,18 +270,6 @@ function LoginPage({ action }) {
             >
               {action === "login" ? "Sign in" : "Sign up"}
             </StyledButton>
-            {action === "login" && (
-              <Link
-                component="button"
-                type="button"
-                onClick={handleClickOpen}
-                variant="body2"
-                sx={{ alignSelf: "center" }}
-                color="secondary"
-              >
-                Forgot your password?
-              </Link>
-            )}
           </Box>
           <Divider>or</Divider>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -301,20 +291,21 @@ function LoginPage({ action }) {
             >
               {action === "login" ? "Sign in" : "Sign up"} with Facebook
             </StyledButton>
-            {action === "login" && (
-              <Typography sx={{ textAlign: "center" }}>
-                Don&apos;t have an account?{" "}
-                <Link
-                  component={RouterLink}
-                  to="/sign-up"
-                  variant="body2"
-                  sx={{ alignSelf: "center" }}
-                  color="secondary"
-                >
-                  Sign up
-                </Link>
-              </Typography>
-            )}
+
+            <Typography sx={{ textAlign: "center" }}>
+              {action === "login"
+                ? "Don&apos;t have an account? "
+                : "Already have an account? "}
+              <Link
+                component={RouterLink}
+                to={action === "login" ? "/signup" : "/login"}
+                variant="body2"
+                sx={{ alignSelf: "center" }}
+                color="secondary"
+              >
+                {action === "login" ? "Sign up" : "Login"}
+              </Link>
+            </Typography>
           </Box>
         </Card>
       </SignInContainer>
