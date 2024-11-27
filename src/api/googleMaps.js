@@ -23,7 +23,7 @@ const geocodeAddress = async (address) => {
         city = locality.short_name;
       } else {
         city = addressComponents.find((component) =>
-          component.types.includes("sublocality")
+          component.types.includes("administrative_area_level_3")
         ).short_name;
       }
 

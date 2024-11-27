@@ -8,7 +8,7 @@ const validateForm = (formData) => {
         newErrors[key] = "Please enter a valid email address";
       }
     } else if (key === "description") {
-      if (value.length > 500 || value.length < 1) {
+      if (value.length > 150 || value.length < 1) {
         newErrors[key] = "Please enter a description. (Max. 500 characters)";
       }
     } else if (key === "pet_name") {

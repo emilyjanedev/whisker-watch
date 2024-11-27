@@ -63,7 +63,7 @@ function LocationInput({ callbackFn, name = "", errors }) {
           error={errors ? true : false}
           helperText={errors || " "}
           color="secondary"
-          sx={{ backgroundColor: "white", borderRadius: "20px" }}
+          sx={{ backgroundColor: "white", zIndex: "1" }}
         />
       )}
     />

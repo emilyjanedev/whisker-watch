@@ -18,7 +18,7 @@ function SightingForm({ petId, handleNewSighting }) {
     lat: "",
     lng: "",
     city: "",
-    sighted_at: "",
+    sighted_at: null,
   });
 
   const handleLocationInput = useCallback(
@@ -47,6 +47,14 @@ function SightingForm({ petId, handleNewSighting }) {
     if (Object.keys(newErrors).length === 0) {
       const { lat, lng } = await backend.addPetSighting(formData, petId);
       handleNewSighting(await backend.getPetSightings(petId), { lat, lng });
+      setFormData({
+        pet_id: petId,
+        note: "",
+        lat: "",
+        lng: "",
+        city: "",
+        sighted_at: null,
+      });
     }
   };
 
@@ -57,6 +65,7 @@ function SightingForm({ petId, handleNewSighting }) {
           <DateField
             label="Date"
             name="sighted_at"
+            value={formData.sighted_at}
             onChange={(newValue) =>
               setFormData((prevData) => ({
                 ...prevData,
@@ -81,7 +90,7 @@ function SightingForm({ petId, handleNewSighting }) {
 
       <TextField
         label="Note"
-        placeholder="Include any important information."
+        placeholder="Include important information."
         fullWidth
         name="note"
         value={formData.note}
