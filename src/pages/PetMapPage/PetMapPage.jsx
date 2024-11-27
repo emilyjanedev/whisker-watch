@@ -4,6 +4,7 @@ import MapWithMarkers from "../../components/MapWithMarkers/MapWithMarkers.jsx";
 import LocationInput from "../../components/LocationInput/LocationInput.jsx";
 import { Skeleton } from "@mui/material";
 import { defaultMapLocation } from "../../constants/mapConstants.js";
+import { offsetMarkers } from "../../utils/offsetMarkers.js";
 import PetCard from "../../components/PetCard/PetCard.jsx";
 import "./PetMapPage.scss";
 
@@ -17,7 +18,9 @@ function PetMapPage() {
   useEffect(() => {
     const loadPetsList = async () => {
       const data = await backend.getPetsList();
-      setPetsList(data);
+      const adjustedPetsList = offsetMarkers(data);
+      console.log(adjustedPetsList);
+      setPetsList(adjustedPetsList);
     };
     loadPetsList();
   }, []);
