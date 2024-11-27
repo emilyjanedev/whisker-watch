@@ -258,7 +258,7 @@ function AddPetPage() {
             disableElevation
             variant="outlined"
             color="secondary"
-            sx={{ width: { sm: "11.25rem" } }}
+            sx={{ width: { sm: "11.25rem" }, backgroundColor: "white" }}
           >
             Cancel
           </StyledButton>

@@ -3,6 +3,7 @@ import PetMapPage from "./pages/PetMapPage/PetMapPage.jsx";
 import PetDetailsPage from "./pages/PetDetailsPage/PetDetailsPage";
 import AddPetPage from "./pages/AddPetPage/AddPetPage";
 import NavBar from "./components/NavBar/NavBar.jsx";
+import "./styles/globals.scss";
 
 function App() {
   return (

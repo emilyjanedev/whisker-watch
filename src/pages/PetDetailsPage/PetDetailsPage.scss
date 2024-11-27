@@ -83,12 +83,15 @@
   }
 
   &__details-and-form {
+    background-color: white;
+    border-radius: 20px;
     @include tablet {
       width: 45%;
       max-width: 300px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      padding: 1rem;
     }
   }
 

@@ -42,6 +42,8 @@
     gap: 0.25rem;
     flex-grow: 1;
     justify-content: space-between;
+    background-color: white;
+    border-radius: 20px;
 
     @include tablet {
       flex-direction: row;
