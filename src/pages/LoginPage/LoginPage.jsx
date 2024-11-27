@@ -4,7 +4,6 @@ import {
   TextField,
   Typography,
   Stack,
-  MuiCard,
   FormControl,
   Link,
   FormLabel,
@@ -15,6 +14,7 @@ import {
   Box,
   styled,
 } from "@mui/material";
+import MuiCard from "@mui/material/Card";
 import PasswordModal from "../../components/PasswordModal/PasswordModal";
 import { GoogleIcon, FacebookIcon } from "./CustomIcons";
 import { StyledButton } from "../../components/StyledButton/StyledButton";
