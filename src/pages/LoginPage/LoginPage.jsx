@@ -16,6 +16,7 @@ import MuiCard from "@mui/material/Card";
 import { GoogleIcon, FacebookIcon } from "./CustomIcons";
 import { StyledButton } from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
+import ResetPasswordModal from "../../components/ResetPasswordModal/ResetPasswordModal";
 
 import PropTypes from "prop-types";
 
@@ -66,8 +67,17 @@ function LoginPage({ action }) {
     status: "",
     message: "",
   });
+  const [open, setOpen] = useState(false);
   const { signup, login, currentUser } = useAuth();
   const navigate = useNavigate();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -109,7 +119,7 @@ function LoginPage({ action }) {
           const { user } = await login(data.get("email"), data.get("password"));
           const userData = user._delegate;
           console.log(userData);
-          navigate("/");
+          navigate("/users/profile");
         }
       } catch (error) {
         setMessage({
@@ -260,6 +270,18 @@ function LoginPage({ action }) {
                 />
               </FormControl>
             )}
+            {action === "login" && (
+              <Link
+                component="button"
+                type="button"
+                onClick={handleClickOpen}
+                variant="body2"
+                sx={{ alignSelf: "center" }}
+                color="secondary"
+              >
+                Forgot your password?
+              </Link>
+            )}
             <StyledButton
               type="submit"
               fullWidth
@@ -271,6 +293,8 @@ function LoginPage({ action }) {
               {action === "login" ? "Sign in" : "Sign up"}
             </StyledButton>
           </Box>
+          <ResetPasswordModal open={open} handleClose={handleClose} />
+
           <Divider>or</Divider>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <StyledButton
@@ -294,7 +318,7 @@ function LoginPage({ action }) {
 
             <Typography sx={{ textAlign: "center" }}>
               {action === "login"
-                ? "Don&apos;t have an account? "
+                ? "Don't have an account? "
                 : "Already have an account? "}
               <Link
                 component={RouterLink}
