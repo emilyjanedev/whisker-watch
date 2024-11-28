@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
 import { StyledButton } from "../StyledButton/StyledButton";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Alert, TextField } from "@mui/material";
-import OutlinedInput from "@mui/material/OutlinedInput";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Alert,
+  TextField,
+} from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 

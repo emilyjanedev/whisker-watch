@@ -27,7 +27,7 @@ function UserProfilePage() {
       {error && <Alert>{error}</Alert>}
       <StyledButton
         component={Link}
-        to="/users/profile/update"
+        to="/user/profile/update"
         variant="outlined"
         color="secondary"
         disableElevation

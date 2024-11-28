@@ -68,7 +68,7 @@ function LoginPage({ action }) {
     message: "",
   });
   const [open, setOpen] = useState(false);
-  const { signup, login, currentUser } = useAuth();
+  const { signup, login } = useAuth();
   const navigate = useNavigate();
 
   const handleClickOpen = () => {
@@ -119,7 +119,7 @@ function LoginPage({ action }) {
           const { user } = await login(data.get("email"), data.get("password"));
           const userData = user._delegate;
           console.log(userData);
-          navigate("/users/profile");
+          navigate("/user/profile");
         }
       } catch (error) {
         setMessage({
@@ -206,7 +206,6 @@ function LoginPage({ action }) {
           {message.status && (
             <Alert severity={message.status}>{message.message}</Alert>
           )}
-          {currentUser && currentUser.email}
           <Box
             component="form"
             onSubmit={handleSubmit}
