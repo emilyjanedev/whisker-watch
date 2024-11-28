@@ -1,9 +1,11 @@
 import axios from "axios";
 const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 
-const getPetsList = async () => {
+const getPetsList = async (userId = "") => {
   try {
-    const { data } = await axios.get(`${baseUrl}/api/pets`);
+    const { data } = await axios.get(
+      `${baseUrl}/api/pets?${userId && "user_id="}${userId}`
+    );
     return data;
   } catch (error) {
     console.error("Could not get pets list:", error);

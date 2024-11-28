@@ -1,13 +1,28 @@
-import { useState } from "react";
-import { Alert, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Alert, Container, Typography, Box, List } from "@mui/material";
+import * as backend from "../../api/backend.js";
 import StyledButton from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import ManagePetCard from "../../components/ManagePetCard/ManagePetCard.jsx";
 
 function UserProfilePage() {
   const [error, setError] = useState();
+  const [userPetList, setUserPetList] = useState([]);
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadUserPetList = async () => {
+      const petList = await backend.getPetsList(1);
+      setUserPetList(petList);
+    };
+    loadUserPetList();
+  }, []);
+
+  const handleDelete = async () => {
+    console.log("delete");
+  };
 
   const handleLogout = async () => {
     setError("");
@@ -21,24 +36,67 @@ function UserProfilePage() {
   };
 
   return (
-    <>
-      <div>User Profile</div>
-      <Typography sx={{ fontWeight: "medium" }}>{currentUser.email}</Typography>
-      {error && <Alert>{error}</Alert>}
-      <StyledButton
-        component={Link}
-        to="/user/profile/update"
-        variant="outlined"
-        color="secondary"
-        disableElevation
-        onClick={handleLogout}
-      >
-        Update Profile
-      </StyledButton>
-      <StyledButton variant="contained" disableElevation onClick={handleLogout}>
-        Logout
-      </StyledButton>
-    </>
+    <Container className="user-profile">
+      <Box className="user-profile__sidebar">
+        <Typography
+          className="user-profile__greeting"
+          variant="h4"
+          component="h1"
+        >
+          Hello, Emily!
+        </Typography>
+        {error && <Alert className="user-profile__error">{error}</Alert>}
+        <Typography
+          className="user-profile__email"
+          variant="body1"
+          color="secondary"
+        >
+          {currentUser.email}
+        </Typography>
+        <Box className="user-profile__actions">
+          <StyledButton
+            className="user-profile__action user-profile__action--update"
+            component={Link}
+            to="/user/profile/update"
+            variant="outlined"
+            color="secondary"
+            disableElevation
+            sx={{ bgcolor: "white" }}
+          >
+            Update Profile
+          </StyledButton>
+          <StyledButton
+            className="user-profile__action user-profile__action--logout"
+            variant="contained"
+            disableElevation
+            onClick={handleLogout}
+          >
+            Logout
+          </StyledButton>
+        </Box>
+      </Box>
+
+      <Box className="user-profile__content">
+        <Typography
+          className="user-profile__title"
+          variant="h6"
+          component="h3"
+          sx={{ mt: { xs: 2, sm: 0 } }}
+        >
+          Manage Your Pets
+        </Typography>
+        <List className="user-profile__pet-list">
+          {userPetList.map((pet) => (
+            <ManagePetCard
+              key={pet.id}
+              pet={pet}
+              handleDelete={handleDelete}
+              className="user-profile__pet-card"
+            />
+          ))}
+        </List>
+      </Box>
+    </Container>
   );
 }
 
