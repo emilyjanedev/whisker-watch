@@ -12,12 +12,11 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { StyledButton } from "../StyledButton/StyledButton";
 
 const pages = ["Pet Map", "Report Lost Pet"];
-const settings = ["Profile", "Logout"];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
