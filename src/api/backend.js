@@ -23,6 +23,16 @@ const getPetById = async (petId) => {
   }
 };
 
+const deletePet = async (petId) => {
+  try {
+    await axios.delete(`${baseUrl}/api/pets/${petId}`);
+    return;
+  } catch (error) {
+    console.error("Could not delete pet:", error);
+    throw new Error("Error deleting pet.");
+  }
+};
+
 const getPetSightings = async (petId) => {
   try {
     const { data } = await axios.get(`${baseUrl}/api/pets/${petId}/sightings`);
@@ -56,4 +66,11 @@ const addPetSighting = async (newSighting, petId) => {
   }
 };
 
-export { getPetsList, getPetById, getPetSightings, addPet, addPetSighting };
+export {
+  getPetsList,
+  getPetById,
+  getPetSightings,
+  addPet,
+  addPetSighting,
+  deletePet,
+};

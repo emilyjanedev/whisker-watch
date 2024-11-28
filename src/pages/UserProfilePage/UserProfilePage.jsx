@@ -5,6 +5,7 @@ import StyledButton from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import ManagePetCard from "../../components/ManagePetCard/ManagePetCard.jsx";
+import "./UserProfilePage.scss";
 
 function UserProfilePage() {
   const [error, setError] = useState();
@@ -20,8 +21,10 @@ function UserProfilePage() {
     loadUserPetList();
   }, []);
 
-  const handleDelete = async () => {
-    console.log("delete");
+  const handleDelete = async (petId) => {
+    await backend.deletePet(petId);
+    const updatedPetList = await backend.getPetsList(1);
+    setUserPetList(updatedPetList);
   };
 
   const handleLogout = async () => {

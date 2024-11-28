@@ -26,7 +26,9 @@ function ManagePetCard({ pet, handleDelete }) {
           </Typography>
           <IconButton
             className="manage-pet-card__delete-button"
-            onClick={handleDelete}
+            onClick={() => {
+              handleDelete(pet.id);
+            }}
           >
             <DeleteIcon />
           </IconButton>
