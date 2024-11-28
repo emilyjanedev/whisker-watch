@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { StyledButton } from "../StyledButton/StyledButton";
+import StyledButton from "../StyledButton/StyledButton";
 import {
   Dialog,
   DialogActions,

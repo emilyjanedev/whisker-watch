@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { forwardRef } from "react";
 import { Chip, Box, Typography } from "@mui/material";
-import { StyledButton } from "../StyledButton/StyledButton";
+import StyledButton from "../StyledButton/StyledButton";
 import placeholder from "../../assets/images/pet-image-placeholder.jpg";
 import { format } from "date-fns";
 import "./PetCard.scss";

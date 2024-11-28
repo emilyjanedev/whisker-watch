@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
-import { StyledButton } from "../StyledButton/StyledButton";
+import StyledButton from "../StyledButton/StyledButton";
 import { Link } from "react-router-dom";
 
 function Popup({ isOpen, handleClose, title, description, petId }) {

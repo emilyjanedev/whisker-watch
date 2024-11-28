@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { StyledButton } from "../StyledButton/StyledButton";
+import StyledButton from "../StyledButton/StyledButton";
 
 const pages = ["Pet Map", "Report Lost Pet"];
 

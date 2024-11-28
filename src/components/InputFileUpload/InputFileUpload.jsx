@@ -2,7 +2,7 @@ import PetsIcon from "@mui/icons-material/Pets";
 import { styled } from "@mui/material/styles";
 import { FormHelperText, FormControl } from "@mui/material";
 import PropTypes from "prop-types";
-import { StyledButton } from "../StyledButton/StyledButton";
+import StyledButton from "../StyledButton/StyledButton";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",

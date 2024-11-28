@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import MuiCard from "@mui/material/Card";
 import { GoogleIcon } from "./CustomIcons";
-import { StyledButton } from "../../components/StyledButton/StyledButton";
+import StyledButton from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
 import ResetPasswordModal from "../../components/ResetPasswordModal/ResetPasswordModal";
 

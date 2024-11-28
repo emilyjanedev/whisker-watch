@@ -7,4 +7,4 @@ const StyledButton = styled(Button)(() => ({
   textTransform: "capitalize",
 }));
 
-export { StyledButton };
+export default StyledButton;

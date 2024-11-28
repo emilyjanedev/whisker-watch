@@ -6,7 +6,7 @@ import { useState, useCallback } from "react";
 import { TextField } from "@mui/material";
 import LocationInput from "../LocationInput/LocationInput";
 import { validateForm } from "../../utils/validateForm.js";
-import { StyledButton } from "../StyledButton/StyledButton.jsx";
+import StyledButton from "../StyledButton/StyledButton.jsx";
 import * as backend from "../../api/backend.js";
 import PropTypes from "prop-types";
 

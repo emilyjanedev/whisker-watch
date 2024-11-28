@@ -4,10 +4,12 @@ import * as backend from "../../api/backend.js";
 import { useCallback, useEffect, useState } from "react";
 import { Chip, List, Skeleton, Typography } from "@mui/material";
 import { format } from "date-fns";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 import MapWithMarkers from "../../components/MapWithMarkers/MapWithMarkers.jsx";
 import SightingForm from "../../components/SightingForm/SIghtingForm.jsx";
 import SightingCard from "../../components/SightingCard/SightingCard.jsx";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import SignInPrompt from "../../components/SignInPrompt/SignInPrompt.jsx";
 
 function PetDetailsPage() {
   const { id } = useParams();
@@ -15,6 +17,7 @@ function PetDetailsPage() {
   const [petData, setPetData] = useState({});
   const [petSightings, setPetSightings] = useState([]);
   const [mapLocation, setMapLocation] = useState({});
+  const { currentUser } = useAuth();
 
   const handleNewSighting = useCallback((updatedList, sightingLocation) => {
     setPetSightings(updatedList);
@@ -124,7 +127,11 @@ function PetDetailsPage() {
             >
               Have you seen {petData.pet_name}?
             </Typography>
-            <SightingForm petId={id} handleNewSighting={handleNewSighting} />
+            {currentUser ? (
+              <SightingForm petId={id} handleNewSighting={handleNewSighting} />
+            ) : (
+              <SignInPrompt action="sighting" />
+            )}
           </div>
         </div>
         <div className="pet-details-page__map-and-results">

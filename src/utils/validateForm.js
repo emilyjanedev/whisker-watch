@@ -9,7 +9,7 @@ const validateForm = (formData) => {
       }
     } else if (key === "description") {
       if (value.length > 150 || value.length < 1) {
-        newErrors[key] = "Please enter a description. (Max. 500 characters)";
+        newErrors[key] = "Please enter a description. (Max. 150 characters)";
       }
     } else if (key === "pet_name") {
       if (value.length > 10 || value.length < 1) {

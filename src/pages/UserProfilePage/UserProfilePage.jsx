@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Alert, Typography } from "@mui/material";
-import { StyledButton } from "../../components/StyledButton/StyledButton";
+import StyledButton from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
