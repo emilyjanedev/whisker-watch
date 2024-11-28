@@ -13,7 +13,7 @@ import {
   Alert,
 } from "@mui/material";
 import MuiCard from "@mui/material/Card";
-import { GoogleIcon, FacebookIcon } from "./CustomIcons";
+import { GoogleIcon } from "./CustomIcons";
 import { StyledButton } from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
 import ResetPasswordModal from "../../components/ResetPasswordModal/ResetPasswordModal";
@@ -68,7 +68,7 @@ function LoginPage({ action }) {
     message: "",
   });
   const [open, setOpen] = useState(false);
-  const { signup, login } = useAuth();
+  const { signup, login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const handleClickOpen = () => {
@@ -77,6 +77,24 @@ function LoginPage({ action }) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleGoogleLogin = async () => {
+    setMessage({
+      status: "",
+      message: "",
+    });
+    try {
+      await loginWithGoogle();
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      setMessage({
+        ...message,
+        status: "error",
+        message: "Could not sign in with Google.",
+      });
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -299,20 +317,11 @@ function LoginPage({ action }) {
             <StyledButton
               fullWidth
               variant="outlined"
-              onClick={() => alert("Sign in with Google")}
+              onClick={handleGoogleLogin}
               startIcon={<GoogleIcon />}
               color="secondary"
             >
               {action === "login" ? "Sign in" : "Sign up"} with Google
-            </StyledButton>
-            <StyledButton
-              fullWidth
-              variant="outlined"
-              onClick={() => alert("Sign in with Facebook")}
-              startIcon={<FacebookIcon />}
-              color="secondary"
-            >
-              {action === "login" ? "Sign in" : "Sign up"} with Facebook
             </StyledButton>
 
             <Typography sx={{ textAlign: "center" }}>

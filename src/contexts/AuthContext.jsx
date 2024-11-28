@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { auth, googleProvider, facebookProvider } from "../auth/firebase";
+import { auth, googleProvider } from "../auth/firebase";
 import PropTypes from "prop-types";
 
 const AuthContext = createContext();
@@ -30,8 +30,6 @@ export function AuthProvider({ children }) {
 
   const loginWithGoogle = () => signInWithPopup(auth, googleProvider);
 
-  const loginWithFacebook = () => signInWithPopup(auth, facebookProvider);
-
   const logout = () => {
     return signOut(auth);
   };
@@ -53,7 +51,6 @@ export function AuthProvider({ children }) {
     signup,
     login,
     loginWithGoogle,
-    loginWithFacebook,
     logout,
     resetPassword,
   };
