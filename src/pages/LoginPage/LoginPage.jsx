@@ -196,7 +196,7 @@ function LoginPage({ action }) {
           {message.status && (
             <Alert severity={message.status}>{message.message}</Alert>
           )}
-          {currentUser.email}
+          {currentUser && currentUser.email}
           <Box
             component="form"
             onSubmit={handleSubmit}
