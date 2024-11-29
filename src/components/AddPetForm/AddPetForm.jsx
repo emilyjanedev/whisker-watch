@@ -14,6 +14,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { TextField } from "@mui/material";
 import StyledButton from "../../components/StyledButton/StyledButton.jsx";
 import { useAuth } from "../../contexts/AuthContext.jsx";
+import PropTypes from "prop-types";
 
 function AddPetForm({ action }) {
   const { currentUser } = useAuth();
@@ -46,7 +47,7 @@ function AddPetForm({ action }) {
       const updatedFormData = { ...formData };
 
       Object.keys(updatedFormData).forEach((key) => {
-        if (petData.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(petData, key)) {
           updatedFormData[key] = petData[key];
         }
       });
@@ -57,7 +58,7 @@ function AddPetForm({ action }) {
     if (action === "update") {
       loadPetData();
     }
-  }, [action, id]);
+  });
 
   const handlePopupOpen = () => setOpen(true);
   const handlePopupClose = () => setOpen(false);
@@ -295,16 +296,20 @@ function AddPetForm({ action }) {
       </form>
       <Popup
         isOpen={open}
+        petId={newPetId}
         handleOpen={handlePopupOpen}
         handleClose={handlePopupClose}
         title={"Pet Added!"}
         description={
           "Your pet was successfully added. Check out their profile page or browse the pet map."
         }
-        petId={newPetId}
       />
     </>
   );
 }
 
 export default AddPetForm;
+
+AddPetForm.propTypes = {
+  action: PropTypes.string.isRequired,
+};

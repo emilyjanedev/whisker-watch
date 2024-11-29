@@ -33,5 +33,5 @@ function AddPetPage({ action }) {
 export default AddPetPage;
 
 AddPetPage.propTypes = {
-  action: PropTypes.string.isrequired,
+  action: PropTypes.string.isRequired,
 };
