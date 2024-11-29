@@ -23,6 +23,19 @@ const getPetById = async (petId) => {
   }
 };
 
+const updatePet = async (petId, updatedPet) => {
+  try {
+    const { data } = await axios.put(
+      `${baseUrl}/api/pets/${petId}`,
+      updatedPet
+    );
+    return data;
+  } catch (error) {
+    console.error("Could not update pet:", error);
+    throw new Error("Error updating pet.");
+  }
+};
+
 const deletePet = async (petId) => {
   try {
     await axios.delete(`${baseUrl}/api/pets/${petId}`);
@@ -84,4 +97,5 @@ export {
   addPetSighting,
   deletePet,
   addUser,
+  updatePet,
 };

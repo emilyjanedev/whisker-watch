@@ -1,14 +1,21 @@
 import PropTypes from "prop-types";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useMapsLibrary } from "@vis.gl/react-google-maps";
 import { Autocomplete, TextField } from "@mui/material";
 import * as googleMapsApi from "../../api/googleMaps.js";
 
-function LocationInput({ callbackFn, name = "", errors }) {
+function LocationInput({ callbackFn, name = "", errors, initialValue = "" }) {
   const inputRef = useRef(null);
   const placesLib = useMapsLibrary("places");
   const [address, setAddress] = useState("");
   const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+    if (!initialValue) {
+      return;
+    }
+    setAddress(initialValue);
+  }, [initialValue]);
 
   const fetchAddressPredictions = useCallback(
     (inputValue) => {
@@ -39,11 +46,11 @@ function LocationInput({ callbackFn, name = "", errors }) {
     fetchAddressPredictions(newInputValue);
   };
 
-  const handleChange = async (e, value) => {
+  const handleChange = async (_e, value) => {
     if (value) {
       setAddress(value);
       const result = await googleMapsApi.geocodeAddress(value);
-      callbackFn(result.position, result.city);
+      callbackFn(result.position, result.city, value);
     }
   };
 
@@ -76,4 +83,5 @@ LocationInput.propTypes = {
   callbackFn: PropTypes.func.isRequired,
   name: PropTypes.string,
   errors: PropTypes.string,
+  initialValue: PropTypes.string,
 };

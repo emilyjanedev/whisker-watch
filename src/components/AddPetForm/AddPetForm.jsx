@@ -29,6 +29,7 @@ function AddPetForm({ action }) {
     lat: "",
     lng: "",
     city: "",
+    address: "",
     pet_age: "",
     description: "",
     pet_temperament: "",
@@ -39,11 +40,12 @@ function AddPetForm({ action }) {
   });
   const [open, setOpen] = useState(false);
   const [newPetId, setNewPetId] = useState("");
-  const { id } = useParams();
+  const [imagePreview, setImagePreview] = useState(placeholder);
+  const { id: petId } = useParams();
 
   useEffect(() => {
     const loadPetData = async () => {
-      const petData = await backend.getPetById(id);
+      const petData = await backend.getPetById(petId);
 
       const updatedFormData = { ...formData };
 
@@ -60,12 +62,13 @@ function AddPetForm({ action }) {
       });
 
       setFormData(updatedFormData);
+      setImagePreview(updatedFormData.pet_image);
     };
 
     if (action === "update") {
       loadPetData();
     }
-  }, [action, id]);
+  }, [action, petId]);
 
   const handlePopupOpen = () => setOpen(true);
   const handlePopupClose = () => setOpen(false);
@@ -77,18 +80,20 @@ function AddPetForm({ action }) {
         ...formData,
         [name]: files[0],
       });
+      setImagePreview(URL.createObjectURL(files[0]));
     } else {
       setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
   };
 
   const handleLocationInput = useCallback(
-    (position, city) => {
+    (position, city, address) => {
       setFormData({
         ...formData,
         lat: position.lat,
         lng: position.lng,
         city: city,
+        address: address,
       });
     },
     [formData]
@@ -104,9 +109,16 @@ function AddPetForm({ action }) {
       for (const [key, value] of Object.entries(formData)) {
         formDataObject.append(key, value);
       }
-      const { id } = await backend.addPet(formDataObject);
-      setNewPetId(id);
-      setOpen(true);
+
+      if (action === "add") {
+        const { id } = await backend.addPet(formDataObject);
+        setNewPetId(id);
+        setOpen(true);
+      } else {
+        const { id } = await backend.updatePet(petId, formDataObject);
+        setNewPetId(id);
+        setOpen(true);
+      }
 
       setFormData({
         user_id: currentUser.uid,
@@ -116,6 +128,7 @@ function AddPetForm({ action }) {
         lat: "",
         lng: "",
         city: "",
+        address: "",
         pet_age: "",
         description: "",
         pet_temperament: "",
@@ -124,17 +137,9 @@ function AddPetForm({ action }) {
         contact_name: "",
         contact_email: "",
       });
+      setImagePreview(placeholder);
     }
   };
-
-  let imagePreview;
-  if (action === "add") {
-    imagePreview = formData.pet_image
-      ? URL.createObjectURL(formData.pet_image)
-      : placeholder;
-  } else {
-    imagePreview = formData.pet_image;
-  }
 
   return (
     <>
@@ -172,6 +177,7 @@ function AddPetForm({ action }) {
             <LocationInput
               name="location_lost"
               errors={errors.lat}
+              initialValue={formData.address && formData.address}
               callbackFn={handleLocationInput}
             />
           </div>
@@ -307,9 +313,11 @@ function AddPetForm({ action }) {
         petId={newPetId}
         handleOpen={handlePopupOpen}
         handleClose={handlePopupClose}
-        title={"Pet Added!"}
+        title={action === "add" ? "Pet Added!" : "Pet Updated!"}
         description={
-          "Your pet was successfully added. Check out their profile page or browse the pet map."
+          action === "add"
+            ? "Your pet was successfully added. Check out their profile page or browse the pet map."
+            : "Your pet was successfully updated. Check out their profile page or browse the pet map."
         }
       />
     </>
