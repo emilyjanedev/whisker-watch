@@ -3,8 +3,9 @@ import { Typography } from "@mui/material";
 import SignInPrompt from "../../components/SignInPrompt/SignInPrompt.jsx";
 import AddPetForm from "../../components/AddPetForm/AddPetForm.jsx";
 import { useAuth } from "../../contexts/AuthContext.jsx";
+import PropTypes from "prop-types";
 
-function AddPetPage() {
+function AddPetPage({ action }) {
   const { currentUser } = useAuth();
 
   return (
@@ -20,9 +21,17 @@ function AddPetPage() {
       >
         Let&apos;s Find your Lost Pet...
       </Typography>
-      {currentUser ? <AddPetForm /> : <SignInPrompt action="add" />}
+      {currentUser ? (
+        <AddPetForm action={action} />
+      ) : (
+        <SignInPrompt action="add" />
+      )}
     </div>
   );
 }
 
 export default AddPetPage;
+
+AddPetPage.propTypes = {
+  action: PropTypes.string.isrequired,
+};

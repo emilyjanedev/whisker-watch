@@ -9,10 +9,13 @@ import { validateForm } from "../../utils/validateForm.js";
 import StyledButton from "../StyledButton/StyledButton.jsx";
 import * as backend from "../../api/backend.js";
 import PropTypes from "prop-types";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 
 function SightingForm({ petId, handleNewSighting }) {
+  const { currentUser } = useAuth();
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
+    user_id: currentUser.uid,
     pet_id: petId,
     note: "",
     lat: "",
@@ -48,6 +51,7 @@ function SightingForm({ petId, handleNewSighting }) {
       const { lat, lng } = await backend.addPetSighting(formData, petId);
       handleNewSighting(await backend.getPetSightings(petId), { lat, lng });
       setFormData({
+        user_id: currentUser.uid,
         pet_id: petId,
         note: "",
         lat: "",

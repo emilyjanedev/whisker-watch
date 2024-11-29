@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<PetMapPage />} />
           <Route path="/pets/:id" element={<PetDetailsPage />} />
-          <Route path="/pets/add" element={<AddPetPage />} />
+          <Route path="/pets/add" element={<AddPetPage action="add" />} />
           <Route path="/login" element={<LoginPage />} />
           <Route
             path="/signup"
@@ -37,6 +37,14 @@ function App() {
             element={
               <PrivateRoute>
                 <UserProfilePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/pets/:id/update"
+            element={
+              <PrivateRoute>
+                <AddPetPage action="update" />
               </PrivateRoute>
             }
           />

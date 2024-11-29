@@ -40,7 +40,7 @@ function ManagePetCard({ pet, handleDelete }) {
             color="secondary"
             size="small"
             component={Link}
-            to={`/pets/${pet.id}`}
+            to={`/pets/${pet.id}/update`}
             disableElevation
           >
             Edit

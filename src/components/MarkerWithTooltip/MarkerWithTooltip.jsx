@@ -17,6 +17,7 @@ function MarkerWithTooltip({ marker }) {
       className="tooltip-marker"
       collisionBehavior={CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY}
       clickable={true}
+      zIndex={2}
       position={{ lat: marker.lat, lng: marker.lng }}
     >
       <div className="tooltip-marker__container">

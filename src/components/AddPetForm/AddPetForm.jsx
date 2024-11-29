@@ -1,7 +1,7 @@
 import "./AddPetForm.scss";
 import * as backend from "../../api/backend.js";
-import { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { validateForm } from "../../utils/validateForm.js";
 import { temperaments, sizes } from "../../constants/petConstants.js";
 import placeholder from "../../assets/images/pet-image-placeholder.jpg";
@@ -13,11 +13,14 @@ import { DateField, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { TextField } from "@mui/material";
 import StyledButton from "../../components/StyledButton/StyledButton.jsx";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 
-function AddPetForm() {
+function AddPetForm({ action }) {
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
+    user_id: currentUser.uid,
     pet_image: "",
     pet_name: "",
     pet_type: "",
@@ -34,6 +37,27 @@ function AddPetForm() {
   });
   const [open, setOpen] = useState(false);
   const [newPetId, setNewPetId] = useState("");
+  const { id } = useParams();
+
+  useEffect(() => {
+    const loadPetData = async () => {
+      const petData = await backend.getPetById(id);
+
+      const updatedFormData = { ...formData };
+
+      Object.keys(updatedFormData).forEach((key) => {
+        if (petData.hasOwnProperty(key)) {
+          updatedFormData[key] = petData[key];
+        }
+      });
+
+      setFormData(updatedFormData);
+    };
+
+    if (action === "update") {
+      loadPetData();
+    }
+  }, [action, id]);
 
   const handlePopupOpen = () => setOpen(true);
   const handlePopupClose = () => setOpen(false);
@@ -77,6 +101,7 @@ function AddPetForm() {
       setOpen(true);
 
       setFormData({
+        user_id: currentUser.uid,
         pet_image: "",
         pet_name: "",
         pet_type: "",
@@ -94,9 +119,14 @@ function AddPetForm() {
     }
   };
 
-  const imagePreview = formData.pet_image
-    ? URL.createObjectURL(formData.pet_image)
-    : placeholder;
+  let imagePreview;
+  if (action === "add") {
+    imagePreview = formData.pet_image
+      ? URL.createObjectURL(formData.pet_image)
+      : placeholder;
+  } else {
+    imagePreview = formData.pet_image;
+  }
 
   return (
     <>
@@ -259,7 +289,7 @@ function AddPetForm() {
             variant="contained"
             sx={{ width: { sm: "11.25rem" } }}
           >
-            Submit
+            {action === "add" ? "Submit" : "Update"}
           </StyledButton>
         </div>
       </form>

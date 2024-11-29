@@ -15,11 +15,11 @@ function UserProfilePage() {
 
   useEffect(() => {
     const loadUserPetList = async () => {
-      const petList = await backend.getPetsList(1);
+      const petList = await backend.getPetsList(currentUser.uid);
       setUserPetList(petList);
     };
     loadUserPetList();
-  }, []);
+  }, [currentUser.uid]);
 
   const handleDelete = async (petId) => {
     await backend.deletePet(petId);
