@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import PropTypes from "prop-types";
 import PlaceIcon from "@mui/icons-material/Place";
+import PetsIcon from "@mui/icons-material/Pets";
 import "./SightingCard.scss";
 import {
   ListItem,
@@ -9,7 +10,7 @@ import {
   Avatar,
   IconButton,
 } from "@mui/material";
-
+import { Link } from "react-router-dom";
 function SightingCard({ sightingData, handleClick }) {
   const { lat, lng } = sightingData;
 
@@ -18,24 +19,47 @@ function SightingCard({ sightingData, handleClick }) {
       <ListItem
         className="sighting-card__list-item"
         secondaryAction={
-          <IconButton
-            aria-label="delete"
-            onClick={() => handleClick({ lat, lng })}
-            size="large"
-          >
-            <PlaceIcon color="secondary" />
-          </IconButton>
+          handleClick ? (
+            <IconButton
+              aria-label="delete"
+              onClick={() => handleClick({ lat, lng })}
+              size="large"
+            >
+              <PlaceIcon color="secondary" />
+            </IconButton>
+          ) : (
+            <IconButton
+              aria-label="delete"
+              component={Link}
+              to={`/pets/${sightingData.pet_id}`}
+              size="large"
+            >
+              <PetsIcon color="secondary" />
+            </IconButton>
+          )
         }
       >
         <ListItemAvatar className="sighting-card__avatar-container">
-          <Avatar className="sighting-card__avatar" />
+          {sightingData.user_name ? (
+            <Avatar
+              alt={`${sightingData.user_name.toUpperCase()}'s profile image`}
+              src="/static/images/avatar/2.jpg"
+              className="sighting-card__avatar"
+            />
+          ) : (
+            <Avatar alt="user profile image" />
+          )}
         </ListItemAvatar>
         <ListItemText
           className="sighting-card__text"
           primary={sightingData.note}
           secondary={`Seen on ${format(sightingData.sighted_at, "MMM do")} - ${
             sightingData.city
-          } - Reported by ${sightingData.user_name}`}
+          } ${
+            sightingData.user_name
+              ? `- Reported by ${sightingData.user_name}`
+              : ""
+          }`}
         />
       </ListItem>
     </div>

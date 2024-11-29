@@ -89,6 +89,18 @@ const addUser = async (newUser) => {
   }
 };
 
+const getUserSightings = async (userId) => {
+  try {
+    const { data } = await axios.get(
+      `${baseUrl}/api/users/${userId}/sightings`
+    );
+    return data;
+  } catch (error) {
+    console.error("Could not get user sightings:", error);
+    throw new Error("Error getting user sightings.");
+  }
+};
+
 export {
   getPetsList,
   getPetById,
@@ -98,4 +110,5 @@ export {
   deletePet,
   addUser,
   updatePet,
+  getUserSightings,
 };

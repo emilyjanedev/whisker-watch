@@ -6,19 +6,24 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import ManagePetCard from "../../components/ManagePetCard/ManagePetCard.jsx";
 import "./UserProfilePage.scss";
+import SightingCard from "../../components/SightingCard/SightingCard.jsx";
 
 function UserProfilePage() {
   const [error, setError] = useState();
   const [userPetList, setUserPetList] = useState([]);
+  const [userSightingList, setUserSightingList] = useState([]);
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loadUserPetList = async () => {
+    const loadUserInfo = async () => {
       const petList = await backend.getPetsList(currentUser.uid);
       setUserPetList(petList);
+
+      const sightingList = await backend.getUserSightings(currentUser.uid);
+      setUserSightingList(sightingList);
     };
-    loadUserPetList();
+    loadUserInfo();
   }, [currentUser.uid]);
 
   const handleDelete = async (petId) => {
@@ -98,6 +103,25 @@ function UserProfilePage() {
             />
           ))}
         </List>
+        <Box>
+          <Typography
+            className="user-profile__title"
+            variant="h6"
+            component="h3"
+            sx={{ mt: { xs: 2, sm: 0 } }}
+          >
+            Your Reported Sightings
+          </Typography>
+          <List className="user-profile__sighting-list">
+            {userSightingList.map((sighting) => (
+              <SightingCard
+                key={sighting.id}
+                sightingData={sighting}
+                className="user-profile__sighting-card"
+              />
+            ))}
+          </List>
+        </Box>
       </Box>
     </Container>
   );
