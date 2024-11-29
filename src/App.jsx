@@ -19,7 +19,7 @@ function App() {
           <Route path="/" element={<PetMapPage />} />
           <Route path="/pets/:id" element={<PetDetailsPage />} />
           <Route path="/pets/add" element={<AddPetPage />} />
-          <Route path="/login" element={<LoginPage action="login" />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route
             path="/signup"
             element={<SignUpUpdatePage action="signup" />}

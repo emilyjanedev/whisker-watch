@@ -16,6 +16,7 @@ import MuiCard from "@mui/material/Card";
 import { GoogleIcon } from "./GoogleIcon";
 import StyledButton from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
+import { validateForm } from "../../utils/validateForm";
 import ResetPasswordModal from "../../components/ResetPasswordModal/ResetPasswordModal";
 import PropTypes from "prop-types";
 
@@ -53,22 +54,25 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-function LoginPage({ action }) {
-  const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
-  const [passwordConfirmError, setPasswordConfirmError] = useState(false);
-  const [passwordConfirmErrorMessage, setPasswordConfirmErrorMessage] =
-    useState("");
+function LoginPage() {
+  const [formData, setFormData] = useState({
+    user_email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({
     status: "",
     message: "",
   });
   const [open, setOpen] = useState(false);
-  const { signup, login, loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -96,101 +100,30 @@ function LoginPage({ action }) {
     }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setMessage({
       status: "",
       message: "",
     });
+    const newErrors = validateForm(formData);
+    setErrors(newErrors);
 
-    if (emailError || passwordError) {
-      return;
-    }
-
-    if (validateInputs()) {
-      const data = new FormData(event.currentTarget);
-      console.log({
-        email: data.get("email"),
-        password: data.get("password"),
-        passwordConfirm: data.get("confirm-password"),
-      });
-
+    if (Object.keys(newErrors).length === 0) {
       try {
         setLoading(true);
-        if (action === "signup") {
-          const { user } = await signup(
-            data.get("email"),
-            data.get("password")
-          );
-          const userData = user._delegate;
-          console.log(userData);
-
-          if (userData) {
-            setMessage({
-              ...message,
-              status: "success",
-              message: "User account created!",
-            });
-          }
-        } else {
-          const { user } = await login(data.get("email"), data.get("password"));
-          const userData = user._delegate;
-          console.log(userData);
-          navigate("/user/profile");
-        }
+        await login(formData.user_email, formData.password);
+        navigate("/user/profile");
       } catch (error) {
         setMessage({
           ...message,
           status: "error",
-          message:
-            action === "login"
-              ? "Could not login."
-              : "Could not create user account.",
+          message: "Could not login.",
         });
         console.error(error);
       }
       setLoading(false);
     }
-  };
-
-  const validateInputs = () => {
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-    const passwordConfirm = document.getElementById("confirm-password");
-
-    let isValid = true;
-
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage("Please enter a valid email address.");
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage("");
-    }
-
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage("Password must be at least 6 characters long.");
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage("");
-    }
-
-    if (
-      passwordConfirm &&
-      (!passwordConfirm.value || passwordConfirm.value !== password.value)
-    ) {
-      setPasswordConfirmError(true);
-      setPasswordConfirmErrorMessage("Passwords do not match.");
-      isValid = false;
-    } else {
-      setPasswordConfirmError(false);
-      setPasswordErrorMessage("");
-    }
-    console.log(isValid);
-    return isValid;
   };
 
   return (
@@ -218,7 +151,7 @@ function LoginPage({ action }) {
               fontWeight: "medium",
             }}
           >
-            {action === "login" ? "Sign in" : "Sign up"}
+            Sign In
           </Typography>
           {message.status && (
             <Alert severity={message.status}>{message.message}</Alert>
@@ -237,25 +170,29 @@ function LoginPage({ action }) {
             <FormControl>
               <FormLabel htmlFor="email">Email</FormLabel>
               <TextField
-                error={emailError}
-                helperText={emailErrorMessage}
-                id="email"
+                value={formData.user_email}
+                onChange={handleChange}
+                error={errors.user_email ? true : false}
+                helperText={errors.user_email}
+                id="user_email"
                 type="email"
-                name="email"
+                name="user_email"
                 placeholder="your@email.com"
                 autoComplete="email"
                 autoFocus
                 required
                 fullWidth
                 variant="outlined"
-                color={emailError ? "error" : "primary"}
+                color="secondary"
               />
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="password">Password</FormLabel>
               <TextField
-                error={passwordError}
-                helperText={passwordErrorMessage}
+                value={formData.password}
+                onChange={handleChange}
+                error={errors.password ? true : false}
+                helperText={errors.password}
                 name="password"
                 placeholder="••••••"
                 type="password"
@@ -265,48 +202,27 @@ function LoginPage({ action }) {
                 required
                 fullWidth
                 variant="outlined"
-                color={passwordError ? "error" : "primary"}
+                color="secondary"
               />
             </FormControl>
-            {action === "signup" && (
-              <FormControl>
-                <FormLabel htmlFor="password">Confirm Password</FormLabel>
-                <TextField
-                  error={passwordConfirmError}
-                  helperText={passwordConfirmErrorMessage}
-                  name="confirm-password"
-                  placeholder="••••••"
-                  type="password"
-                  id="confirm-password"
-                  autoFocus
-                  required
-                  fullWidth
-                  variant="outlined"
-                  color={passwordConfirmError ? "error" : "primary"}
-                />
-              </FormControl>
-            )}
-            {action === "login" && (
-              <Link
-                component="button"
-                type="button"
-                onClick={handleClickOpen}
-                variant="body2"
-                sx={{ alignSelf: "center" }}
-                color="secondary"
-              >
-                Forgot your password?
-              </Link>
-            )}
+            <Link
+              component="button"
+              type="button"
+              onClick={handleClickOpen}
+              variant="body2"
+              sx={{ alignSelf: "center" }}
+              color="secondary"
+            >
+              Forgot your password?
+            </Link>
             <StyledButton
               type="submit"
               fullWidth
               disableElevation
               variant="contained"
               disabled={loading}
-              onClick={validateInputs}
             >
-              {action === "login" ? "Sign in" : "Sign up"}
+              Sign in
             </StyledButton>
           </Box>
           <ResetPasswordModal open={open} handleClose={handleClose} />
@@ -320,21 +236,18 @@ function LoginPage({ action }) {
               startIcon={<GoogleIcon />}
               color="secondary"
             >
-              {action === "login" ? "Sign in" : "Sign up"} with Google
+              Sign in with Google
             </StyledButton>
-
             <Typography sx={{ textAlign: "center" }}>
-              {action === "login"
-                ? "Don't have an account? "
-                : "Already have an account? "}
+              Don&apos;t have an account?{" "}
               <Link
                 component={RouterLink}
-                to={action === "login" ? "/signup" : "/login"}
+                to="/signup"
                 variant="body2"
                 sx={{ alignSelf: "center" }}
                 color="secondary"
               >
-                {action === "login" ? "Sign up" : "Login"}
+                Sign up
               </Link>
             </Typography>
           </Box>

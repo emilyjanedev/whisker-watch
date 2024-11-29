@@ -110,6 +110,10 @@ function SignUpUpdatePage({ action }) {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
+      if (formData.confirm_password !== formData.password) {
+        setErrors({ ...errors, confirm_password: "Passwords do not match" });
+        return;
+      }
       try {
         setLoading(true);
         if (action === "signup") {
@@ -205,7 +209,7 @@ function SignUpUpdatePage({ action }) {
                 required
                 fullWidth
                 variant="outlined"
-                color={errors.user_name ? "error" : "primary"}
+                color="secondary"
               />
             </FormControl>
             <FormControl>
@@ -224,7 +228,7 @@ function SignUpUpdatePage({ action }) {
                 required
                 fullWidth
                 variant="outlined"
-                color={errors.user_email ? "error" : "primary"}
+                color="secondary"
               />
             </FormControl>
             <FormControl>
@@ -243,7 +247,7 @@ function SignUpUpdatePage({ action }) {
                 required
                 fullWidth
                 variant="outlined"
-                color={errors.password ? "error" : "primary"}
+                color="secondary"
               />
             </FormControl>
             <FormControl>
@@ -261,7 +265,7 @@ function SignUpUpdatePage({ action }) {
                 required
                 fullWidth
                 variant="outlined"
-                color={errors.confirm_password ? "error" : "primary"}
+                color="secondary"
               />
             </FormControl>
             <StyledButton
