@@ -66,6 +66,16 @@ const addPetSighting = async (newSighting, petId) => {
   }
 };
 
+const addUser = async (newUser) => {
+  try {
+    const { data } = await axios.post(`${baseUrl}/api/users`, newUser);
+    return data;
+  } catch (error) {
+    console.error("Could not add user:", error);
+    throw new Error("Error adding user.");
+  }
+};
+
 export {
   getPetsList,
   getPetById,
@@ -73,4 +83,5 @@ export {
   addPet,
   addPetSighting,
   deletePet,
+  addUser,
 };

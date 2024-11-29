@@ -60,7 +60,7 @@ function UserProfilePage() {
           <StyledButton
             className="user-profile__action user-profile__action--update"
             component={Link}
-            to="/user/profile/update"
+            to="/user/update-profile"
             variant="outlined"
             color="secondary"
             disableElevation

@@ -13,11 +13,10 @@ import {
   Alert,
 } from "@mui/material";
 import MuiCard from "@mui/material/Card";
-import { GoogleIcon } from "./CustomIcons";
+import { GoogleIcon } from "./GoogleIcon";
 import StyledButton from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
 import ResetPasswordModal from "../../components/ResetPasswordModal/ResetPasswordModal";
-
 import PropTypes from "prop-types";
 
 const Card = styled(MuiCard)(({ theme }) => ({

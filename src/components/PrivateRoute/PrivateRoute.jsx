@@ -11,5 +11,5 @@ function PrivateRoute({ children }) {
 export default PrivateRoute;
 
 PrivateRoute.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.array.isRequired,
 };
