@@ -12,6 +12,7 @@ import InputFileUpload from "../../components/InputFileUpload/InputFileUpload.js
 import { DateField, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { TextField } from "@mui/material";
+import dayjs from "dayjs";
 import StyledButton from "../../components/StyledButton/StyledButton.jsx";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 import PropTypes from "prop-types";
@@ -48,7 +49,13 @@ function AddPetForm({ action }) {
 
       Object.keys(updatedFormData).forEach((key) => {
         if (Object.prototype.hasOwnProperty.call(petData, key)) {
-          updatedFormData[key] = petData[key];
+          if (key === "missing_since") {
+            updatedFormData[key] = dayjs(petData.missing_since).isValid()
+              ? dayjs(petData.missing_since)
+              : null;
+          } else {
+            updatedFormData[key] = petData[key];
+          }
         }
       });
 
@@ -58,7 +65,7 @@ function AddPetForm({ action }) {
     if (action === "update") {
       loadPetData();
     }
-  });
+  }, [action, id]);
 
   const handlePopupOpen = () => setOpen(true);
   const handlePopupClose = () => setOpen(false);
@@ -173,10 +180,11 @@ function AddPetForm({ action }) {
             <DateField
               label="Missing Since"
               name="missing_since"
+              value={formData.missing_since || null}
               onChange={(newValue) =>
                 setFormData((prevData) => ({
                   ...prevData,
-                  missing_since: newValue,
+                  missing_since: newValue?.isValid() ? newValue : null,
                 }))
               }
               error={errors.missing_since ? true : false}
