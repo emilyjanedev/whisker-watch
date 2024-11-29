@@ -18,7 +18,6 @@ import StyledButton from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
 import { validateForm } from "../../utils/validateForm";
 import ResetPasswordModal from "../../components/ResetPasswordModal/ResetPasswordModal";
-import PropTypes from "prop-types";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -113,7 +112,7 @@ function LoginPage() {
       try {
         setLoading(true);
         await login(formData.user_email, formData.password);
-        navigate("/user/profile");
+        navigate("/");
       } catch (error) {
         setMessage({
           ...message,
@@ -258,7 +257,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
-LoginPage.propTypes = {
-  action: PropTypes.string.isRequired,
-};
