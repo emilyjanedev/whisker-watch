@@ -68,7 +68,13 @@ function SignUpUpdatePage({ action }) {
     status: "",
     message: "",
   });
-  const { signup, loginWithGoogle } = useAuth();
+  const {
+    signup,
+    loginWithGoogle,
+    currentUser,
+    updateUserEmail,
+    updateUserPassword,
+  } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -78,10 +84,15 @@ function SignUpUpdatePage({ action }) {
 
   useEffect(() => {
     const loadUserData = async () => {
-      console.log("Load User Data For Updating Profile");
+      setFormData({
+        user_email: currentUser.email,
+        user_name: currentUser.displayName,
+        password: "",
+        confirm_password: "",
+      });
     };
     action === "update" && loadUserData();
-  }, [action]);
+  }, [action, currentUser]);
 
   const handleGoogleLogin = async () => {
     setMessage({
@@ -145,8 +156,15 @@ function SignUpUpdatePage({ action }) {
             });
           }
         } else {
-          console.log("Update Profile");
-          //profile update logic
+          if (formData.user_email !== currentUser.email) {
+            await updateUserEmail(formData.user_email);
+          }
+          await updateUserPassword(formData.password);
+          setMessage({
+            ...message,
+            status: "success",
+            message: "User account updated!",
+          });
         }
       } catch (error) {
         setMessage({
@@ -254,7 +272,6 @@ function SignUpUpdatePage({ action }) {
                 id="password"
                 autoComplete="current-password"
                 autoFocus
-                required
                 fullWidth
                 variant="outlined"
                 color="secondary"
@@ -272,7 +289,6 @@ function SignUpUpdatePage({ action }) {
                 type="password"
                 id="confirm_password"
                 autoFocus
-                required
                 fullWidth
                 variant="outlined"
                 color="secondary"
@@ -287,6 +303,19 @@ function SignUpUpdatePage({ action }) {
             >
               {action === "signup" ? "Sign up" : "Update"}
             </StyledButton>
+            {action === "update" && (
+              <StyledButton
+                fullWidth
+                disableElevation
+                variant="outlined"
+                color="secondary"
+                onClick={() => {
+                  navigate("/user/profile");
+                }}
+              >
+                Cancel
+              </StyledButton>
+            )}
           </Box>
           {action === "signup" && (
             <>

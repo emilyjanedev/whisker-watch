@@ -6,6 +6,8 @@ import {
   signInWithPopup,
   onAuthStateChanged,
   signOut,
+  updateEmail,
+  updatePassword,
 } from "firebase/auth";
 import { auth, googleProvider } from "../auth/firebase";
 import PropTypes from "prop-types";
@@ -38,6 +40,14 @@ export function AuthProvider({ children }) {
     return sendPasswordResetEmail(auth, email);
   };
 
+  const updateUserEmail = (email) => {
+    return updateEmail(auth.currentUser, email);
+  };
+
+  const updateUserPassword = (password) => {
+    return updatePassword(auth.currentUser, password);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setCurrentUser(currentUser);
@@ -53,6 +63,8 @@ export function AuthProvider({ children }) {
     loginWithGoogle,
     logout,
     resetPassword,
+    updateUserEmail,
+    updateUserPassword,
   };
 
   return (
