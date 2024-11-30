@@ -1,10 +1,11 @@
 @use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
 
 .manage-pet-card {
   border-radius: 1.25rem;
   display: flex;
   flex-direction: column;
-  background-color: #f7f7f7;
+  background-color: $light-gray;
   padding: 1rem;
   align-items: center;
   width: 12.5rem;

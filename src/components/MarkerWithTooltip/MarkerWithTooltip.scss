@@ -1,3 +1,5 @@
+@use "../../styles/partials/variables" as *;
+
 .tooltip-marker {
   &__container {
     position: relative;
@@ -10,9 +12,9 @@
     position: absolute;
     bottom: 90%;
     left: 50%;
-    border: 0.125rem solid #83c5be;
+    border: 0.125rem solid $primary;
     transform: translateX(-50%);
-    background-color: #006d77;
+    background-color: $secondary;
     font-weight: 500;
     color: white;
     padding: 0.5rem 0.75rem;
@@ -32,7 +34,7 @@
       transform: translateX(-50%);
       border-width: 0.375rem;
       border-style: solid;
-      border-color: #006d77 transparent transparent transparent;
+      border-color: $secondary transparent transparent transparent;
     }
 
     &.visible {

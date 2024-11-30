@@ -1,9 +1,11 @@
+@use "../../styles/partials/variables" as *;
+
 .sign-in-prompt {
   margin-top: 1.5rem;
   padding: 1rem;
   text-align: center;
   border-radius: 1.25rem;
-  background-color: #f7f7f7;
+  background-color: $light-gray;
 
   display: flex;
   flex-direction: column;
@@ -12,7 +14,6 @@
 
   &__message {
     font-size: 1rem;
-    color: #333;
   }
 
   &__button {
