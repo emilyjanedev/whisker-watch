@@ -51,7 +51,7 @@ function UserProfilePage() {
           variant="h4"
           component="h1"
         >
-          Hello, Emily!
+          Hello, {currentUser.displayName}!
         </Typography>
         {error && <Alert className="user-profile__error">{error}</Alert>}
         <Typography

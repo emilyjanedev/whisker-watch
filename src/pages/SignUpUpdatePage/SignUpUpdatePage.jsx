@@ -19,6 +19,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { validateForm } from "../../utils/validateForm";
 import * as backend from "../../api/backend.js";
 import PropTypes from "prop-types";
+import { updateProfile } from "firebase/auth";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -77,7 +78,7 @@ function SignUpUpdatePage({ action }) {
 
   useEffect(() => {
     const loadUserData = async () => {
-      console.log("Load User Data");
+      console.log("Load User Data For Updating Profile");
     };
     action === "update" && loadUserData();
   }, [action]);
@@ -118,6 +119,9 @@ function SignUpUpdatePage({ action }) {
         setLoading(true);
         if (action === "signup") {
           const { user } = await signup(formData.user_email, formData.password);
+          await updateProfile(user, {
+            displayName: formData.user_name,
+          });
           const userId = user.uid;
 
           const backendUserData = {
