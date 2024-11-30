@@ -107,9 +107,15 @@ function NavBar() {
               ))}
             </Menu>
           </Box>
-          <PetsIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <PetsIcon
+            sx={{
+              display: { xs: "flex", md: "none" },
+              height: { xs: "20px" },
+              mr: 0.5,
+            }}
+          />
           <Typography
-            variant="h6"
+            variant="body1"
             noWrap
             component={Link}
             to="/"
@@ -158,6 +164,7 @@ function NavBar() {
                 to="/login"
                 disableElevation
                 variant="contained"
+                size="small"
                 color="secondary"
               >
                 Sign In
@@ -190,13 +197,6 @@ function NavBar() {
               <MenuItem onClick={handleLogout}>
                 <Typography sx={{ textAlign: "center" }}>Logout</Typography>
               </MenuItem>
-              {/* {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>
-                    {setting}
-                  </Typography>
-                </MenuItem>
-              ))} */}
             </Menu>
           </Box>
         </Toolbar>
