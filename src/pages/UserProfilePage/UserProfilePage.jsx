@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Alert, Container, Typography, Box, List } from "@mui/material";
+import {
+  Alert,
+  Container,
+  Typography,
+  Box,
+  List,
+  Tooltip,
+} from "@mui/material";
 import * as backend from "../../api/backend.js";
 import StyledButton from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
@@ -43,6 +50,8 @@ function UserProfilePage() {
     }
   };
 
+  const userSignInProvider = currentUser.providerData[0].providerId;
+  console.log(userSignInProvider);
   return (
     <Container className="user-profile">
       <Box className="user-profile__sidebar">
@@ -69,6 +78,7 @@ function UserProfilePage() {
             variant="outlined"
             color="secondary"
             disableElevation
+            disabled={userSignInProvider !== "password"}
             sx={{ bgcolor: "white" }}
           >
             Update Profile
