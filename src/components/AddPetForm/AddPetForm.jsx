@@ -47,6 +47,10 @@ function AddPetForm({ action }) {
     const loadPetData = async () => {
       const petData = await backend.getPetById(petId);
 
+      if (currentUser.uid !== petData.user_id) {
+        navigate("/user/profile");
+      }
+
       const updatedFormData = { ...formData };
 
       Object.keys(updatedFormData).forEach((key) => {
@@ -64,7 +68,6 @@ function AddPetForm({ action }) {
       setFormData(updatedFormData);
       setImagePreview(updatedFormData.pet_image);
     };
-
     if (action === "update") {
       loadPetData();
     }

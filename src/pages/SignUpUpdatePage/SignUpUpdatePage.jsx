@@ -135,7 +135,13 @@ function SignUpUpdatePage({ action }) {
             setMessage({
               ...message,
               status: "success",
-              message: "User account created!",
+              message: "User account created! You are logged in.",
+            });
+            setFormData({
+              user_name: "",
+              user_email: "",
+              password: "",
+              confirm_password: "",
             });
           }
         } else {
