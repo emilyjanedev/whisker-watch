@@ -48,4 +48,10 @@
       flex-wrap: wrap;
     }
   }
+
+  &__sighting-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }

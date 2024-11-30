@@ -70,5 +70,5 @@ export default SightingCard;
 
 SightingCard.propTypes = {
   sightingData: PropTypes.object.isRequired,
-  handleClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func,
 };
