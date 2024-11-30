@@ -97,14 +97,20 @@ function UserProfilePage() {
           Manage Your Pets
         </Typography>
         <List className="user-profile__pet-list">
-          {userPetList.map((pet) => (
-            <ManagePetCard
-              key={pet.id}
-              pet={pet}
-              handleDelete={handleDelete}
-              className="user-profile__pet-card"
-            />
-          ))}
+          {userPetList.length > 0 ? (
+            userPetList.map((pet) => (
+              <ManagePetCard
+                key={pet.id}
+                pet={pet}
+                handleDelete={handleDelete}
+                className="user-profile__pet-card"
+              />
+            ))
+          ) : (
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+              You haven&apos;t posted any pets yet.
+            </Typography>
+          )}
         </List>
         <Box>
           <Typography
@@ -116,13 +122,19 @@ function UserProfilePage() {
             Your Reported Sightings
           </Typography>
           <List className="user-profile__sighting-list">
-            {userSightingList.map((sighting) => (
-              <SightingCard
-                key={sighting.id}
-                sightingData={sighting}
-                className="user-profile__sighting-card"
-              />
-            ))}
+            {userSightingList.length > 0 ? (
+              userSightingList.map((sighting) => (
+                <SightingCard
+                  key={sighting.id}
+                  sightingData={sighting}
+                  className="user-profile__sighting-card"
+                />
+              ))
+            ) : (
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                You haven&apos;t reported any pet sightings yet.
+              </Typography>
+            )}
           </List>
         </Box>
       </Box>
