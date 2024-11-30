@@ -19,7 +19,7 @@ function AddPetPage({ action }) {
           marginBottom: { xs: "1rem", sm: "2rem" },
         }}
       >
-        Let&apos;s Find your Lost Pet...
+        {action === "add" ? "Let's Find your Lost Pet..." : "Update Your Pet"}
       </Typography>
       {currentUser ? (
         <AddPetForm action={action} />

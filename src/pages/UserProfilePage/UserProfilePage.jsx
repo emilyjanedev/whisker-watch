@@ -28,7 +28,7 @@ function UserProfilePage() {
 
   const handleDelete = async (petId) => {
     await backend.deletePet(petId);
-    const updatedPetList = await backend.getPetsList(1);
+    const updatedPetList = await backend.getPetsList(currentUser.uid);
     setUserPetList(updatedPetList);
   };
 
