@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 
 const StyledButton = styled(Button)(() => ({
   width: "100%",
-  borderRadius: "20px",
+  borderRadius: "1.25rem",
   textTransform: "capitalize",
 }));
 

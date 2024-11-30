@@ -160,7 +160,7 @@ function PetDetailsPage() {
                 centralMarker={petData}
               />
             ) : (
-              <Skeleton variant="rectangle" sx={{ height: "300px" }} />
+              <Skeleton variant="rectangle" sx={{ height: "18.75rem" }} />
             )}
           </div>
           <List

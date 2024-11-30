@@ -2,7 +2,7 @@
 
 .pet-map-page {
   padding: 0 1rem;
-  max-width: 1280px;
+  max-width: 80rem;
   margin: 0 auto;
 
   @include tablet {
@@ -21,7 +21,7 @@
   }
 
   &__location-input {
-    height: 80px;
+    height: 5rem;
     padding-top: 1rem;
     background-color: white;
 
@@ -35,9 +35,9 @@
   }
 
   &__map {
-    border-radius: 20px;
+    border-radius: 1.25rem;
     overflow: hidden;
-    height: 350px;
+    height: 21.875rem;
     margin-top: 1rem;
 
     @include tablet {
@@ -51,7 +51,7 @@
   &__map-results {
     @include tablet {
       width: 50%;
-      max-width: 400px;
+      max-width: 25rem;
       margin: 0;
       height: 100%;
       overflow: scroll;

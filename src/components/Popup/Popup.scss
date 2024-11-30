@@ -8,14 +8,14 @@
   height: 100vh;
   transform: translate(-50%, -50%);
   background-color: white;
-  box-shadow: 24px;
+  box-shadow: 1.5rem;
   padding: 6rem 2rem;
 
   @include tablet {
     padding: 2rem;
-    width: 400px;
-    height: 250px;
-    border-radius: 20px;
+    width: 25rem;
+    height: 15.625rem;
+    border-radius: 1.25rem;
   }
 
   &__button-container {

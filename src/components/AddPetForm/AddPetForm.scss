@@ -19,9 +19,9 @@
   }
 
   &__image {
-    width: 200px;
-    height: 200px;
-    border-radius: 20px;
+    width: 12.5rem;
+    height: 12.5rem;
+    border-radius: 1.25rem;
     object-fit: cover;
   }
 
@@ -33,7 +33,7 @@
     flex-grow: 1;
     justify-content: space-between;
     background-color: white;
-    border-radius: 20px;
+    border-radius: 1.25rem;
 
     @include tablet {
       flex-direction: row;

@@ -165,7 +165,7 @@ function NavBar() {
             )}
 
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{ mt: "2.8125rem" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{

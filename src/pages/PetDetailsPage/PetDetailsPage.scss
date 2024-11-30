@@ -2,12 +2,12 @@
 
 .pet-details-page {
   padding: 0 1rem;
-  max-width: 1024px;
+  max-width: 64rem;
   margin: 1rem auto;
 
   &__layout {
     @include tablet {
-      height: 850px;
+      height: 53.125rem;
     }
 
     @include tablet {
@@ -36,12 +36,12 @@
     width: 100%;
     height: auto;
     aspect-ratio: 1/1;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     object-fit: cover;
 
     @include tablet {
-      width: 300px;
-      height: 300px;
+      width: 18.75rem;
+      height: 18.75rem;
     }
   }
 
@@ -59,9 +59,9 @@
   }
 
   &__map-container {
-    border-radius: 20px;
+    border-radius: 1.25rem;
     overflow: hidden;
-    height: 300px;
+    height: 18.75rem;
     margin-bottom: 1rem;
 
     @include tablet {
@@ -84,10 +84,10 @@
 
   &__details-and-form {
     background-color: white;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     @include tablet {
       width: 45%;
-      max-width: 300px;
+      max-width: 18.75rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
