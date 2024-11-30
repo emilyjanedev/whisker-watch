@@ -114,9 +114,17 @@ function PetDetailsPage() {
               variant="body1"
               component="p"
               className="pet-details-page__description"
-              sx={{ mb: "1rem" }}
+              sx={{ mb: "0.5rem" }}
             >
               {petData.description}
+            </Typography>
+            <Typography
+              variant="body2"
+              component="p"
+              color="secondary"
+              sx={{ mb: 2.5, fontWeight: "medium" }}
+            >
+              Contact: {petData.contact_name} - {petData.contact_email}
             </Typography>
           </div>
           <div className="pet-details-page__sighting-form">
@@ -159,14 +167,19 @@ function PetDetailsPage() {
             className="pet-details-page__sightings-list"
             sx={{ padding: "0.5rem" }}
           >
-            {petSightings.length > 0 &&
+            {petSightings.length > 0 ? (
               petSightings.map((sighting) => (
                 <SightingCard
                   sightingData={sighting}
                   handleClick={handleSightingCardClick}
                   key={sighting.id}
                 />
-              ))}
+              ))
+            ) : (
+              <Typography variant="body1" color="text.secondary">
+                No sightings of {petData.pet_name} yet.
+              </Typography>
+            )}
           </List>
         </div>
       </div>
