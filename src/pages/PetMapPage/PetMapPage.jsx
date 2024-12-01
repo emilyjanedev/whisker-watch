@@ -55,7 +55,7 @@ function PetMapPage() {
     setMapLocation(coords);
   }, []);
 
-  const handleMarkerClick = useCallback((petId) => {
+  const handleMarkerClick = useCallback((petId, markerLocation) => {
     setActivePet(petId);
     setTimeout(() => {
       setActivePet(null);
@@ -67,6 +67,8 @@ function PetMapPage() {
         block: "center",
       });
     }
+
+    setMapLocation(markerLocation);
   }, []);
 
   return (

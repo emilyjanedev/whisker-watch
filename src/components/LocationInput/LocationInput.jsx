@@ -96,4 +96,5 @@ LocationInput.propTypes = {
   name: PropTypes.string,
   errors: PropTypes.string,
   initialValue: PropTypes.string,
+  resetInput: PropTypes.bool,
 };

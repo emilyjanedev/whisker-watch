@@ -7,7 +7,8 @@ function MarkerWithImage({ marker, handleMarkerClick = null }) {
   const [zIndex, setZIndex] = useState(1);
   const handleClick = () => {
     setZIndex(zIndex + 1);
-    handleMarkerClick && handleMarkerClick(marker.id);
+    handleMarkerClick &&
+      handleMarkerClick(marker.id, { lat: marker.lat, lng: marker.lng });
   };
 
   return (
