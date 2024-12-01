@@ -13,6 +13,7 @@ import { useAuth } from "../../contexts/AuthContext.jsx";
 
 function SightingForm({ petId, handleNewSighting }) {
   const { currentUser } = useAuth();
+  const [resetLocationInput, setResetLocationInput] = useState(false);
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     user_id: currentUser.uid,
@@ -59,6 +60,7 @@ function SightingForm({ petId, handleNewSighting }) {
         city: "",
         sighted_at: null,
       });
+      setResetLocationInput(true);
     }
   };
 
@@ -84,6 +86,7 @@ function SightingForm({ petId, handleNewSighting }) {
 
         <div className="add-sighting-form__location-input-container">
           <LocationInput
+            resetInput={resetLocationInput}
             callbackFn={handleLocationInput}
             className="add-sighting-form__location-input"
             name="sighted_at"

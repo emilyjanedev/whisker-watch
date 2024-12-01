@@ -3,6 +3,16 @@ import validator from "validator";
 const validateForm = (formData) => {
   const newErrors = {};
   for (const [key, value] of Object.entries(formData)) {
+    let isDate;
+
+    const date = new Date(value);
+
+    if (isNaN(date.getTime())) {
+      isDate = false;
+    } else {
+      isDate = true;
+    }
+
     if (key === "contact_email") {
       if (!validator.isEmail(value)) {
         newErrors[key] = "Please enter a valid email address";
@@ -21,6 +31,11 @@ const validateForm = (formData) => {
       }
     } else if (!value) {
       newErrors[key] = "*Field is required";
+    } else if (isDate) {
+      const currentDate = new Date();
+      if (date > currentDate) {
+        newErrors[key] = "The date cannot be in the future.";
+      }
     }
   }
   return newErrors;

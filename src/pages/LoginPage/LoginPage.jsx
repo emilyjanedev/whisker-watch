@@ -17,6 +17,7 @@ import { GoogleIcon } from "./GoogleIcon";
 import StyledButton from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
 import { validateForm } from "../../utils/validateForm";
+import { generateErrorMessage } from "../../utils/firebaseErrorResponses";
 import ResetPasswordModal from "../../components/ResetPasswordModal/ResetPasswordModal";
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -114,11 +115,13 @@ function LoginPage() {
         await login(formData.user_email, formData.password);
         navigate("/");
       } catch (error) {
+        const errorMessage = generateErrorMessage(error);
         setMessage({
           ...message,
           status: "error",
-          message: "Could not login.",
+          message: errorMessage,
         });
+        console.error(error);
         console.error(error);
       }
       setLoading(false);

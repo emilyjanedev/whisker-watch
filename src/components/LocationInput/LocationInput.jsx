@@ -4,7 +4,13 @@ import { useMapsLibrary } from "@vis.gl/react-google-maps";
 import { Autocomplete, TextField } from "@mui/material";
 import * as googleMapsApi from "../../api/googleMaps.js";
 
-function LocationInput({ callbackFn, name = "", errors, initialValue = "" }) {
+function LocationInput({
+  callbackFn,
+  name = "",
+  errors,
+  initialValue = "",
+  resetInput = null,
+}) {
   const inputRef = useRef(null);
   const placesLib = useMapsLibrary("places");
   const [address, setAddress] = useState("");
@@ -16,6 +22,12 @@ function LocationInput({ callbackFn, name = "", errors, initialValue = "" }) {
     }
     setAddress(initialValue);
   }, [initialValue]);
+
+  useEffect(() => {
+    if (resetInput) {
+      setAddress("");
+    }
+  }, [resetInput]);
 
   const fetchAddressPredictions = useCallback(
     (inputValue) => {

@@ -21,6 +21,7 @@ import { validateSignUpForm } from "../../utils/validateSignUpForm";
 import * as backend from "../../api/backend.js";
 import PropTypes from "prop-types";
 import { updateProfile } from "firebase/auth";
+import { generateErrorMessage } from "../../utils/firebaseErrorResponses.js";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -195,13 +196,11 @@ function SignUpUpdatePage({ action }) {
           });
         }
       } catch (error) {
+        const errorMessage = generateErrorMessage(error);
         setMessage({
           ...message,
           status: "error",
-          message:
-            action === "signup"
-              ? "Could not create user account."
-              : "Could not update user account.",
+          message: errorMessage,
         });
         console.error(error);
       }
