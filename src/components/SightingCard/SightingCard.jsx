@@ -53,9 +53,10 @@ function SightingCard({ sightingData, handleClick }) {
         <ListItemText
           className="sighting-card__text"
           primary={sightingData.note}
-          secondary={`Seen on ${format(sightingData.sighted_at, "MMM do")} - ${
-            sightingData.city
-          } ${
+          secondary={`Seen on ${format(
+            sightingData.sighted_at,
+            "MMM do, yyyy"
+          )} - ${sightingData.city} ${
             sightingData.user_name
               ? `- Reported by ${sightingData.user_name}`
               : ""
