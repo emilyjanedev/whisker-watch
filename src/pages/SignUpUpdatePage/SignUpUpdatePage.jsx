@@ -107,22 +107,27 @@ function SignUpUpdatePage({ action }) {
       const { user } = await loginWithGoogle();
 
       const userId = user.uid;
+      const { id } = await backend.getUserById(userId);
 
-      const backendUserData = {
-        id: userId,
-        user_name: user.displayName,
-        user_email: user.providerData[0].email,
-      };
+      if (!id) {
+        const backendUserData = {
+          id: userId,
+          user_name: user.displayName,
+          user_email: user.providerData[0].email,
+        };
 
-      const newUser = await backend.addUser(backendUserData);
-
-      if (userId && newUser.id) {
-        setMessage({
-          ...message,
-          status: "success",
-          message: "User account created! You are logged in.",
-        });
+        await backend.addUser(backendUserData);
       }
+
+      setMessage({
+        ...message,
+        status: "success",
+        message: "User account created! You are logged in.",
+      });
+
+      setTimeout(() => {
+        navigate("/user/profile");
+      }, 2200);
     } catch (error) {
       console.error(error);
       setMessage({
