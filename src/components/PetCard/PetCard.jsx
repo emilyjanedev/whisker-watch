@@ -7,9 +7,15 @@ import { format } from "date-fns";
 import "./PetCard.scss";
 import { Link } from "react-router-dom";
 
-const PetCard = forwardRef(({ pet, isActive }, ref) => {
+const PetCard = forwardRef(({ pet, isActive, handleClick }, ref) => {
   return (
-    <div ref={ref} className={`pet-card ${isActive ? "pet-card--active" : ""}`}>
+    <Box
+      ref={ref}
+      className={`pet-card ${isActive ? "pet-card--active" : ""}`}
+      onClick={() => {
+        handleClick(pet.id, { lat: pet.lat, lng: pet.lng });
+      }}
+    >
       <Box className="pet-card__details">
         <img
           className="pet-card__image"
@@ -70,7 +76,7 @@ const PetCard = forwardRef(({ pet, isActive }, ref) => {
           Details
         </StyledButton>
       </Box>
-    </div>
+    </Box>
   );
 });
 
@@ -81,4 +87,5 @@ export default PetCard;
 PetCard.propTypes = {
   pet: PropTypes.object.isRequired,
   isActive: PropTypes.bool.isRequired,
+  handleClick: PropTypes.func.isRequired,
 };

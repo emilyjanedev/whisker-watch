@@ -57,9 +57,6 @@ function PetMapPage() {
 
   const handleMarkerClick = useCallback((petId, markerLocation) => {
     setActivePet(petId);
-    setTimeout(() => {
-      setActivePet(null);
-    }, 5250);
 
     if (petCardRefs.current[petId]) {
       petCardRefs.current[petId].scrollIntoView({
@@ -69,6 +66,11 @@ function PetMapPage() {
     }
 
     setMapLocation(markerLocation);
+  }, []);
+
+  const handlePetCardClick = useCallback((petId, petLocation) => {
+    setActivePet(petId);
+    setMapLocation(petLocation);
   }, []);
 
   return (
@@ -82,6 +84,7 @@ function PetMapPage() {
               mapLocation={mapLocation}
               updateVisibleMarkers={updateVisiblePets}
               handleMarkerClick={handleMarkerClick}
+              activeMarker={activePet}
             />
           ) : (
             <Skeleton
@@ -108,6 +111,7 @@ function PetMapPage() {
                     pet={pet}
                     ref={(el) => (petCardRefs.current[pet.id] = el)}
                     isActive={activePet === pet.id}
+                    handleClick={handlePetCardClick}
                   />
                 </li>
               ))}

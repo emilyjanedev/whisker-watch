@@ -11,6 +11,10 @@
   border: 0.1563rem solid transparent;
   transition: border 0.3s;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &--active {
     border: 0.1563rem solid $primary;
     animation: border-pulse 1.5s;

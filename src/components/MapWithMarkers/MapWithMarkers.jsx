@@ -9,6 +9,7 @@ function MapWithMarkers({
   markersList,
   markerChoice,
   mapLocation,
+  activeMarker = "",
   updateVisibleMarkers = null,
   centralMarker = {},
   handleMarkerClick = null,
@@ -37,6 +38,7 @@ function MapWithMarkers({
   useEffect(() => {
     if (map) {
       map.panTo(mapLocation);
+      map.setZoom(14);
     }
   }, [mapLocation, map]);
 
@@ -54,6 +56,7 @@ function MapWithMarkers({
             key={marker.id}
             marker={marker}
             handleMarkerClick={handleMarkerClick && handleMarkerClick}
+            activeMarker={activeMarker}
           />
         ) : (
           <MarkerWithTooltip key={marker.id} marker={marker} />
@@ -73,4 +76,5 @@ MapWithMarkers.propTypes = {
   updateVisibleMarkers: PropTypes.func,
   centralMarker: PropTypes.object,
   handleMarkerClick: PropTypes.func,
+  activeMarker: PropTypes.number,
 };

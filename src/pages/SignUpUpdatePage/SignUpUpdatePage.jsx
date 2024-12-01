@@ -173,6 +173,9 @@ function SignUpUpdatePage({ action }) {
               password: "",
               confirm_password: "",
             });
+            setTimeout(() => {
+              navigate("/user/profile");
+            }, 2200);
           }
         } else {
           const userCredential = EmailAuthProvider.credential(
