@@ -297,8 +297,8 @@ function SignUpUpdatePage({ action }) {
                 <TextField
                   value={formData.current_password}
                   onChange={handleChange}
-                  error={errors.password ? true : false}
-                  helperText={errors.password}
+                  error={errors.current_password ? true : false}
+                  helperText={errors.current_password}
                   name="current_password"
                   placeholder="••••••"
                   type="password"
@@ -312,12 +312,19 @@ function SignUpUpdatePage({ action }) {
               </FormControl>
             )}
             <FormControl>
-              <FormLabel htmlFor="password">Password</FormLabel>
+              <FormLabel htmlFor="password">
+                {action === "update" && "New "}Password
+              </FormLabel>
               <TextField
                 value={formData.password}
                 onChange={handleChange}
                 error={errors.password ? true : false}
-                helperText={errors.password}
+                helperText={
+                  errors.password ||
+                  (action === "update"
+                    ? "Leave blank if you don't want to change."
+                    : "")
+                }
                 name="password"
                 placeholder="••••••"
                 type="password"
@@ -330,12 +337,19 @@ function SignUpUpdatePage({ action }) {
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
+              <FormLabel htmlFor="confirm_password">
+                Confirm {action === "update" && " New "}Password
+              </FormLabel>
               <TextField
                 value={formData.confirm_password}
                 onChange={handleChange}
                 error={errors.confirm_password ? true : false}
-                helperText={errors.confirm_password}
+                helperText={
+                  errors.confirm_password ||
+                  (action === "update"
+                    ? "Leave blank if you don't want to change."
+                    : "")
+                }
                 name="confirm_password"
                 placeholder="••••••"
                 type="password"
