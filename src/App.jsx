@@ -9,6 +9,7 @@ import UserProfilePage from "./pages/UserProfilePage/UserProfilePage.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute.jsx";
 import SignUpUpdatePage from "./pages/SignUpUpdatePage/SignUpUpdatePage.jsx";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

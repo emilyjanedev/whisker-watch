@@ -1,13 +1,13 @@
 import { AdvancedMarker, CollisionBehavior } from "@vis.gl/react-google-maps";
+import { useState } from "react";
 import "./MarkerWithImage.scss";
 import PropTypes from "prop-types";
-import { useState } from "react";
 
 function MarkerWithImage({ marker, handleMarkerClick = null }) {
   const [zIndex, setZIndex] = useState(1);
   const handleClick = () => {
-    handleMarkerClick(marker.id);
-    setZIndex(2);
+    setZIndex(zIndex + 1);
+    handleMarkerClick && handleMarkerClick(marker.id);
   };
 
   return (
@@ -15,8 +15,8 @@ function MarkerWithImage({ marker, handleMarkerClick = null }) {
       className="image-marker"
       collisionBehavior={CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY}
       clickable={true}
+      onClick={handleClick}
       zIndex={zIndex}
-      onClick={handleMarkerClick && handleClick}
       position={{ lat: marker.lat, lng: marker.lng }}
     >
       <div className="image-marker__container">

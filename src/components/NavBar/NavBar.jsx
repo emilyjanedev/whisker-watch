@@ -152,10 +152,7 @@ function NavBar() {
             {currentUser ? (
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt={`${currentUser.email.toUpperCase()}'s profile image`}
-                    src="/static/images/avatar/2.jpg"
-                  />
+                  <Avatar />
                 </IconButton>
               </Tooltip>
             ) : (

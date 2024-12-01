@@ -94,20 +94,37 @@ function SignUpUpdatePage({ action }) {
     action === "update" && loadUserData();
   }, [action, currentUser]);
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleSignUp = async () => {
     setMessage({
       status: "",
       message: "",
     });
     try {
-      await loginWithGoogle();
-      navigate("/");
+      const { user } = await loginWithGoogle();
+
+      const userId = user.uid;
+
+      const backendUserData = {
+        id: userId,
+        user_name: user.displayName,
+        user_email: user.providerData[0].email,
+      };
+
+      const newUser = await backend.addUser(backendUserData);
+
+      if (userId && newUser.id) {
+        setMessage({
+          ...message,
+          status: "success",
+          message: "User account created! You are logged in.",
+        });
+      }
     } catch (error) {
       console.error(error);
       setMessage({
         ...message,
         status: "error",
-        message: "Could not sign in with Google.",
+        message: "Could not sign up with Google.",
       });
     }
   };
@@ -324,7 +341,7 @@ function SignUpUpdatePage({ action }) {
                 <StyledButton
                   fullWidth
                   variant="outlined"
-                  onClick={handleGoogleLogin}
+                  onClick={handleGoogleSignUp}
                   startIcon={<GoogleIcon />}
                   color="secondary"
                 >
