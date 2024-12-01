@@ -4,7 +4,7 @@
 
 Google Maps API and Firebase Auth Accounts Required
 
-1. Copy the `.env.example` file and rename it to .env
+1. Copy the `.env.example` file and rename it to `.env`
 2. Fill in empty variables with your credentials for Google Maps API and Firebase Auth.
 3. In your terminal, run `npm install` to install all dependencies
 4. In your terminal run `npm run dev` and click on the provided url to see the website
