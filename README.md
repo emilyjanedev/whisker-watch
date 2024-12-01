@@ -2,7 +2,7 @@
 
 ## Overview
 
-WhiskerWatch is a place to reunite pet owners with their lost pets.
+WhiskerWatch is a platform dedicated to reuniting lost pets with their owners.
 
 ### Problem Space
 
@@ -22,20 +22,12 @@ Losing a pet is a distressing experience, pet owners often feel helpless and des
 - who should be aware if a pet is missing in their neighborhood so they can keep an eye out
 
 ### Features
-
-**MVP:**
-
 - As a user, I want to be able to post that my pet is missing
 - As a user, I want to be able to give relevant information (such as: location, picture, temperament) about my pet that will help others identify them and approach them safely
 - As a user, I want to be able to provide my contact information to be able to be reached if someone finds my pet
-
 - As a user, I want to be able to see missing pets that have been reported in my area
-
-**Future Implementations:**
-
-- As a user, I want to be able to report that I have seen a pet, and where I saw it, if I was unable to successfully approach and take in the pet
-- As a logged in user, I want to be able to update my lost pet listings, updating details or marking a pet as actively missing/found
-- As a logged in user, I want to be able to message other users to communicate about their pets
+- As a user, I want to be able to report that I have seen a pet, where I saw it, and if I was unable to successfully approach and take in the pet
+- As a logged in user, I want to be able to update the details of my lost pet listings or removing a pet listing
 
 ## Implementation
 
@@ -43,38 +35,36 @@ Losing a pet is a distressing experience, pet owners often feel helpless and des
 
 **MVP:**
 
+Front-End:
 - React
 - Sass
-- Express
+- MUI - Custom Theming
+- Google Maps API
+- Geolocation API
+- Firebase Authentication
+
+Back-End:
+- Express Server
+- Firebase Cloud Storage - User Uploaded Images
 - Knex.js
-- MySQL
-
-**Future Implementations:**
-
-- TypeScript
-- Next.js
-- User Authentication
+- MySQL Database
 
 ### APIs
-
-MVP:
-
 - Google Maps API: [Docs](https://developers.google.com/maps/documentation/javascript/overview)
+- Geolocation API
+- Firebase Auth API
+- Firebase Storage API
 
 ### Sitemap
 
 MVP:
 
-- Map & Pet List page
-- Pet profile page
-- Add pet page
-
-Future Implementations:
-
-- Register page
-- Login page
-- Account page
-- Inbox page
+- Map & Pet List Page
+- Pet Details Page
+- Add Pet Page / Edit Pet Page
+- Sign Up Page / Update Profile Page
+- Login Page
+- User Profile Page
 
 ### Mockups
 
@@ -86,12 +76,6 @@ Future Implementations:
 
 **Add Pet Page**
 ![](./src/assets/images/whisker-watch-form.png)
-
-Design Inspiration
-
-- [Pet List & Map Page](https://www.figma.com/community/file/1040515244782148525/property-listing-website-concept)
-- [Pet Profile Page](https://www.figma.com/community/file/1120008181964013360/ui-kit-pet-adoption)
-- [Color Palette](https://coolors.co/palette/8ecae6-219ebc-023047-ffb703-fb8500)
 
 ### Data
 
@@ -222,11 +206,7 @@ Response:
 - POST /conversations/:id/messages
 
 ## Roadmap
-
-**MVP:**
-
 - Create client
-
   - React project with routes and boilerplate pages
 
 - Create server
@@ -237,18 +217,15 @@ Response:
 - Deploy client and server projects so all commits will be reflected in production
 
 - Feature: List Lost Pets in a Given Location
-
   - Build and style
   - Fetch and display a list of pets given a certain location
   - Create GET /pets endpoint
 
 - Feature: Dynamic/Interactive Map of Lost Pets in a Given Location
-
   - Build and style
   - Integrate Google Maps API to display the list of lost pets in a given location on the map
 
 - Feature: Pet Profile Page
-
   - Build and style
   - Get a pet by id and display all relevant data
   - Create GET /pets/:id endpoint
@@ -257,38 +234,26 @@ Response:
   - Build and style
   - Create POST /pets endpoint
 
-**Future Implementations:**
-
 - Feature: Pet Sightings
-
   - Build and style component, implement into pet profile page
   - Create GET /pets/:id/sightings endpoint
   - Create add sighting form
   - Create POST /pets/:id/sightings endpoint
 
 - Feature: User Authentication - Sign Up Page
-
   - Build and style
-  - Create POST /users/register endpoint
+  - Implement Firebase Authentication
 
 - Feature: User Authentication - Login Page
-
   - Build and style
-  - Create POST /users/login endpoint
-
-- Feature: Implement JWT tokens
-
-  - Server: Update expected requests / responses on protected endpoints
-  - Client: Store JWT in local storage, include JWT on axios calls
+  - Implement Firebase Authentication
 
 - Feature: Account Page
-
   - Build and style
   - Create PUT /pets/:id endpoint
   - Create DELETE /pets/:id endpoint
 
 - Feature: Messaging System DB
-
   - Add conversations and messages tables
   - Seed with mock data
 
