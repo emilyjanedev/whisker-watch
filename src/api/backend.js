@@ -89,6 +89,16 @@ const addUser = async (newUser) => {
   }
 };
 
+const getUserById = async (userId) => {
+  try {
+    const { data } = await axios.get(`${baseUrl}/api/users/${userId}`);
+    return data;
+  } catch (error) {
+    console.error("Could not get user with id:", userId, error);
+    throw new Error("Error getting user.");
+  }
+};
+
 const getUserSightings = async (userId) => {
   try {
     const { data } = await axios.get(
@@ -111,4 +121,5 @@ export {
   addUser,
   updatePet,
   getUserSightings,
+  getUserById,
 };

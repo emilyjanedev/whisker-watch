@@ -13,6 +13,7 @@ import {
   Alert,
 } from "@mui/material";
 import MuiCard from "@mui/material/Card";
+import * as backend from "../../api/backend";
 import { GoogleIcon } from "./GoogleIcon";
 import StyledButton from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
@@ -88,7 +89,21 @@ function LoginPage() {
       message: "",
     });
     try {
-      await loginWithGoogle();
+      const { user } = await loginWithGoogle();
+      const userId = user.uid;
+
+      const { id } = await backend.getUserById(userId);
+
+      if (!id) {
+        const backendUserData = {
+          id: userId,
+          user_name: user.displayName,
+          user_email: user.providerData[0].email,
+        };
+
+        await backend.addUser(backendUserData);
+      }
+
       navigate("/");
     } catch (error) {
       console.error(error);
