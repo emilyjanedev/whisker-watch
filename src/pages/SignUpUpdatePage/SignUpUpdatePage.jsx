@@ -14,9 +14,10 @@ import {
 } from "@mui/material";
 import MuiCard from "@mui/material/Card";
 import { GoogleIcon } from "../LoginPage/GoogleIcon";
+import { EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
 import StyledButton from "../../components/StyledButton/StyledButton";
 import { useAuth } from "../../contexts/AuthContext";
-import { validateForm } from "../../utils/validateForm";
+import { validateSignUpForm } from "../../utils/validateSignUpForm";
 import * as backend from "../../api/backend.js";
 import PropTypes from "prop-types";
 import { updateProfile } from "firebase/auth";
@@ -59,6 +60,7 @@ function SignUpUpdatePage({ action }) {
   const [formData, setFormData] = useState({
     user_name: "",
     user_email: "",
+    current_password: "",
     password: "",
     confirm_password: "",
   });
@@ -87,6 +89,7 @@ function SignUpUpdatePage({ action }) {
       setFormData({
         user_email: currentUser.email,
         user_name: currentUser.displayName,
+        current_password: "",
         password: "",
         confirm_password: "",
       });
@@ -135,14 +138,12 @@ function SignUpUpdatePage({ action }) {
       status: "",
       message: "",
     });
-    const newErrors = validateForm(formData);
+
+    const newErrors = validateSignUpForm(formData, action);
     setErrors(newErrors);
+    console.log(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      if (formData.confirm_password !== formData.password) {
-        setErrors({ ...errors, confirm_password: "Passwords do not match" });
-        return;
-      }
       try {
         setLoading(true);
         if (action === "signup") {
@@ -173,10 +174,20 @@ function SignUpUpdatePage({ action }) {
             });
           }
         } else {
+          const userCredential = EmailAuthProvider.credential(
+            currentUser.email,
+            formData.current_password
+          );
+          await reauthenticateWithCredential(currentUser, userCredential);
+          console.log("Reauthenticated");
+
           if (formData.user_email !== currentUser.email) {
             await updateUserEmail(formData.user_email);
           }
           await updateUserPassword(formData.password);
+          await updateProfile(currentUser, {
+            displayName: formData.user_name,
+          });
           setMessage({
             ...message,
             status: "success",
@@ -194,8 +205,8 @@ function SignUpUpdatePage({ action }) {
         });
         console.error(error);
       }
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   return (
@@ -276,6 +287,28 @@ function SignUpUpdatePage({ action }) {
                 color="secondary"
               />
             </FormControl>
+            {action === "update" && (
+              <FormControl>
+                <FormLabel htmlFor="current_password">
+                  Current Password
+                </FormLabel>
+                <TextField
+                  value={formData.current_password}
+                  onChange={handleChange}
+                  error={errors.password ? true : false}
+                  helperText={errors.password}
+                  name="current_password"
+                  placeholder="••••••"
+                  type="password"
+                  id="current_password"
+                  autoComplete="current-password"
+                  autoFocus
+                  fullWidth
+                  variant="outlined"
+                  color="secondary"
+                />
+              </FormControl>
+            )}
             <FormControl>
               <FormLabel htmlFor="password">Password</FormLabel>
               <TextField
@@ -295,7 +328,7 @@ function SignUpUpdatePage({ action }) {
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="password">Confirm Password</FormLabel>
+              <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
               <TextField
                 value={formData.confirm_password}
                 onChange={handleChange}
