@@ -1,5 +1,18 @@
 # WhiskerWatch
 
+## Environement Setup
+
+Google Maps API and Firebase Auth Accounts Required
+
+1. Copy the `.env.example` file and rename it to .env
+2. Fill in empty variables with your credentials for Google Maps API and Firebase Auth.
+3. In your terminal, run `npm install` to install all dependencies
+4. In your terminal run `npm run dev` and click on the provided url to see the website
+5. To browse the site you can make your own account, or if you want to use a pre-made account that has some data attached to it you can sign into the developer profile:
+
+- Email: developer@gmail.com
+- Password: develop
+
 ## Overview
 
 WhiskerWatch is a platform dedicated to reuniting lost pets with their owners.
@@ -22,6 +35,7 @@ Losing a pet is a distressing experience, pet owners often feel helpless and des
 - who should be aware if a pet is missing in their neighborhood so they can keep an eye out
 
 ### Features
+
 - As a user, I want to be able to post that my pet is missing
 - As a user, I want to be able to give relevant information (such as: location, picture, temperament) about my pet that will help others identify them and approach them safely
 - As a user, I want to be able to provide my contact information to be able to be reached if someone finds my pet
@@ -36,28 +50,29 @@ Losing a pet is a distressing experience, pet owners often feel helpless and des
 **MVP:**
 
 Front-End:
+
 - React
 - Sass
 - MUI - Custom Theming
 - Google Maps API
 - Geolocation API
-- Firebase Authentication
+- Firebase Authentication - Email/Password and Google OAuth
 
 Back-End:
+
 - Express Server
 - Firebase Cloud Storage - User Uploaded Images
 - Knex.js
 - MySQL Database
 
 ### APIs
+
 - Google Maps API: [Docs](https://developers.google.com/maps/documentation/javascript/overview)
 - Geolocation API
 - Firebase Auth API
 - Firebase Storage API
 
 ### Sitemap
-
-MVP:
 
 - Map & Pet List Page
 - Pet Details Page
@@ -206,7 +221,9 @@ Response:
 - POST /conversations/:id/messages
 
 ## Roadmap
+
 - Create client
+
   - React project with routes and boilerplate pages
 
 - Create server
@@ -217,43 +234,52 @@ Response:
 - Deploy client and server projects so all commits will be reflected in production
 
 - Feature: List Lost Pets in a Given Location
+
   - Build and style
   - Fetch and display a list of pets given a certain location
   - Create GET /pets endpoint
 
 - Feature: Dynamic/Interactive Map of Lost Pets in a Given Location
+
   - Build and style
   - Integrate Google Maps API to display the list of lost pets in a given location on the map
 
 - Feature: Pet Profile Page
+
   - Build and style
   - Get a pet by id and display all relevant data
   - Create GET /pets/:id endpoint
 
 - Feature: Add Pet Page
+
   - Build and style
   - Create POST /pets endpoint
 
 - Feature: Pet Sightings
+
   - Build and style component, implement into pet profile page
   - Create GET /pets/:id/sightings endpoint
   - Create add sighting form
   - Create POST /pets/:id/sightings endpoint
 
 - Feature: User Authentication - Sign Up Page
+
   - Build and style
   - Implement Firebase Authentication
 
 - Feature: User Authentication - Login Page
+
   - Build and style
   - Implement Firebase Authentication
 
 - Feature: Account Page
+
   - Build and style
   - Create PUT /pets/:id endpoint
   - Create DELETE /pets/:id endpoint
 
 - Feature: Messaging System DB
+
   - Add conversations and messages tables
   - Seed with mock data
 
