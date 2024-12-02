@@ -8,10 +8,7 @@ Google Maps API and Firebase Auth Accounts Required
 2. Fill in empty variables with your credentials for Google Maps API and Firebase Auth.
 3. In your terminal, run `npm install` to install all dependencies
 4. In your terminal run `npm run dev` and click on the provided url to see the website
-5. To browse the site you can make your own account, or if you want to use a pre-made account that has some data attached to it you can sign into the developer profile:
-
-- Email: developer@gmail.com
-- Password: develop
+5. You can create an account to post pets and report sightings, or you can just browse the pet map and pet listings without an account.
 
 ## Overview
 
