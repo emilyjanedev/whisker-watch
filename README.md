@@ -47,8 +47,6 @@ Losing a pet is a distressing experience, pet owners often feel helpless and des
 
 ### Tech Stack
 
-**MVP:**
-
 Front-End:
 
 - React
@@ -158,30 +156,11 @@ Please reference the [WhiskerWatch API Repo](https://github.com/emilyjanedev/whi
   - Create PUT /pets/:id endpoint
   - Create DELETE /pets/:id endpoint
 
-- Feature: Messaging System DB
-
-  - Add conversations and messages tables
-  - Seed with mock data
-
-- Feature: Inbox Page
-  - Build and style
-  - New conversation form
-  - Create GET /users/:id/conversations endpoint
-  - Create POST /users/:id/conversations endpoint
-  - Create DELETE /users/:id/conversations endpoint
-  - Create GET /conversations/:id/messages endpoint
-  - Create POST /conversations/:id/messages endpoint
-
 ---
 
 ## Future Implementations
 
-I have broken up the above sections based on MVP and plans for future implementations.
-
-A summary would be that I plan to add a "sightings" feature where users can report a sighting of a pet if they happened to see it but were unable to approach/take in the pet. These sightings would be visble on a pet's profile page.
-
-Additionally, I would like to implement user authentication and a messaging system for users to be able to message each other within the app.
-
-I would also like to eventually convert this project to be built in some high-demand technologies in the industry such as TypeScript and Next.js.
-
-Another feature that I think would be a valuable addition to this app would be a notification system where users could opt in to recieve email notifcations for various events. For example, recieving a message, new animal reported lost in your area, a sighting was left on your lost pet, etc.
+- In-app messaging system so that users can communicate about their lost pets seamlessly.
+- More interactive map features. For example, click on the map to indicate where you lost or saw a pet.
+- Notification system to notify users of pets missing in their area, if their listed pets recieved any new sightings, or if they recieved any new messages.
+- More 0Auth sign in options such as Facebook, Microsoft, etc.
