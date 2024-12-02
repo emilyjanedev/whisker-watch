@@ -1,0 +1,11 @@
+@use "../../styles/partials/mixins" as *;
+
+.add-pet-page {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1rem;
+
+  @include tablet {
+    padding: 2rem;
+  }
+}

@@ -1,8 +1,21 @@
 # WhiskerWatch
 
+## Environement Setup
+
+Google Maps API and Firebase Auth Accounts Required
+
+1. Copy the `.env.example` file and rename it to `.env`
+2. Fill in empty variables with your credentials for Google Maps API and Firebase Auth.
+3. In your terminal, run `npm install` to install all dependencies
+4. In your terminal run `npm run dev` and click on the provided url to see the website
+5. To browse the site you can make your own account, or if you want to use a pre-made account that has some data attached to it you can sign into the developer profile:
+
+- Email: developer@gmail.com
+- Password: develop
+
 ## Overview
 
-WhiskerWatch is a place to reunite pet owners with their lost pets.
+WhiskerWatch is a platform dedicated to reuniting lost pets with their owners.
 
 ### Problem Space
 
@@ -23,206 +36,69 @@ Losing a pet is a distressing experience, pet owners often feel helpless and des
 
 ### Features
 
-**MVP:**
-
 - As a user, I want to be able to post that my pet is missing
 - As a user, I want to be able to give relevant information (such as: location, picture, temperament) about my pet that will help others identify them and approach them safely
 - As a user, I want to be able to provide my contact information to be able to be reached if someone finds my pet
-
 - As a user, I want to be able to see missing pets that have been reported in my area
-
-**Future Implementations:**
-
-- As a user, I want to be able to report that I have seen a pet, and where I saw it, if I was unable to successfully approach and take in the pet
-- As a logged in user, I want to be able to update my lost pet listings, updating details or marking a pet as actively missing/found
-- As a logged in user, I want to be able to message other users to communicate about their pets
+- As a user, I want to be able to report that I have seen a pet, where I saw it, and if I was unable to successfully approach and take in the pet
+- As a logged in user, I want to be able to update the details of my lost pet listings or removing a pet listing
 
 ## Implementation
 
 ### Tech Stack
 
-**MVP:**
+Front-End:
 
 - React
 - Sass
-- Express
+- MUI - Custom Theming
+- Google Maps API
+- Geolocation API
+- Firebase Authentication - Email/Password and Google OAuth
+
+Back-End:
+
+- Express Server
+- Firebase Cloud Storage - User Uploaded Images
 - Knex.js
-- MySQL
-
-**Future Implementations:**
-
-- TypeScript
-- Next.js
-- User Authentication
+- MySQL Database
 
 ### APIs
 
-MVP:
-
 - Google Maps API: [Docs](https://developers.google.com/maps/documentation/javascript/overview)
+- Geolocation API
+- Firebase Auth API
+- Firebase Storage API
 
 ### Sitemap
 
-MVP:
-
-- Map & Pet List page
-- Pet profile page
-- Add pet page
-
-Future Implementations:
-
-- Register page
-- Login page
-- Account page
-- Inbox page
+- Map & Pet List Page
+- Pet Details Page
+- Add Pet Page / Edit Pet Page
+- Sign Up Page / Update Profile Page
+- Login Page
+- User Profile Page
 
 ### Mockups
 
 **Pet List & Map Page**
-![](assets/images/whisker-watch-map.png)
+![](./src/assets/images/whisker-watch-map.png)
 
 **Pet Profile Page**
-![](assets/images/whisker-watch-pet.png)
+![](./src/ssets/images/whisker-watch-pet.png)
 
 **Add Pet Page**
-![](assets/images/whisker-watch-form.png)
-
-Design Inspiration
-
-- [Pet List & Map Page](https://www.figma.com/community/file/1040515244782148525/property-listing-website-concept)
-- [Pet Profile Page](https://www.figma.com/community/file/1120008181964013360/ui-kit-pet-adoption)
+![](./src/assets/images/whisker-watch-form.png)
 
 ### Data
 
-**MVP:**
-![](assets/images/whisker-watch-mvp-data.png)
-
-**Future Implementations:**
-![](assets/images/whisker-watch-future-data.png)
-
-**With Messaging System:**
-![](assets/images/whisker-watch-messaging-data.png)
+![](./src/assets/images/whisker-watch-db-map.png)
 
 ### Endpoints
 
-**MVP:**
-
-**GET /pets**
-
-- Get list of pets
-
-Response:
-
-```json
-[
-    {
-        "id": 1,
-        "image": "https://example.com/images/pet1.jpg",
-        "status": "missing",
-        "name": "Buddy",
-        "pet_type": "dog",
-        "age": 3,
-        "description": "Golden retriever with a red collar, very friendly.",
-        "longitude": -122.4194,
-        "latitude": 37.7749,
-        "posted_date": "2024-11-01T10:30:00Z",
-        "updated_date": "2024-11-10T15:45:00Z",
-        "user_id": 42
-    },
-    ...
-]
-```
-
-**POST /pets**
-
-- Add a new pet
-
-Parameters:
-
-- image, status, name, pet_type, age, description, longitude, latitude, user_id required in the request body
-
-Request Body:
-
-```json
-{
-  "image": "https://example.com/images/pet1.jpg",
-  "status": "missing",
-  "name": "Buddy",
-  "pet_type": "dog",
-  "age": 3,
-  "description": "Golden retriever with a red collar, very friendly.",
-  "longitude": -122.4194,
-  "latitude": 37.7749,
-  "user_id": 42
-}
-```
-
-Response:
-
-```json
-{
-  "id": 1,
-  "image": "https://example.com/images/pet1.jpg",
-  "status": "missing",
-  "name": "Buddy",
-  "pet_type": "dog",
-  "age": 3,
-  "description": "Golden retriever with a red collar, very friendly.",
-  "longitude": -122.4194,
-  "latitude": 37.7749,
-  "posted_date": "2024-11-01T10:30:00Z",
-  "updated_date": "2024-11-10T15:45:00Z",
-  "user_id": 42
-}
-```
-
-**GET /pets/:id**
-
-- Get one pet with the given id
-
-Parameters:
-
-- id: number representing the id of the pet
-
-Response:
-
-```json
-{
-  "id": 1,
-  "image": "https://example.com/images/pet1.jpg",
-  "status": "missing",
-  "name": "Buddy",
-  "pet_type": "dog",
-  "age": 3,
-  "description": "Golden retriever with a red collar, very friendly.",
-  "longitude": -122.4194,
-  "latitude": 37.7749,
-  "posted_date": "2024-11-01T10:30:00Z",
-  "updated_date": "2024-11-10T15:45:00Z",
-  "user_id": 42
-}
-```
-
-**Future Implementations:**
-
-- PUT /pets/:id
-- DELETE /pets/:id
-
-- GET /pets/:id/sightings
-- POST /pets/:id/sightings
-
-- POST /users/register
-- POST /users/login
-
-- GET /users/:id/conversations
-- POST /users/:id/conversations
-- DELETE /users/:id/conversations
-- GET /conversations/:id/messages
-- POST /conversations/:id/messages
+Please reference the [WhiskerWatch API Repo](https://github.com/emilyjanedev/whisker-watch-api/) for detailed documentation on endpoints.
 
 ## Roadmap
-
-**MVP:**
 
 - Create client
 
@@ -253,10 +129,9 @@ Response:
   - Create GET /pets/:id endpoint
 
 - Feature: Add Pet Page
+
   - Build and style
   - Create POST /pets endpoint
-
-**Future Implementations:**
 
 - Feature: Pet Sightings
 
@@ -268,17 +143,12 @@ Response:
 - Feature: User Authentication - Sign Up Page
 
   - Build and style
-  - Create POST /users/register endpoint
+  - Implement Firebase Authentication
 
 - Feature: User Authentication - Login Page
 
   - Build and style
-  - Create POST /users/login endpoint
-
-- Feature: Implement JWT tokens
-
-  - Server: Update expected requests / responses on protected endpoints
-  - Client: Store JWT in local storage, include JWT on axios calls
+  - Implement Firebase Authentication
 
 - Feature: Account Page
 
@@ -286,30 +156,11 @@ Response:
   - Create PUT /pets/:id endpoint
   - Create DELETE /pets/:id endpoint
 
-- Feature: Messaging System DB
-
-  - Add conversations and messages tables
-  - Seed with mock data
-
-- Feature: Inbox Page
-  - Build and style
-  - New conversation form
-  - Create GET /users/:id/conversations endpoint
-  - Create POST /users/:id/conversations endpoint
-  - Create DELETE /users/:id/conversations endpoint
-  - Create GET /conversations/:id/messages endpoint
-  - Create POST /conversations/:id/messages endpoint
-
 ---
 
 ## Future Implementations
 
-I have broken up the above sections based on MVP and plans for future implementations.
-
-A summary would be that I plan to add a "sightings" feature where users can report a sighting of a pet if they happened to see it but were unable to approach/take in the pet. These sightings would be visble on a pet's profile page.
-
-Additionally, I would like to implement user authentication and a messaging system for users to be able to message each other within the app.
-
-I would also like to eventually convert this project to be built in some high-demand technologies in the industry such as TypeScript and Next.js.
-
-Another feature that I think would be a valuable addition to this app would be a notification system where users could opt in to recieve email notifcations for various events. For example, recieving a message, new animal reported lost in your area, a sighting was left on your lost pet, etc.
+- In-app messaging system so that users can communicate about their lost pets seamlessly.
+- More interactive map features. For example, click on the map to indicate where you lost or saw a pet.
+- Notification system to notify users of pets missing in their area, if their listed pets recieved any new sightings, or if they recieved any new messages.
+- More 0Auth sign in options such as Facebook, Microsoft, etc.

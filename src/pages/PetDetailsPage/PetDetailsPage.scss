@@ -1,0 +1,111 @@
+@use "../../styles/partials/mixins" as *;
+
+.pet-details-page {
+  padding: 0 1rem;
+  max-width: 64rem;
+  margin: 1rem auto;
+
+  &__layout {
+    @include tablet {
+      height: 53.125rem;
+    }
+
+    @include tablet {
+      display: flex;
+      gap: 1.5rem;
+    }
+  }
+
+  &__title-icon {
+    cursor: pointer;
+    transition: transform 0.5s ease-out;
+
+    &:hover {
+      transform: translateX(-2px);
+    }
+  }
+
+  &__image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+    border-radius: 1.25rem;
+    object-fit: cover;
+
+    @include tablet {
+      width: 18.75rem;
+      height: 18.75rem;
+    }
+  }
+
+  &__header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 0.25rem;
+  }
+
+  &__status-container {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
+
+  &__map-container {
+    border-radius: 1.25rem;
+    overflow: hidden;
+    height: 18.75rem;
+    margin-bottom: 1rem;
+
+    @include tablet {
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+  }
+
+  &__sightings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    @include tablet {
+      order: 2;
+      overflow: scroll;
+      scrollbar-color: lightgray white;
+    }
+  }
+
+  &__details-and-form {
+    background-color: white;
+    border-radius: 1.25rem;
+    @include tablet {
+      width: 45%;
+      max-width: 18.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0 1rem 1rem;
+    }
+  }
+
+  &__map-and-results {
+    @include tablet {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__sightings-title {
+    @include tablet {
+      order: 1;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+@use "../../styles/partials/mixins" as *;
+
+.user-profile {
+  max-width: 64rem;
+
+  @include tablet {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__sidebar {
+    @include tablet {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      width: 15.625rem;
+      flex-shrink: 0;
+      padding: 1rem;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+
+    @include tablet {
+      flex-direction: column;
+      max-width: 16.5625rem;
+    }
+  }
+
+  &__content {
+    @include tablet {
+      flex-grow: 1;
+      padding: 1rem;
+    }
+  }
+
+  &__pet-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    @include tablet {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+
+  &__sighting-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

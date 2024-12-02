@@ -1,0 +1,100 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+
+.pet-card {
+  border-radius: 1.25rem;
+  height: 7.5rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: $light-gray;
+  padding: 1rem 0.5rem;
+  border: 0.1563rem solid transparent;
+  transition: border 0.3s;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &--active {
+    border: 0.1563rem solid $primary;
+    animation: border-pulse 1.5s;
+    animation-iteration-count: 2;
+    background-color: $primary-light;
+
+    @keyframes border-pulse {
+      0% {
+        border-color: $primary;
+      }
+      50% {
+        border-color: $secondary;
+      }
+      100% {
+        border-color: $primary;
+      }
+    }
+  }
+
+  @include small-mobile {
+    height: 8.125rem;
+    padding: 1rem;
+  }
+
+  &__image {
+    border-radius: 50%;
+    width: 4.375rem;
+    height: 4.375rem;
+    object-fit: cover;
+
+    @include small-mobile {
+      border-radius: 1.25rem;
+      width: 6.25rem;
+      height: 6.25rem;
+    }
+  }
+
+  &__attributes {
+    display: none;
+
+    @include small-mobile {
+      display: block;
+    }
+  }
+
+  &__details {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  &__info {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__status-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+
+    @include small-mobile {
+      align-items: end;
+    }
+  }
+
+  &__missing-date {
+    text-align: center;
+    flex-grow: 1;
+    font-size: 0.5rem !important;
+
+    @include small-mobile {
+      font-size: 0.625rem !important;
+    }
+  }
+
+  &__details-link {
+    border-radius: 1.25rem;
+  }
+}

@@ -1,0 +1,35 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+
+.manage-pet-card {
+  border-radius: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  background-color: $light-gray;
+  padding: 1rem;
+  align-items: center;
+  width: 12.5rem;
+
+  &__image {
+    border-radius: 1.25rem;
+    width: 10.625rem;
+    height: 10.625rem;
+    object-fit: cover;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+  }
+
+  &__status-container {
+    text-align: right;
+  }
+
+  &__button-container {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+}
