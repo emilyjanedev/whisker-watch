@@ -1,6 +1,6 @@
 # WhiskerWatch
 
-## Environement Setup
+## Environment Setup
 
 Google Maps API and Firebase Auth Accounts Required
 
