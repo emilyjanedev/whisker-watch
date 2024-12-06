@@ -1,4 +1,5 @@
-# WhiskerWatch - [Link to Live Site](https://whiskerwatch.netlify.app/)
+# WhiskerWatch
+Check out the deployed site here! [WhiskerWatch](https://whiskerwatch.netlify.app/)
 
 ## Environment Setup
 
