@@ -6,7 +6,7 @@ import { Chip, List, Skeleton, Typography } from "@mui/material";
 import { format } from "date-fns";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 import MapWithMarkers from "../../components/MapWithMarkers/MapWithMarkers.jsx";
-import SightingForm from "../../components/SightingForm/SIghtingForm.jsx";
+import SightingForm from "../../components/SightingForm/SightingForm.jsx";
 import SightingCard from "../../components/SightingCard/SightingCard.jsx";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SignInPrompt from "../../components/SignInPrompt/SignInPrompt.jsx";
